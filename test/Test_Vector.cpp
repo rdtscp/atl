@@ -29,6 +29,23 @@ TEST(VectorTest, Reserve) {
   ASSERT_EQ(atlVect.size(), stdVect.size());
 }
 
+TEST(VectorTest, PushBack) {
+  atl::vector<int> atlVect;
+  std::vector<int> stdVect;
+  atlVect.push_back(5);
+  atlVect.push_back(6);
+  atlVect.push_back(7);
+  stdVect.push_back(5);
+  stdVect.push_back(6);
+  stdVect.push_back(7);
+  ASSERT_EQ(atlVect.capacity(), stdVect.capacity());
+  ASSERT_EQ(atlVect.size(), stdVect.size());
+  ASSERT_EQ(atlVect[0], stdVect[0]);
+  ASSERT_EQ(atlVect.at(0), stdVect.at(0));
+  ASSERT_EQ(atlVect[1], stdVect[1]);
+  ASSERT_EQ(atlVect.at(1), stdVect.at(1));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
