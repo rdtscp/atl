@@ -39,15 +39,34 @@ public:
       delete[] elements;
   }
 
+  T &operator[](const int index) { return at(index); }
+
+  const T &operator[](const int index) const { return at(index); }
+
+  T &at(const int index) {
+    if (index < elements_size) {
+      return elements[index];
+    }
+    throw "atl::vector::at Out of Bounds Exception";
+  }
+
+  const T &at(const int index) const {
+    if (index < elements_size) {
+      return elements[index];
+    }
+    throw "atl::vector::at Out of Bounds Exception";
+  }
+
   int capacity() const { return elements_size; }
 
   void push_back(const T &elem) {
+    const int extendNum = 2;
     if (!initialised) {
-      allocate(1);
+      allocate(extendNum);
       initialised = true;
     }
     if (elements_used >= elements_size)
-      extend(1);
+      extend(extendNum);
 
     elements[elements_used] = elem;
     ++elements_used;
