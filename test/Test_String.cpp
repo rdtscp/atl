@@ -1,3 +1,4 @@
+#include <string.h>
 #include <string>
 
 #include "gtest/gtest.h"
@@ -16,11 +17,10 @@ TEST(StringTest, StringLiteralConstruction) {
   ASSERT_EQ(atlString.size(), stdString.size());
 }
 
-TEST(StringTest, StringLiteralConstruction) {
+TEST(StringTest, CSTREqual) {
   atl::string atlString("Hello World");
-
   std::string stdString("Hello World");
-  ASSERT_EQ(atlString.size(), stdString.size());
+  ASSERT_EQ(0, strcmp(atlString.c_str(), stdString.c_str()));
 }
 
 // The fixture for testing class Project1. From google test primer.
