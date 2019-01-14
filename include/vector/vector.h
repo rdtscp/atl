@@ -22,16 +22,44 @@ public:
   }
 
   /* Copy Constructor */
-  vector<T>(const vector<T> &rhs) {}
+  vector<T>(const vector<T> &rhs) {
+    if (this == &rhs)
+      return *this;
+    allocate(rhs.capacity());
+    for (int i = 0; i < rhs.elements_used; ++i)
+      push_back(rhs[i]);
+    return *this;
+  }
 
   /* Assignment Operator */
-  vector<T> &operator=(const vector<T> &rhs) {}
+  vector<T> &operator=(const vector<T> &rhs) {
+    if (this == &rhs)
+      return *this;
+    allocate(rhs.capacity());
+    for (int i = 0; i < rhs.size(); ++i)
+      push_back(rhs[i]);
+    return *this;
+  }
 
   /* Move Constructor */
-  vector<T>(const vector<T> &&rhs) {}
+  vector<T>(const vector<T> &&rhs) {
+    if (this == &rhs)
+      return *this;
+    allocate(rhs.capacity());
+    for (int i = 0; i < rhs.elements_used; ++i)
+      push_back(rhs[i]);
+    return *this;
+  }
 
   /* Move-Assignment Operator */
-  vector<T> &operator=(const vector<T> &&rhs) {}
+  vector<T> &operator=(const vector<T> &&rhs) {
+    if (this == &rhs)
+      return *this;
+    allocate(rhs.capacity());
+    for (int i = 0; i < rhs.size(); ++i)
+      push_back(rhs[i]);
+    return *this;
+  }
 
   /* Destructor */
   ~vector<T>() {
@@ -60,13 +88,12 @@ public:
   int capacity() const { return elements_size; }
 
   void push_back(const T &elem) {
-    const int extendNum = 2;
     if (!initialised) {
-      allocate(extendNum);
+      allocate(1);
       initialised = true;
     }
     if (elements_used >= elements_size)
-      extend(extendNum);
+      extend(1);
 
     elements[elements_used] = elem;
     ++elements_used;
