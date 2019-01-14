@@ -68,7 +68,12 @@ public:
 
   const T &operator[](const int index) const { return at(index); }
 
-  T &at(const int index) { return at(index); }
+  T &at(const int index) {
+    if (index < elements_size) {
+      return elements[index];
+    }
+    throw "atl::vector::at Out of Bounds Exception";
+  }
 
   T &at(const int index) const {
     if (index < elements_size) {
