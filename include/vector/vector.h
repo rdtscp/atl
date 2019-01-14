@@ -3,8 +3,6 @@
 #ifndef ATL_VECTOR_H
 #define ATL_VECTOR_H
 
-#include <memory>
-
 namespace atl {
 
 template <typename T> class vector {
@@ -24,11 +22,10 @@ public:
   /* Copy Constructor */
   vector<T>(const vector<T> &rhs) {
     if (this == &rhs)
-      return *this;
+      return;
     allocate(rhs.capacity());
     for (int i = 0; i < rhs.elements_used; ++i)
       push_back(rhs[i]);
-    return *this;
   }
 
   /* Assignment Operator */
@@ -78,7 +75,7 @@ public:
     throw "atl::vector::at Out of Bounds Exception";
   }
 
-  const T &at(const int index) const {
+  T &at(const int index) const {
     if (index < elements_size) {
       return elements[index];
     }
