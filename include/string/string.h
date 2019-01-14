@@ -70,19 +70,18 @@ public:
   const char &operator[](const int index) const { return at(index); }
 
   char &at(const int index) {
-    return at(index);
-    // if (index < charBufferLength(string_value)) {
-    //   int currIdx = 0;
-    //   char *string_value_ptr = string_value;
-    //   while (*string_value_ptr != '\0') {
-    //     if (currIdx == index)
-    //       return *string_value_ptr;
-    //     ++currIdx;
-    //     ++string_value_ptr;
-    //   }
-    //   throw "atl::string::at Unexpected NULL Terminator";
-    // }
-    // throw "atl::string::at Out of Bounds Exception";
+    if (index < charBufferLength(string_value)) {
+      int currIdx = 0;
+      char *string_value_ptr = string_value;
+      while (*string_value_ptr != '\0') {
+        if (currIdx == index)
+          return *string_value_ptr;
+        ++currIdx;
+        ++string_value_ptr;
+      }
+      throw "atl::string::at Unexpected NULL Terminator";
+    }
+    throw "atl::string::at Out of Bounds Exception";
   }
 
   char &at(const int index) const {
@@ -100,7 +99,7 @@ public:
     throw "atl::string::at Out of Bounds Exception";
   }
 
-  char *c_str() { return c_str(); }
+  char *c_str() { return string_value; }
 
   char *c_str() const { return string_value; }
 
