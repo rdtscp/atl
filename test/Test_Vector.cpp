@@ -88,6 +88,9 @@ TEST(VectorTest, CopyConstructor) {
   ASSERT_EQ(atlVect.size(), atlVect2.size());
   ASSERT_EQ(stdVect.size(), stdVect2.size());
 
+  ASSERT_EQ(atlVect[0], 5);
+  ASSERT_EQ(atlVect2[0], 5);
+
   ASSERT_EQ(atlVect[0], atlVect2[0]);
   ASSERT_EQ(atlVect[1], atlVect2[1]);
 
