@@ -23,6 +23,25 @@ TEST(StringTest, CSTREqual) {
   ASSERT_EQ(0, strcmp(atlString.c_str(), stdString.c_str()));
 }
 
+TEST(StringTest, CopyConstructor) {
+  atl::string atlString("Hello World");
+  atl::string atlString2(atlString);
+  std::string stdString("Hello World");
+  std::string stdString2(stdString);
+
+  ASSERT_EQ(0, strcmp(atlString.c_str(), atlString2.c_str()));
+  ASSERT_EQ(0, strcmp(stdString.c_str(), stdString2.c_str()));
+}
+
+TEST(StringTest, SelfAssign) {
+  atl::string atlString("Hello World");
+  atl::string atlString2(atlString);
+  std::string stdString("Hello World");
+  std::string stdString2(stdString);
+  ASSERT_EQ(0, strcmp(atlString.c_str(), atlString2.c_str()));
+  ASSERT_EQ(0, strcmp(stdString.c_str(), stdString2.c_str()));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

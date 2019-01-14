@@ -63,7 +63,7 @@ public:
   string &operator=(const string &&rhs) { return *this; }
 
   /* Destructor */
-  ~string() {}
+  ~string() { delete[] string_value; }
 
   char &operator[](const int index) { return at(index); }
 
