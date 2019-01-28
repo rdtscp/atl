@@ -51,6 +51,6 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
 ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
 install(
-  FILES include/*.h
+  DIRECTORY include
   DESTINATION include
 )
