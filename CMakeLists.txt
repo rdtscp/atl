@@ -50,4 +50,7 @@ IF(CMAKE_BUILD_TYPE MATCHES Debug)
   add_subdirectory(test)
 ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
-# add_subdirectory(include/vector)
+install(
+  FILES include/*.h
+  DESTINATION include
+)
