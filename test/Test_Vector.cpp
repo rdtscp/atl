@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../include/vector/vector.h"
+#include "../include/vector.h"
 
 TEST(VectorTest, DefaultConstruction) {
   atl::vector<int> atlVect;

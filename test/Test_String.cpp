@@ -3,7 +3,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../include/string/string.h"
+#include "../include/string.h"
 
 TEST(StringTest, DefaultConstruction) {
   atl::string atlString;
