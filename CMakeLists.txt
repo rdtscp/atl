@@ -52,4 +52,5 @@ ENDIF(CMAKE_BUILD_TYPE MATCHES Debug)
 
 install(
   DIRECTORY ${CMAKE_SOURCE_DIR}/include
+  DESTINATION include
 )
