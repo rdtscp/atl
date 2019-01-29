@@ -42,6 +42,18 @@ TEST(StringTest, SelfAssign) {
   ASSERT_EQ(0, strcmp(stdString.c_str(), stdString2.c_str()));
 }
 
+TEST(StringTest, Concat) {
+  atl::string atlString1("hello ");
+  std::string stdString1("hello ");
+  atl::string atlString2("world");
+  std::string stdString2("world");
+
+  atl::string atlConcat = atlString1 + atlString2;
+  std::string stdConcat = stdString1 + stdString2;
+
+  ASSERT_EQ(0, strcmp(atlConcat.c_str(), stdConcat.c_str()));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
