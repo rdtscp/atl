@@ -67,6 +67,19 @@ TEST(StringTest, EqualsOperator) {
   ASSERT_FALSE(atlString1 == "foo ");
 }
 
+TEST(StringTest, NotEqualsOperator) {
+  atl::string atlString1("foo");
+  atl::string atlString2("foo");
+  atl::string atlString3("bars");
+  atl::string atlString4("bars");
+  ASSERT_FALSE(atlString1 != atlString2);
+  ASSERT_TRUE(atlString2 != atlString3);
+  ASSERT_FALSE(atlString3 != atlString4);
+  ASSERT_FALSE(atlString1 != "foo");
+  ASSERT_TRUE(atlString1 != "bar");
+  ASSERT_TRUE(atlString1 != "foo ");
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

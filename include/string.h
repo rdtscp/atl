@@ -137,6 +137,10 @@ public:
     return output;
   }
 
+  bool operator!=(const string &rhs) const { return !(*this == rhs); }
+
+  bool operator!=(const char *rhs) const { return !(*this == rhs); }
+
   bool operator==(const string &rhs) const {
     if (length() != rhs.length())
       return false;
