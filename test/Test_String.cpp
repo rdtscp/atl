@@ -52,6 +52,11 @@ TEST(StringTest, Concat) {
   std::string stdConcat = stdString1 + stdString2;
 
   ASSERT_EQ(0, strcmp(atlConcat.c_str(), stdConcat.c_str()));
+
+  atlConcat = atlConcat + '!';
+  stdConcat = stdConcat + '!';
+
+  ASSERT_EQ(0, strcmp(atlConcat.c_str(), stdConcat.c_str()));
 }
 
 TEST(StringTest, EqualsOperator) {
@@ -89,6 +94,9 @@ TEST(StringTest, PlusEqualsOperator) {
   atl::string atlString2("hello");
   atlString2 += atl::string(" world");
   ASSERT_TRUE(atlString2 == "hello world");
+
+  atlString2 += '!';
+  ASSERT_TRUE(atlString2 == "hello world!");
 }
 
 TEST(StringTest, Find) {

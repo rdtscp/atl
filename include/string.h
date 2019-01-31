@@ -59,10 +59,13 @@ public:
   }
 
   /* Move Constructor */
-  string(const string &&rhs) {}
+  string(const string &&rhs) { *this = rhs; }
 
   /* Move-Assignment Operator */
-  string &operator=(const string &&rhs) { return *this; }
+  string &operator=(const string &&rhs) {
+    *this = rhs;
+    return *this;
+  }
 
   /* Destructor */
   ~string() { delete[] string_value; }
@@ -70,6 +73,36 @@ public:
   char &operator[](const int index) { return at(index); }
 
   const char &operator[](const int index) const { return at(index); }
+
+  string operator+(const char rhs) {
+    // Calculate the new size.
+    const int lhs_len = size();
+    const int rhs_len = 1;
+    const int string_length = lhs_len + rhs_len;
+
+    // Allocate memory for the new string.
+    char *new_string_value = new char[string_length + 1];
+    char *new_string_value_ptr = new_string_value;
+
+    // Copy the LHS.
+    char *lhs_ptr = string_value;
+    for (int i = 0; i < lhs_len; ++i) {
+      *new_string_value_ptr = *lhs_ptr;
+      ++lhs_ptr;
+      ++new_string_value_ptr;
+    }
+
+    // Copy the RHS.
+    *new_string_value_ptr = rhs;
+    ++new_string_value_ptr;
+
+    // Null terminate.
+    *new_string_value_ptr = '\0';
+
+    string output(new_string_value);
+    delete[] new_string_value;
+    return output;
+  }
 
   string operator+(char *const rhs) {
     // Calculate the new size.
@@ -173,14 +206,18 @@ public:
     return output;
   }
 
+  string &operator+=(const char rhs) {
+    *this = *this + rhs;
+    return *this;
+  }
+
   string &operator+=(char *const rhs) {
-    *this += atl::string(rhs);
+    *this = *this + atl::string(rhs);
     return *this;
   }
 
   string &operator+=(const string &rhs) {
-    const string newStr = *this + rhs;
-    *this = newStr;
+    *this = *this + rhs;
     return *this;
   }
 
