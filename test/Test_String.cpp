@@ -91,6 +91,16 @@ TEST(StringTest, PlusEqualsOperator) {
   ASSERT_TRUE(atlString2 == "hello world");
 }
 
+TEST(StringTest, Find) {
+  const atl::string atlString1("hello");
+
+  const int lIndex = atlString1.find('l');
+  ASSERT_EQ(lIndex, 2);
+
+  const int xIndex = atlString1.find('x');
+  ASSERT_EQ(xIndex, atl::string::npos);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

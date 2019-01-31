@@ -8,6 +8,8 @@ namespace atl {
 class string {
 
 public:
+  enum { npos = -1 };
+
   /* Constructor */
   string() {
     string_value = new char[1];
@@ -213,6 +215,18 @@ public:
   bool operator!=(const string &rhs) const { return !(*this == rhs); }
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
+
+  int find(const char searchChar) const {
+    const int len = length();
+    char currChar;
+    for (int idx = 0; idx < len; ++idx) {
+      currChar = at(idx);
+      if (currChar == searchChar) {
+        return idx;
+      }
+    }
+    return npos;
+  }
 
   char &at(const int index) {
     if (index < charBufferLength(string_value)) {
