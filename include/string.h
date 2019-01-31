@@ -17,6 +17,18 @@ public:
   }
 
   /* Constructor */
+  string(const int count, const char c) {
+    const int string_length = count;
+    string_value = new char[string_length + 1];
+    char *string_value_ptr = string_value;
+    for (int i = 0; i < string_length; ++i) {
+      *string_value_ptr = c;
+      ++string_value_ptr;
+    }
+    *string_value_ptr = '\0';
+  }
+
+  /* Constructor */
   string(const char *string_literal) {
     const int string_length = charBufferLength(string_literal);
     string_value = new char[string_length + 1];

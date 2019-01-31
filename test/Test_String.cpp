@@ -11,6 +11,12 @@ TEST(StringTest, DefaultConstruction) {
   ASSERT_EQ(atlString.size(), stdString.size());
 }
 
+TEST(StringTest, CharConstruction) {
+  atl::string atlString(1, 'h');
+  std::string stdString(1, 'h');
+  ASSERT_EQ(atlString.size(), stdString.size());
+}
+
 TEST(StringTest, StringLiteralConstruction) {
   atl::string atlString("Hello World");
   std::string stdString("Hello World");
