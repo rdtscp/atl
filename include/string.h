@@ -137,9 +137,50 @@ public:
     return output;
   }
 
-  bool operator!=(const string &rhs) const { return !(*this == rhs); }
+  string operator+(const string &rhs) const {
+    // Calculate the new size.
+    const int lhs_len = size();
+    const int rhs_len = rhs.size();
+    const int string_length = lhs_len + rhs_len;
 
-  bool operator!=(const char *rhs) const { return !(*this == rhs); }
+    // Allocate memory for the new string.
+    char *new_string_value = new char[string_length + 1];
+    char *new_string_value_ptr = new_string_value;
+
+    // Copy the LHS.
+    char *lhs_ptr = string_value;
+    for (int i = 0; i < lhs_len; ++i) {
+      *new_string_value_ptr = *lhs_ptr;
+      ++lhs_ptr;
+      ++new_string_value_ptr;
+    }
+
+    // Copy the RHS.
+    char *rhs_ptr = rhs.c_str();
+    for (int i = 0; i < rhs_len; ++i) {
+      *new_string_value_ptr = *rhs_ptr;
+      ++rhs_ptr;
+      ++new_string_value_ptr;
+    }
+
+    // Null terminate.
+    *new_string_value_ptr = '\0';
+
+    string output(new_string_value);
+    delete[] new_string_value;
+    return output;
+  }
+
+  string &operator+=(char *const rhs) {
+    *this += atl::string(rhs);
+    return *this;
+  }
+
+  string &operator+=(const string &rhs) {
+    const string newStr = *this + rhs;
+    *this = newStr;
+    return *this;
+  }
 
   bool operator==(const string &rhs) const {
     if (length() != rhs.length())
@@ -168,6 +209,10 @@ public:
     }
     return true;
   }
+
+  bool operator!=(const string &rhs) const { return !(*this == rhs); }
+
+  bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
   char &at(const int index) {
     if (index < charBufferLength(string_value)) {

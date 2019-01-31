@@ -68,9 +68,10 @@ TEST(StringTest, EqualsOperator) {
 }
 
 TEST(StringTest, NotEqualsOperator) {
-  atl::string atlString1("foo");
+  const atl::string atlString1("foo");
   atl::string atlString2("foo");
-  atl::string atlString3("bars");
+
+  const atl::string atlString3("bars");
   atl::string atlString4("bars");
   ASSERT_FALSE(atlString1 != atlString2);
   ASSERT_TRUE(atlString2 != atlString3);
@@ -78,6 +79,16 @@ TEST(StringTest, NotEqualsOperator) {
   ASSERT_FALSE(atlString1 != "foo");
   ASSERT_TRUE(atlString1 != "bar");
   ASSERT_TRUE(atlString1 != "foo ");
+}
+
+TEST(StringTest, PlusEqualsOperator) {
+  atl::string atlString1("hello");
+  atlString1 += " world";
+  ASSERT_TRUE(atlString1 == "hello world");
+
+  atl::string atlString2("hello");
+  atlString2 += atl::string(" world");
+  ASSERT_TRUE(atlString2 == "hello world");
 }
 
 // The fixture for testing class Project1. From google test primer.
