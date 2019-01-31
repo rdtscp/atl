@@ -54,6 +54,16 @@ TEST(StringTest, Concat) {
   ASSERT_EQ(0, strcmp(atlConcat.c_str(), stdConcat.c_str()));
 }
 
+TEST(StringTest, EqualsOperator) {
+  atl::string atlString1("foo");
+  atl::string atlString2("foo");
+  atl::string atlString3("bars");
+  atl::string atlString4("bars");
+  ASSERT_TRUE(atlString1 == atlString2);
+  ASSERT_FALSE(atlString2 == atlString3);
+  ASSERT_TRUE(atlString3 == atlString4);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

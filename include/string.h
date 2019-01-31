@@ -137,6 +137,20 @@ public:
     return output;
   }
 
+  bool operator==(const string &rhs) const {
+    if (length() != rhs.length())
+      return false;
+    const int str_len = length();
+    char lhsChar, rhsChar;
+    for (int charIdx = 0; charIdx < str_len; ++charIdx) {
+      lhsChar = at(charIdx);
+      rhsChar = rhs.at(charIdx);
+      if (lhsChar != rhsChar)
+        return false;
+    }
+    return true;
+  }
+
   char &at(const int index) {
     if (index < charBufferLength(string_value)) {
       int currIdx = 0;
