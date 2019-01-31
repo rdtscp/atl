@@ -62,6 +62,9 @@ TEST(StringTest, EqualsOperator) {
   ASSERT_TRUE(atlString1 == atlString2);
   ASSERT_FALSE(atlString2 == atlString3);
   ASSERT_TRUE(atlString3 == atlString4);
+  ASSERT_TRUE(atlString1 == "foo");
+  ASSERT_FALSE(atlString1 == "bar");
+  ASSERT_FALSE(atlString1 == "foo ");
 }
 
 // The fixture for testing class Project1. From google test primer.

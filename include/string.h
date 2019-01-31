@@ -151,6 +151,20 @@ public:
     return true;
   }
 
+  bool operator==(const char *rhs) const {
+    if (length() != charBufferLength(rhs))
+      return false;
+    const int str_len = length();
+    char lhsChar, rhsChar;
+    for (int charIdx = 0; charIdx < str_len; ++charIdx) {
+      lhsChar = at(charIdx);
+      rhsChar = rhs[charIdx];
+      if (lhsChar != rhsChar)
+        return false;
+    }
+    return true;
+  }
+
   char &at(const int index) {
     if (index < charBufferLength(string_value)) {
       int currIdx = 0;
