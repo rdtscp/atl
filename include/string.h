@@ -3,6 +3,8 @@
 #ifndef ATL_VECTOR_H
 #define ATL_VECTOR_H
 
+#include <vector>
+
 namespace atl {
 
 class string {
@@ -116,7 +118,7 @@ public:
     return output;
   }
 
-  string operator+(char *const rhs) {
+  string operator+(const char *rhs) {
     // Calculate the new size.
     const int lhs_len = size();
     const int rhs_len = charBufferLength(rhs);
@@ -135,7 +137,7 @@ public:
     }
 
     // Copy the RHS.
-    char *rhs_ptr = rhs;
+    const char *rhs_ptr = rhs;
     for (int i = 0; i < rhs_len; ++i) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
@@ -223,7 +225,7 @@ public:
     return *this;
   }
 
-  string &operator+=(char *const rhs) {
+  string &operator+=(const char *rhs) {
     *this = *this + atl::string(rhs);
     return *this;
   }
@@ -327,6 +329,44 @@ private:
     return length;
   }
 };
+
+/* https://www.geeksforgeeks.org/implement-itoa/ */
+string to_string(int num) {
+  int i = 0;
+  bool isNegative = false;
+
+  /* Handle 0 explicitely, otherwise empty string is printed for 0 */
+  if (num == 0)
+    return string("0");
+
+  // In standard itoa(), negative numbers are handled only with
+  // base 10. Otherwise numbers are considered unsigned.
+  if (num < 0) {
+    isNegative = true;
+    num = -num;
+  }
+
+  // Process individual digits
+  string reverseDigits;
+  while (num != 0) {
+    int rem = num % 10;
+    reverseDigits += (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+    num = num / 10;
+  }
+
+  // If number is negative, append '-'
+  if (isNegative)
+    reverseDigits += '-';
+
+  // Reverse the string
+  string output;
+  for (int idx = reverseDigits.size() - 1; idx >= 0; --idx) {
+    char currChar = reverseDigits[idx];
+    output += currChar;
+  }
+
+  return output;
+}
 
 } // namespace atl
 

@@ -115,6 +115,15 @@ TEST(StringTest, Find) {
   ASSERT_EQ(xIndex, atl::string::npos);
 }
 
+TEST(StringTest, ToString) {
+  ASSERT_TRUE(atl::to_string(0) == "0");
+  ASSERT_TRUE(atl::to_string(1) == "1");
+  ASSERT_TRUE(atl::to_string(100000) == "100000");
+  ASSERT_TRUE(atl::to_string(123456) == "123456");
+  ASSERT_TRUE(atl::to_string(-100000) == "-100000");
+  ASSERT_TRUE(atl::to_string(-123456) == "-123456");
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
