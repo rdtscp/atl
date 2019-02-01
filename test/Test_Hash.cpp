@@ -1,18 +1,15 @@
-#include <memory>
-#include <string>
-
 #include "gtest/gtest.h"
 
 #include "../include/hash.h"
+#include "../include/string.h"
 
 TEST(HashTest, Usage) {
   const int maxVal = 100;
   int curr;
   int last = -1;
   for (int i = 0; i < 100; ++i) {
-    std::string std_str("test string" + std::to_string(i));
-    atl::string atl_str(std_str.c_str());
-    curr = atl::hash(atl_str, maxVal);
+    atl::string str = atl::string("test string") + atl::to_string(i);
+    curr = atl::hash(str, maxVal);
     ASSERT_TRUE(curr >= 0);
     ASSERT_TRUE(curr < maxVal);
     ASSERT_TRUE(curr != last);
