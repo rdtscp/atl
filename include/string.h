@@ -1,9 +1,7 @@
 #pragma once
 
-#ifndef ATL_VECTOR_H
-#define ATL_VECTOR_H
-
-#include <vector>
+#ifndef ATL_STRING_H
+#define ATL_STRING_H
 
 namespace atl {
 
