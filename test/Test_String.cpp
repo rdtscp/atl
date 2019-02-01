@@ -154,8 +154,8 @@ TEST(StringTest, Comparitors) {
 
 TEST(StringTest, BeginEnd) {
   atl::string atlString("test");
-  const char *it_begin = atlString.begin();
-  const char *it_end = atlString.end();
+  atl::string::const_iterator it_begin = atlString.begin();
+  atl::string::const_iterator it_end = atlString.end();
   ASSERT_TRUE(*it_end == '\0');
   ASSERT_TRUE(*it_begin == 't');
   ++it_begin;

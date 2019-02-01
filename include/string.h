@@ -8,6 +8,8 @@ namespace atl {
 class string {
 
 public:
+  typedef const char *const_iterator;
+  typedef char *iterator;
   enum { npos = -1 };
 
   /* Constructor */
@@ -379,9 +381,9 @@ public:
     throw "atl::string::at Out of Bounds Exception";
   }
 
-  char *begin() const { return &string_value[0]; }
+  const_iterator begin() const { return &string_value[0]; }
 
-  char *end() const {
+  const_iterator end() const {
     const int len = charBufferLength(string_value);
     return &string_value[len];
   }
