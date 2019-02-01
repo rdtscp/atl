@@ -124,6 +124,22 @@ TEST(StringTest, ToString) {
   ASSERT_TRUE(atl::to_string(-123456) == "-123456");
 }
 
+TEST(StringTest, Comparitors) {
+  ASSERT_TRUE(atl::string("1234") < atl::string("12345"));
+  ASSERT_TRUE(atl::string("1234") <= atl::string("12345"));
+  ASSERT_FALSE(atl::string("12345") < atl::string("1234"));
+  ASSERT_FALSE(atl::string("12345") <= atl::string("1234"));
+  ASSERT_FALSE(atl::string("12345") < atl::string("12345"));
+  ASSERT_TRUE(atl::string("12345") <= atl::string("12345"));
+
+  ASSERT_TRUE(atl::string("12345") > atl::string("1234"));
+  ASSERT_TRUE(atl::string("12345") >= atl::string("1234"));
+  ASSERT_FALSE(atl::string("1234") > atl::string("12345"));
+  ASSERT_FALSE(atl::string("1234") >= atl::string("12345"));
+  ASSERT_FALSE(atl::string("12345") > atl::string("12345"));
+  ASSERT_TRUE(atl::string("12345") >= atl::string("12345"));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

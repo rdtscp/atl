@@ -233,6 +233,90 @@ public:
     return *this;
   }
 
+  bool operator<(const char *rhs) const { return *this < string(rhs); }
+
+  bool operator>(const char *rhs) const { return *this > string(rhs); }
+
+  bool operator<=(const char *rhs) const { return *this <= string(rhs); }
+
+  bool operator>=(const char *rhs) const { return *this >= string(rhs); }
+
+  bool operator<(const string &rhs) const {
+    const int lhsSize = this->size();
+    const int rhsSize = rhs.size();
+    if (lhsSize < rhsSize)
+      return true;
+    if (lhsSize > rhsSize)
+      return false;
+
+    char currLhs, currRhs;
+    for (int idx = 0; idx < rhsSize; ++idx) {
+      currLhs = this->at(idx);
+      currRhs = rhs[idx];
+      if ((int)currLhs < (int)currRhs) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool operator>(const string &rhs) const {
+    const int lhsSize = this->size();
+    const int rhsSize = rhs.size();
+    if (lhsSize < rhsSize)
+      return false;
+    if (lhsSize > rhsSize)
+      return true;
+
+    char currLhs, currRhs;
+    for (int idx = 0; idx < rhsSize; ++idx) {
+      currLhs = this->at(idx);
+      currRhs = rhs[idx];
+      if ((int)currLhs > (int)currRhs) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool operator<=(const string &rhs) const {
+    const int lhsSize = this->size();
+    const int rhsSize = rhs.size();
+    if (lhsSize < rhsSize)
+      return true;
+    if (lhsSize > rhsSize)
+      return false;
+
+    char currLhs, currRhs;
+    for (int idx = 0; idx < rhsSize; ++idx) {
+      currLhs = this->at(idx);
+      currRhs = rhs[idx];
+      if ((int)currLhs > (int)currRhs) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool operator>=(const string &rhs) const {
+    const int lhsSize = this->size();
+    const int rhsSize = rhs.size();
+    if (lhsSize < rhsSize)
+      return false;
+    if (lhsSize > rhsSize)
+      return true;
+
+    char currLhs, currRhs;
+    for (int idx = 0; idx < rhsSize; ++idx) {
+      currLhs = this->at(idx);
+      currRhs = rhs[idx];
+      if ((int)currLhs < (int)currRhs) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   bool operator==(const string &rhs) const {
     if (length() != rhs.length())
       return false;
