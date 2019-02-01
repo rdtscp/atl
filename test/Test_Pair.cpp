@@ -29,6 +29,20 @@ TEST(PairTest, ValueAssign) {
   ASSERT_EQ(stdPair.second, atlPair.second);
 }
 
+TEST(PairTest, CopyConstructor) {
+  atl::pair<int, std::string> atlPair(5, "foo");
+  atl::pair<int, std::string> atlPair2(atlPair);
+  ASSERT_EQ(atlPair.first, atlPair2.first);
+  ASSERT_EQ(atlPair.second, atlPair2.second);
+}
+
+TEST(PairTest, AssignOperator) {
+  atl::pair<int, std::string> atlPair(5, "foo");
+  atl::pair<int, std::string> atlPair2 = atlPair;
+  ASSERT_EQ(atlPair.first, atlPair2.first);
+  ASSERT_EQ(atlPair.second, atlPair2.second);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Pair : public ::testing::Test {
 protected:

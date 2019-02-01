@@ -42,7 +42,6 @@ public:
 
     first = rhs.first;
     second = rhs.second;
-    return *this;
   }
 
   /* Move-Assignment Operator */
