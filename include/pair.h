@@ -38,7 +38,7 @@ public:
   /* Move Constructor */
   pair<F, S>(const pair<F, S> &&rhs) {
     if (this == &rhs)
-      return *this;
+      return;
 
     first = rhs.first;
     second = rhs.second;
