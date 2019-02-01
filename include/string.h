@@ -349,18 +349,6 @@ public:
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
-  int find(const char searchChar) const {
-    const int len = length();
-    char currChar;
-    for (int idx = 0; idx < len; ++idx) {
-      currChar = at(idx);
-      if (currChar == searchChar) {
-        return idx;
-      }
-    }
-    return npos;
-  }
-
   char &at(const int index) {
     if (index < charBufferLength(string_value)) {
       int currIdx = 0;
@@ -391,9 +379,28 @@ public:
     throw "atl::string::at Out of Bounds Exception";
   }
 
+  char *begin() const { return &string_value[0]; }
+
+  char *end() const {
+    const int len = charBufferLength(string_value);
+    return &string_value[len];
+  }
+
   char *c_str() { return string_value; }
 
   char *c_str() const { return string_value; }
+
+  int find(const char searchChar) const {
+    const int len = length();
+    char currChar;
+    for (int idx = 0; idx < len; ++idx) {
+      currChar = at(idx);
+      if (currChar == searchChar) {
+        return idx;
+      }
+    }
+    return npos;
+  }
 
   int length() const { return size(); }
 

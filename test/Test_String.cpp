@@ -138,6 +138,35 @@ TEST(StringTest, Comparitors) {
   ASSERT_FALSE(atl::string("1234") >= atl::string("12345"));
   ASSERT_FALSE(atl::string("12345") > atl::string("12345"));
   ASSERT_TRUE(atl::string("12345") >= atl::string("12345"));
+
+  ASSERT_TRUE(atl::string("one") == atl::string("one"));
+  ASSERT_TRUE(atl::string("one") <= atl::string("one"));
+  ASSERT_TRUE(atl::string("one") >= atl::string("one"));
+  ASSERT_FALSE(atl::string("one") > atl::string("one"));
+  ASSERT_FALSE(atl::string("one") < atl::string("one"));
+  ASSERT_FALSE(atl::string("one") != atl::string("one"));
+
+  atl::string one1("one");
+  atl::string one2("one");
+
+  ASSERT_TRUE(!(one1 < one2) && !(one2 < one1));
+}
+
+TEST(StringTest, BeginEnd) {
+  atl::string atlString("test");
+  const char *it_begin = atlString.begin();
+  const char *it_end = atlString.end();
+  ASSERT_TRUE(*it_end == '\0');
+  ASSERT_TRUE(*it_begin == 't');
+  ++it_begin;
+  ASSERT_TRUE(*it_begin == 'e');
+  ++it_begin;
+  ASSERT_TRUE(*it_begin == 's');
+  ++it_begin;
+  ASSERT_TRUE(*it_begin == 't');
+  ++it_begin;
+  ASSERT_TRUE(*it_begin == '\0');
+  ASSERT_EQ(it_begin, it_end);
 }
 
 // The fixture for testing class Project1. From google test primer.
