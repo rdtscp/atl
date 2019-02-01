@@ -331,7 +331,7 @@ private:
 };
 
 /* https://www.geeksforgeeks.org/implement-itoa/ */
-string to_string(int num) {
+static string to_string(int num) {
   int i = 0;
   bool isNegative = false;
 
