@@ -18,6 +18,19 @@
       "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
     },
     {
+      "name": "(lldb) Set Unit Tests",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/test/runSetUnitTests",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": true,
+      "MIMode": "lldb",
+      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+    },
+    {
       "name": "(lldb) String Unit Tests",
       "type": "cppdbg",
       "request": "launch",

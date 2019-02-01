@@ -7,6 +7,10 @@ add_executable(runHashUnitTests Test_Hash.cpp  main.cpp)
 target_link_libraries(runHashUnitTests libgtest libgmock)
 add_test(HashUnitTests runHashUnitTests)
 
+add_executable(runSetUnitTests Test_Set.cpp  main.cpp)
+target_link_libraries(runSetUnitTests libgtest libgmock)
+add_test(SetUnitTests runSetUnitTests)
+
 add_executable(runStringUnitTests Test_String.cpp  main.cpp)
 target_link_libraries(runStringUnitTests libgtest libgmock)
 add_test(StringUnitTests runStringUnitTests)
