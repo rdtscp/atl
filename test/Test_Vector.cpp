@@ -109,6 +109,16 @@ TEST(VectorTest, Erase) {
   ASSERT_EQ(atlVect.size(), 2);
 }
 
+TEST(VectorTest, Clear) {
+  atl::vector<int> atlVect;
+  atlVect.push_back(0);
+  atlVect.push_back(1);
+  atlVect.push_back(2);
+  ASSERT_EQ(atlVect.size(), 3);
+  atlVect.clear();
+  ASSERT_EQ(atlVect.size(), 0);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

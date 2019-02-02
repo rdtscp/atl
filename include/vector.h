@@ -89,6 +89,8 @@ public:
 
   int capacity() const { return elements_size; }
 
+  void clear() { deallocate(); }
+
   T erase(const int eraseIndex) {
     if (eraseIndex > size())
       throw "atl::vector::erase Out of Bounds Exception"; 
