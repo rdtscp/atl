@@ -170,20 +170,20 @@ TEST(StringTest, BeginEnd) {
 }
 
 TEST(StringTest, IsSpace) {
-  ASSERT_TRUE(atl::is_space(' '));
-  ASSERT_TRUE(atl::is_space('\n'));
-  ASSERT_TRUE(atl::is_space('\r'));
-  ASSERT_TRUE(atl::is_space('\t'));
-  ASSERT_FALSE(atl::is_space('!'));
-  ASSERT_FALSE(atl::is_space('a'));
-  ASSERT_FALSE(atl::is_space('A'));
-  ASSERT_FALSE(atl::is_space('1'));
-  ASSERT_FALSE(atl::is_space('9'));
-  ASSERT_FALSE(atl::is_space('0'));
-  ASSERT_FALSE(atl::is_space('\\'));
-  ASSERT_FALSE(atl::is_space('_'));
-  ASSERT_FALSE(atl::is_space('Z'));
-  ASSERT_FALSE(atl::is_space('z'));
+  ASSERT_TRUE(atl::isspace(' '));
+  ASSERT_TRUE(atl::isspace('\n'));
+  ASSERT_TRUE(atl::isspace('\r'));
+  ASSERT_TRUE(atl::isspace('\t'));
+  ASSERT_FALSE(atl::isspace('!'));
+  ASSERT_FALSE(atl::isspace('a'));
+  ASSERT_FALSE(atl::isspace('A'));
+  ASSERT_FALSE(atl::isspace('1'));
+  ASSERT_FALSE(atl::isspace('9'));
+  ASSERT_FALSE(atl::isspace('0'));
+  ASSERT_FALSE(atl::isspace('\\'));
+  ASSERT_FALSE(atl::isspace('_'));
+  ASSERT_FALSE(atl::isspace('Z'));
+  ASSERT_FALSE(atl::isspace('z'));
 }
 
 TEST(StringTest, IsDigit) {
