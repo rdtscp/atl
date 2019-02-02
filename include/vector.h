@@ -3,38 +3,42 @@
 #ifndef ATL_VECTOR_H
 #define ATL_VECTOR_H
 
+#include <iostream>
+
 namespace atl {
 
 template <typename T> class vector {
 
 public:
-  /* Constructor */
-  vector<T>() : elements_size(0), elements_used(0), initialised(false) {}
+  /* Default Constructor */
+  vector<T>() {}
 
-  /* Constructor */
-  vector<T>(const int size)
-      : elements_size(size), elements_used(0), initialised(true) {
+  /* Size Constructor */
+  vector<T>(const int size) {
     allocate(size);
-    for (int i = 0; i < size; i++)
-      push_back(0);
+    for (int idx = 0; idx < capacity(); ++idx)
+      push_back(T());
   }
 
   /* Copy Constructor */
   vector<T>(const vector<T> &rhs) {
     if (this == &rhs)
       return;
-    allocate(rhs.capacity());
-    for (int i = 0; i < rhs.elements_used; ++i)
-      push_back(rhs[i]);
+
+    reserve(rhs.capacity());
+    for (int idx = 0; idx < rhs.size(); ++idx)
+      push_back(rhs.at(idx));
   }
 
   /* Assignment Operator */
   vector<T> &operator=(const vector<T> &rhs) {
     if (this == &rhs)
       return *this;
-    allocate(rhs.capacity());
-    for (int i = 0; i < rhs.size(); ++i)
-      push_back(rhs[i]);
+
+    deallocate();
+    reserve(rhs.capacity());
+    for (int idx = 0; idx < rhs.size(); ++idx)
+      push_back(rhs.at(idx));
     return *this;
   }
 
@@ -42,26 +46,28 @@ public:
   vector<T>(const vector<T> &&rhs) {
     if (this == &rhs)
       return;
-    allocate(rhs.capacity());
-    for (int i = 0; i < rhs.elements_used; ++i)
-      push_back(rhs[i]);
+
+    deallocate();
+    reserve(rhs.capacity());
+    for (int idx = 0; idx < rhs.size(); ++idx)
+      push_back(rhs.at(idx));
   }
 
   /* Move-Assignment Operator */
   vector<T> &operator=(const vector<T> &&rhs) {
     if (this == &rhs)
       return *this;
-    allocate(rhs.capacity());
-    for (int i = 0; i < rhs.size(); ++i)
-      push_back(rhs[i]);
+
+    deallocate();
+    reserve(rhs.capacity());
+    for (int idx = 0; idx < rhs.size(); ++idx)
+      push_back(rhs.at(idx));
+
     return *this;
   }
 
   /* Destructor */
-  ~vector<T>() {
-    if (initialised)
-      delete[] elements;
-  }
+  ~vector<T>() { deallocate(); }
 
   T &operator[](const int index) { return at(index); }
 
@@ -83,59 +89,97 @@ public:
 
   int capacity() const { return elements_size; }
 
+  T erase(const int eraseIndex) {
+    if (eraseIndex > size())
+      throw "atl::vector::erase Out of Bounds Exception"; 
+    const T output = at(eraseIndex);
+    const int vect_size = size();
+    const int vect_capacity = capacity();
+
+    /* Backup existing elements. */
+    T *tempBuffer = new T[vect_size];
+    for (int idx = 0; idx < vect_size; ++idx)
+      tempBuffer[idx] = elements[idx];
+
+    deallocate();
+    allocate(vect_capacity - 1);
+    for (int idx = 0; idx < vect_size; ++idx)
+      if (idx != eraseIndex)
+        push_back(tempBuffer[idx]);
+
+    return output;
+  }
+
   void push_back(const T &elem) {
-    if (!initialised) {
-      allocate(1);
-      initialised = true;
-    }
-    if (elements_used >= elements_size)
-      extend(1);
+    if (capacity() == 0)
+      reserve(1);
+    
+    if (size() >= capacity())
+      reserve(1 + capacity());
 
     elements[elements_used] = elem;
     ++elements_used;
   }
 
-  T pop_back() {}
+  T pop_back() {
+    --elements_used;
+    return erase(elements_used);
+  }
 
-  void reserve(const int size) {
-    if (size <= elements_size)
+  void reserve(const int reserveSize) {
+    /* Already have requested space. */
+    if (reserveSize <= elements_size)
       return;
-    if (initialised) {
+
+    /* Buffer not allocated. */
+    else if (elements_size <= 0) {
+      elements_size = reserveSize;
+      elements = new T[elements_size];
     }
-    allocate(size);
+
+    /* Buffer already allocated. */
+    else if (elements_size > 0) {
+      /* Backup existing elements. */
+      const int tempBufferLen = elements_size;
+      T *tempBuffer = new T[tempBufferLen];
+      for (int idx = 0; idx < elements_size; ++idx)
+        tempBuffer[idx] = elements[idx];
+
+      deallocate();
+      elements_size = reserveSize;
+      elements = new T[elements_size];
+      for (int idx = 0; idx < tempBufferLen; ++idx)
+        push_back(tempBuffer[idx]);
+    }
   }
 
   int size() const { return elements_used; }
 
 private:
-  int elements_size;
-  int elements_used;
-  bool initialised;
+  int elements_size = 0;
+  int elements_used = 0;
   T *elements;
+
+  void allocate(const int num_elems) {
+    elements_size = num_elems;
+    elements = new T[elements_size];
+  }
+
+  void deallocate() {
+    if (elements_size > 0)
+      delete[] elements;
+    elements_size = 0;
+    elements_used = 0;}
 
   /* Extend the size of elements[] by num_elems. */
   void extend(const int num_elems) {
-    /* Store the current state of the vector. */
-    const int temp_elements_size = elements_size;
-    const int temp_elements_used = elements_used;
-    T *temp_elements = new T[elements_size];
-    for (int i = 0; i < elements_size; ++i)
-      temp_elements[i] = elements[i];
-
-    /* Clear the vector state. */
-    delete[] elements;
-    elements_used = 0;
-
-    /* Re-initialise the state of the vector using the extension. */
-    allocate(temp_elements_size + num_elems);
-    for (elements_used = 0; elements_used < temp_elements_size; ++elements_used)
-      elements[elements_used] = temp_elements[elements_used];
+    const int new_capacity = capacity() + num_elems;
+    reserve(new_capacity);
   }
 
-  /* Allocate a new array of size num_elems. Set elements_size. */
-  void allocate(const int num_elems) {
-    elements = new T[num_elems];
-    elements_size = num_elems;
+  void print() const {
+    for (int idx = 0; idx < size(); ++idx)
+      std::cout << at(idx) << std::endl;
   }
 };
 

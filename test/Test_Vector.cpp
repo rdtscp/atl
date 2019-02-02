@@ -98,6 +98,17 @@ TEST(VectorTest, CopyConstructor) {
   ASSERT_EQ(stdVect[1], stdVect2[1]);
 }
 
+TEST(VectorTest, Erase) {
+  atl::vector<int> atlVect;
+  atlVect.push_back(0);
+  atlVect.push_back(1);
+  atlVect.push_back(2);
+  ASSERT_EQ(1, atlVect.erase(1));
+  ASSERT_EQ(atlVect.at(0), 0);
+  ASSERT_EQ(atlVect.at(1), 2);
+  ASSERT_EQ(atlVect.size(), 2);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
