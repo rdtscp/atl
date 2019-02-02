@@ -169,6 +169,57 @@ TEST(StringTest, BeginEnd) {
   ASSERT_EQ(it_begin, it_end);
 }
 
+TEST(StringTest, IsSpace) {
+  ASSERT_TRUE(atl::is_space(' '));
+  ASSERT_TRUE(atl::is_space('\n'));
+  ASSERT_TRUE(atl::is_space('\r'));
+  ASSERT_TRUE(atl::is_space('\t'));
+  ASSERT_FALSE(atl::is_space('!'));
+  ASSERT_FALSE(atl::is_space('a'));
+  ASSERT_FALSE(atl::is_space('A'));
+  ASSERT_FALSE(atl::is_space('1'));
+  ASSERT_FALSE(atl::is_space('9'));
+  ASSERT_FALSE(atl::is_space('0'));
+  ASSERT_FALSE(atl::is_space('\\'));
+  ASSERT_FALSE(atl::is_space('_'));
+  ASSERT_FALSE(atl::is_space('Z'));
+  ASSERT_FALSE(atl::is_space('z'));
+}
+
+TEST(StringTest, IsDigit) {
+  ASSERT_FALSE(atl::isdigit(' '));
+  ASSERT_FALSE(atl::isdigit('\n'));
+  ASSERT_FALSE(atl::isdigit('\r'));
+  ASSERT_FALSE(atl::isdigit('\t'));
+  ASSERT_FALSE(atl::isdigit('!'));
+  ASSERT_FALSE(atl::isdigit('a'));
+  ASSERT_FALSE(atl::isdigit('A'));
+  ASSERT_TRUE(atl::isdigit('1'));
+  ASSERT_TRUE(atl::isdigit('9'));
+  ASSERT_TRUE(atl::isdigit('0'));
+  ASSERT_FALSE(atl::isdigit('\\'));
+  ASSERT_FALSE(atl::isdigit('_'));
+  ASSERT_FALSE(atl::isdigit('Z'));
+  ASSERT_FALSE(atl::isdigit('z'));
+}
+
+TEST(StringTest, IsAlpha) {
+  ASSERT_FALSE(atl::isalpha(' '));
+  ASSERT_FALSE(atl::isalpha('\n'));
+  ASSERT_FALSE(atl::isalpha('\r'));
+  ASSERT_FALSE(atl::isalpha('\t'));
+  ASSERT_FALSE(atl::isalpha('!'));
+  ASSERT_TRUE(atl::isalpha('a'));
+  ASSERT_TRUE(atl::isalpha('A'));
+  ASSERT_FALSE(atl::isalpha('1'));
+  ASSERT_FALSE(atl::isalpha('9'));
+  ASSERT_FALSE(atl::isalpha('0'));
+  ASSERT_FALSE(atl::isalpha('\\'));
+  ASSERT_FALSE(atl::isalpha('_'));
+  ASSERT_TRUE(atl::isalpha('Z'));
+  ASSERT_TRUE(atl::isalpha('z'));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

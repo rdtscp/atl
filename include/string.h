@@ -421,6 +421,16 @@ private:
   }
 };
 
+static bool is_space(const char c) {
+  return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
+}
+
+static bool isalpha(const char c) {
+  return ((('a' <= (c)) && ((c) <= 'z')) || (('A' <= (c)) && ((c) <= 'Z')));
+}
+
+static bool isdigit(const char c) { return (c >= (int)'0' && c <= (int)'9'); }
+
 /* https://www.geeksforgeeks.org/implement-itoa/ */
 static string to_string(int num) {
   int i = 0;
