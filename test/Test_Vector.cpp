@@ -10,6 +10,12 @@ TEST(VectorTest, DefaultConstruction) {
   ASSERT_EQ(atlVect.size(), stdVect.size());
 }
 
+TEST(VectorTest, ListConstruction) {
+  atl::vector<int> atlVect = { 1, 2, 3, 4 };
+  std::vector<int> stdVect = { 1, 2, 3, 4 };
+  ASSERT_EQ(atlVect.size(), stdVect.size());
+}
+
 TEST(VectorTest, SizeConstruction) {
   atl::vector<int> atlVect(5);
   std::vector<int> stdVect(5);

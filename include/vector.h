@@ -13,6 +13,13 @@ public:
   /* Default Constructor */
   vector<T>() {}
 
+  /* Initializer-List Constructor */
+  vector<T>(std::initializer_list<T> list) {
+    reserve(list.size());
+    for (const T &item : list)
+      push_back(item);
+  }
+
   /* Size Constructor */
   vector<T>(const int size) {
     allocate(size);
@@ -93,7 +100,7 @@ public:
 
   T erase(const int eraseIndex) {
     if (eraseIndex > size())
-      throw "atl::vector::erase Out of Bounds Exception"; 
+      throw "atl::vector::erase Out of Bounds Exception";
     const T output = at(eraseIndex);
     const int vect_size = size();
     const int vect_capacity = capacity();
@@ -115,7 +122,7 @@ public:
   void push_back(const T &elem) {
     if (capacity() == 0)
       reserve(1);
-    
+
     if (size() >= capacity())
       reserve(1 + capacity());
 
@@ -171,7 +178,8 @@ private:
     if (elements_size > 0)
       delete[] elements;
     elements_size = 0;
-    elements_used = 0;}
+    elements_used = 0;
+  }
 
   /* Extend the size of elements[] by num_elems. */
   void extend(const int num_elems) {
