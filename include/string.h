@@ -421,7 +421,7 @@ private:
   }
 };
 
-static bool is_space(const char c) {
+static bool isspace(const char c) {
   return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
 }
 
