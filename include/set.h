@@ -33,11 +33,10 @@ public:
   /* Move Constructor */
   set<T>(const set<T> &&rhs) {
     if (this == &rhs)
-      return *this;
+      return;
     allocate(rhs.capacity());
     for (int i = 0; i < rhs.elements_used; ++i)
       push_back(rhs[i]);
-    return *this;
   }
 
   /* Move-Assignment Operator */
