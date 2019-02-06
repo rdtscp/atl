@@ -104,9 +104,9 @@ public:
 
   T &operator*() const { return *ptr; }
 
-  bool operator==(const shared_ptr<T> &rhs) { return ptr == rhs.ptr; }
+  bool operator==(const shared_ptr<T> &rhs) const { return ptr == rhs.ptr; }
 
-  bool operator!=(const shared_ptr<T> &rhs) { return ptr != rhs.ptr; }
+  bool operator!=(const shared_ptr<T> &rhs) const { return ptr != rhs.ptr; }
 
   T *get() const { return ptr; }
 
