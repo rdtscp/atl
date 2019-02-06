@@ -54,6 +54,29 @@ TEST(SharedPtrTest, MakeShared) {
   ASSERT_TRUE(atlSP == atlMSP);
 }
 
+TEST(SharedPtrTest, SharedFromThis) {
+  class TestInt : public atl::enable_shared_from_this<TestInt> {
+  public:
+    int val;
+    TestInt(const int val) : val(val) {}
+    atl::shared_ptr<TestInt> get_ptr() { return shared_from_this(); }
+  };
+
+  TestInt myTestInt(5);
+
+  atl::shared_ptr<TestInt> myTestIntPtr1(&myTestInt);
+  atl::shared_ptr<TestInt> myTestIntPtr2 = myTestInt.get_ptr();
+
+  ASSERT_TRUE(myTestIntPtr1 == myTestIntPtr2);
+
+  atl::shared_ptr<TestInt> myTestIntPtr3(myTestIntPtr1);
+  atl::shared_ptr<TestInt> myTestIntPtr4(myTestIntPtr2);
+  atl::shared_ptr<TestInt> myTestIntPtr5 = myTestInt.get_ptr();
+
+  ASSERT_TRUE(myTestIntPtr3 == myTestIntPtr4);
+  ASSERT_TRUE(myTestIntPtr4 == myTestIntPtr5);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_SharedPtr : public ::testing::Test {
 protected:

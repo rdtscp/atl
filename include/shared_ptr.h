@@ -5,14 +5,35 @@
 
 namespace atl {
 
+template <typename T> class shared_ptr;
+
+template <typename T> class enable_shared_from_this {
+protected:
+  enable_shared_from_this() {}
+  enable_shared_from_this(enable_shared_from_this const &) {}
+  enable_shared_from_this &operator=(enable_shared_from_this const &) {
+    return *this;
+  }
+
+public:
+  shared_ptr<T> shared_from_this() { return self_; }
+  shared_ptr<T const> shared_from_this() const { return self_; }
+
+  shared_ptr<T> self_;
+};
+
 template <typename T> class shared_ptr {
 
 public:
   /* Constructor */
-  shared_ptr<T>() : refCount(nullptr), ptr(nullptr) {}
+  shared_ptr<T>() : refCount(nullptr), ptr(nullptr) {
+    initialiseSharedFromThis(ptr);
+  }
 
   /* Constructor */
-  shared_ptr<T>(T *ptr) : refCount(new int(1)), ptr(ptr) {}
+  shared_ptr<T>(T *ptr) : refCount(new int(1)), ptr(ptr) {
+    initialiseSharedFromThis(ptr);
+  }
 
   /* Copy Constructor */
   shared_ptr<T>(const shared_ptr<T> &rhs) {
@@ -99,6 +120,14 @@ public:
 private:
   int *refCount;
   T *ptr;
+
+  void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
+    obj->self_ = *this;
+  }
+
+  void initialiseSharedFromThis(void *obj) {
+    /* Not an enable_shared_from_this object, nothing to construct. */
+  }
 };
 
 template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
