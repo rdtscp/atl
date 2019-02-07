@@ -6,6 +6,8 @@
 namespace atl {
 
 template <typename T> class shared_ptr;
+template <typename TO, typename FROM>
+static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
 
 template <typename T> class enable_shared_from_this {
 protected:
@@ -35,6 +37,11 @@ public:
     initialiseSharedFromThis(ptr);
   }
 
+  /* Constructor */
+  template <typename B> shared_ptr<T>(const shared_ptr<B> &rhs) {
+    *this = static_pointer_cast<T>(rhs);
+  }
+
   /* Copy Constructor */
   shared_ptr<T>(const shared_ptr<T> &rhs) {
     if (&rhs == this)
@@ -62,6 +69,12 @@ public:
     return *this;
   }
 
+  /* Assignment Operator */
+  template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &rhs) {
+    *this = static_pointer_cast<T>(rhs);
+    return *this;
+  }
+
   /* Move Constructor */
   shared_ptr<T>(const shared_ptr<T> &&rhs) {
     if (&rhs == this)
@@ -86,6 +99,12 @@ public:
     ptr = rhs.ptr;
     refCount = rhs.refCount;
     // *refCount = *refCount + 1;
+    return *this;
+  }
+
+  /* Move-Assignment Operator */
+  template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &&rhs) {
+    *this = static_pointer_cast<T>(rhs);
     return *this;
   }
 

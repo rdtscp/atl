@@ -77,7 +77,7 @@ TEST(SharedPtrTest, SharedFromThis) {
   ASSERT_TRUE(myTestIntPtr4 == myTestIntPtr5);
 }
 
-TEST(SharedPtrTest, StaticPointerCase) {
+TEST(SharedPtrTest, StaticPointerCast) {
   class Base {
   public:
     int val() { return 0; }
@@ -95,6 +95,23 @@ TEST(SharedPtrTest, StaticPointerCase) {
   atl::shared_ptr<Derived> spDerivedDerived =
       atl::static_pointer_cast<Derived>(spBaseDerived);
   ASSERT_EQ(1, spDerivedDerived->val());
+}
+
+TEST(SharedPtrTest, SharedPtrInheritence) {
+  class Base {
+  public:
+    virtual int val() { return 0; }
+  };
+  class Derived : public Base {
+  public:
+    int val() override { return 1; }
+  };
+
+  atl::shared_ptr<Derived> spDerived(new Derived());
+
+  atl::shared_ptr<Base> spBase(spDerived);
+
+  ASSERT_EQ(spDerived->val(), spBase->val());
 }
 
 // The fixture for testing class Project1. From google test primer.
