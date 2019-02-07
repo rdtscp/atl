@@ -149,6 +149,10 @@ private:
   }
 };
 
+template <typename T> static shared_ptr<T> make_shared() {
+  return shared_ptr<T>(new T());
+}
+
 template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
   return shared_ptr<T>(new T(obj));
 }

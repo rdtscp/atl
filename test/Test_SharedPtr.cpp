@@ -52,6 +52,8 @@ TEST(SharedPtrTest, MakeShared) {
   ASSERT_FALSE(atlMSP == atlMSP2);
   atl::shared_ptr<int> atlSP(atlMSP);
   ASSERT_TRUE(atlSP == atlMSP);
+  atl::shared_ptr<int> atlMSP3 = atl::make_shared<int>();
+  ASSERT_TRUE(0 == *atlMSP3);
 }
 
 TEST(SharedPtrTest, SharedFromThis) {
