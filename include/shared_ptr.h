@@ -112,7 +112,7 @@ public:
   ~shared_ptr<T>() {
     if (refCount == nullptr)
       return;
-    else if (*refCount == 0) {
+    else if (refCount != nullptr && *refCount == 0) {
       delete refCount;
       delete ptr;
     } else
