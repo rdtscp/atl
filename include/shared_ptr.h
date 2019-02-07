@@ -12,7 +12,7 @@ static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
 template <typename T> class enable_shared_from_this {
 protected:
   enable_shared_from_this() {}
-  enable_shared_from_this(enable_shared_from_this const &ptr) { self_(ptr); }
+  enable_shared_from_this(enable_shared_from_this const &ptr) {}
   enable_shared_from_this &operator=(enable_shared_from_this const &) {
     return *this;
   }
