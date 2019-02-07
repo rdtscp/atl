@@ -134,6 +134,11 @@ template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
   return shared_ptr<T>(new T(obj));
 }
 
+template <typename TO, typename FROM>
+static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
+  return shared_ptr<TO>(static_cast<TO *>(ptr.get()));
+}
+
 } // namespace atl
 
 #endif
