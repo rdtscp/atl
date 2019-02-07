@@ -28,7 +28,7 @@ template <typename T> class shared_ptr {
 
 public:
   /* Constructor */
-  shared_ptr<T>() : refCount(nullptr), ptr(nullptr) {
+  shared_ptr<T>() : refCount(new int(0)), ptr(nullptr) {
     // initialiseSharedFromThis(ptr);
   }
 
