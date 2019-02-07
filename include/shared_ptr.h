@@ -127,6 +127,8 @@ public:
 
   bool operator!=(const shared_ptr<T> &rhs) const { return ptr != rhs.ptr; }
 
+  operator bool() const { return ptr; }
+
   T *get() const { return ptr; }
 
   int use_count() const {

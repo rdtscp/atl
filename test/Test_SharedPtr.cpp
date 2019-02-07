@@ -116,6 +116,19 @@ TEST(SharedPtrTest, SharedPtrInheritence) {
   ASSERT_EQ(spDerived->val(), spBase->val());
 }
 
+TEST(SharedPtrTest, OperatorBool) {
+  atl::shared_ptr<int> nullPtr;
+  atl::shared_ptr<int> intPtr(new int(5));
+
+  if (nullPtr) {
+    ASSERT_TRUE(false);
+  } else if (intPtr) {
+    ASSERT_TRUE(true);
+  } else {
+    ASSERT_TRUE(false);
+  }
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_SharedPtr : public ::testing::Test {
 protected:
