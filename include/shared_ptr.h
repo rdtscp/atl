@@ -28,9 +28,7 @@ template <typename T> class shared_ptr {
 
 public:
   /* Constructor */
-  shared_ptr<T>() : refCount(new int(0)), ptr(nullptr) {
-    initialiseSharedFromThis(ptr);
-  }
+  shared_ptr<T>() : refCount(new int(0)), ptr(nullptr) {}
 
   /* Constructor */
   shared_ptr<T>(T *ptr) : refCount(new int(1)), ptr(ptr) {
@@ -40,7 +38,6 @@ public:
   /* Constructor */
   template <typename B> shared_ptr<T>(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
-    initialiseSharedFromThis(ptr);
   }
 
   /* Copy Constructor */
@@ -54,7 +51,6 @@ public:
     ptr = rhs.ptr;
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
-    initialiseSharedFromThis(ptr);
   }
 
   /* Assignment Operator */
@@ -68,15 +64,12 @@ public:
     ptr = rhs.ptr;
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
-    initialiseSharedFromThis(ptr);
     return *this;
   }
 
   /* Assignment Operator */
   template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
-    initialiseSharedFromThis(ptr);
-
     return *this;
   }
 
@@ -90,8 +83,6 @@ public:
 
     ptr = rhs.ptr;
     refCount = rhs.refCount;
-    initialiseSharedFromThis(ptr);
-
     // *refCount = *refCount + 1;
   }
 
@@ -106,16 +97,12 @@ public:
     ptr = rhs.ptr;
     refCount = rhs.refCount;
     // *refCount = *refCount + 1;
-    initialiseSharedFromThis(ptr);
-
     return *this;
   }
 
   /* Move-Assignment Operator */
   template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &&rhs) {
     *this = static_pointer_cast<T>(rhs);
-    initialiseSharedFromThis(ptr);
-
     return *this;
   }
 
