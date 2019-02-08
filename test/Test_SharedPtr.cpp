@@ -116,6 +116,31 @@ TEST(SharedPtrTest, SharedPtrInheritence) {
   ASSERT_EQ(spDerived->val(), spBase->val());
 }
 
+class TestInt : public atl::enable_shared_from_this<TestInt> {
+public:
+  int val;
+  TestInt(const int val) : val(val) {}
+  atl::shared_ptr<TestInt> get_ptr() { return shared_from_this(); }
+};
+
+atl::shared_ptr<TestInt> getTestIntSP2() {
+  return atl::make_shared<TestInt>(TestInt(5));
+}
+
+atl::shared_ptr<TestInt> getTestIntSP() { return getTestIntSP2(); }
+TestInt getTestInt() { return TestInt(5); }
+
+TEST(SharedPtrTest, SharedFromThisCopyConstructor) {
+  atl::shared_ptr<TestInt> myTestIntPtr1 = getTestIntSP();
+  atl::shared_ptr<TestInt> myTestIntPtr2 = myTestIntPtr1;
+  atl::shared_ptr<TestInt> myTestIntPtr3 =
+      atl::make_shared<TestInt>(getTestInt());
+
+  ASSERT_TRUE(myTestIntPtr1 == myTestIntPtr2);
+  ASSERT_TRUE(5 == myTestIntPtr2->val);
+  ASSERT_TRUE(5 == myTestIntPtr3->val);
+}
+
 TEST(SharedPtrTest, OperatorBool) {
   atl::shared_ptr<int> nullPtr;
   atl::shared_ptr<int> intPtr(new int(5));
