@@ -70,6 +70,7 @@ public:
   /* Assignment Operator */
   template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
+    *refCount = *refCount + 1;
     return *this;
   }
 
