@@ -3,6 +3,8 @@
 #include "../include/shared_ptr.h"
 #include <memory>
 
+/* STL Behaviour */
+
 TEST(SharedPtrTest, DefaultConstruction) {
   atl::shared_ptr<int> atlSP;
   std::shared_ptr<int> stdSP;
@@ -46,57 +48,146 @@ TEST(SharedPtrTest, Equality) {
   ASSERT_FALSE(stdSP != stdSP2);
 }
 
-TEST(SharedPtrTest, MakeShared) {
-  atl::shared_ptr<int> atlMSP = atl::make_shared<int>(5);
-  atl::shared_ptr<int> atlMSP2 = atl::make_shared<int>(5);
-  ASSERT_FALSE(atlMSP == atlMSP2);
-  atl::shared_ptr<int> atlSP(atlMSP);
-  ASSERT_TRUE(atlSP == atlMSP);
-  atl::shared_ptr<int> atlMSP3 = atl::make_shared<int>();
-  ASSERT_TRUE(0 == *atlMSP3);
-}
-
-TEST(SharedPtrTest, SharedFromThis) {
-  class TestInt : public atl::enable_shared_from_this<TestInt> {
+TEST(SharedPtrTest, ClassInheritance) {
+  class Base {
   public:
-    int val;
-    TestInt(const int val) : val(val) {}
-    atl::shared_ptr<TestInt> get_ptr() { return shared_from_this(); }
+    int b_val;
+    Base(const int val) : b_val(val + 1) {}
+    virtual ~Base() {}
+  };
+  class Derived : public Base {
+  public:
+    int d_val;
+    Derived(const int val) : Base(val), d_val(val) {}
   };
 
-  TestInt myTestInt(5);
+  Derived *derivedPtr = new Derived(0);
+  atl::shared_ptr<Derived> atlSP(derivedPtr);
+  ASSERT_TRUE(atlSP->d_val == 0);
+  ASSERT_TRUE(atlSP->b_val == 1);
 
-  atl::shared_ptr<TestInt> myTestIntPtr1(&myTestInt);
-  atl::shared_ptr<TestInt> myTestIntPtr2 = myTestInt.get_ptr();
+  atl::shared_ptr<Base> atlSP2(derivedPtr);
+  ASSERT_TRUE(atlSP2->b_val == 1);
 
-  ASSERT_TRUE(myTestIntPtr1 == myTestIntPtr2);
+  atl::shared_ptr<Base> atlSP3 = atlSP;
+  ASSERT_TRUE(atlSP3->b_val == 1);
+}
 
-  atl::shared_ptr<TestInt> myTestIntPtr3(myTestIntPtr1);
-  atl::shared_ptr<TestInt> myTestIntPtr4(myTestIntPtr2);
-  atl::shared_ptr<TestInt> myTestIntPtr5 = myTestInt.get_ptr();
+/* Static Function Tests */
 
-  ASSERT_TRUE(myTestIntPtr3 == myTestIntPtr4);
-  ASSERT_TRUE(myTestIntPtr4 == myTestIntPtr5);
+TEST(SharedPtrTest, MakeSharedDefault) {
+  atl::shared_ptr<int> atlMSP = atl::make_shared<int>();
+  ASSERT_TRUE(atlMSP.get() != nullptr);
+  ASSERT_TRUE(*atlMSP == 0);
+}
+
+TEST(SharedPtrTest, MakeSharedRVAL) {
+  atl::shared_ptr<int> atlMSP = atl::make_shared<int>(5);
+  ASSERT_TRUE(atlMSP.get() != nullptr);
+  ASSERT_TRUE(*atlMSP == 5);
+}
+
+// TEST(SharedPtrTest, )
+
+/* Pointer Construction Tests */
+
+TEST(SharedPtrTest, Class) {
+  class Base {
+  public:
+    int b_val;
+    Base(const int val) : b_val(val + 1) {}
+  };
+
+  Base *classPtr = new Base(0);
+  atl::shared_ptr<Base> atlSP(classPtr);
+  ASSERT_TRUE(atlSP->b_val == 1);
+
+  atl::shared_ptr<Base> atlSP2(classPtr);
+  ASSERT_TRUE(atlSP2->b_val == 1);
+
+  atl::shared_ptr<Base> atlSP3 = atlSP;
+  ASSERT_TRUE(atlSP3->b_val == 1);
+}
+
+/* MakeShared Construction Tests */
+
+TEST(SharedPtrTest, MakeSharedClass) {
+  class Base {
+  public:
+    int b_val;
+    Base(const int val) : b_val(val + 1) {}
+  };
+
+  atl::shared_ptr<Base> atlSP = atl::make_shared<Base>(Base(0));
+  ASSERT_TRUE(atlSP->b_val == 1);
+}
+
+TEST(SharedPtrTest, MakeSharedClassInheritance) {
+  class Base {
+  public:
+    int b_val;
+    Base(const int val) : b_val(val + 1) {}
+    virtual ~Base() {}
+  };
+  class Derived : public Base {
+  public:
+    int d_val;
+    Derived(const int val) : Base(val), d_val(val) {}
+  };
+
+  atl::shared_ptr<Derived> atlSP = atl::make_shared<Derived>(Derived(0));
+  ASSERT_TRUE(atlSP->d_val == 0);
+  ASSERT_TRUE(atlSP->b_val == 1);
+}
+
+/* SharedFromThis Tests */
+
+TEST(SharedPtrTest, SharedFromThis) {
+  class Base : public atl::enable_shared_from_this<Base> {
+  public:
+    int b_val;
+    Base(const int val) : b_val(val) {}
+    atl::shared_ptr<Base> get_ptr() { return shared_from_this(); }
+  };
+
+  Base testClass(5);
+
+  atl::shared_ptr<Base> testClassPtr1(&testClass);
+  atl::shared_ptr<Base> testClassPtr2 = testClass.get_ptr();
+
+  ASSERT_TRUE(testClassPtr1 == testClassPtr2);
+
+  atl::shared_ptr<Base> testClassPtr3(testClassPtr1);
+  atl::shared_ptr<Base> testClassPtr4(testClassPtr2);
+  atl::shared_ptr<Base> testClassPtr5 = testClass.get_ptr();
+
+  ASSERT_TRUE(testClassPtr3 == testClassPtr4);
+  ASSERT_TRUE(testClassPtr4 == testClassPtr5);
 }
 
 TEST(SharedPtrTest, StaticPointerCast) {
   class Base {
   public:
-    int val() { return 0; }
+    int b_val;
+    Base(const int val) : b_val(val + 1) {}
+    virtual ~Base() {}
   };
   class Derived : public Base {
   public:
-    int val() { return 1; }
+    int d_val;
+    Derived(const int val) : Base(val), d_val(val) {}
   };
 
-  atl::shared_ptr<Base> spBaseBase(new Base());
-  ASSERT_EQ(0, spBaseBase->val());
-  atl::shared_ptr<Base> spBaseDerived(new Derived());
-  ASSERT_EQ(0, spBaseDerived->val());
+  atl::shared_ptr<Base> spBaseBase(new Base(0));
+  ASSERT_EQ(1, spBaseBase->b_val);
+  atl::shared_ptr<Base> spBaseDerived(new Derived(0));
+  ASSERT_EQ(1, spBaseDerived->b_val);
 
   atl::shared_ptr<Derived> spDerivedDerived =
       atl::static_pointer_cast<Derived>(spBaseDerived);
-  ASSERT_EQ(1, spDerivedDerived->val());
+
+  ASSERT_EQ(0, spDerivedDerived->d_val);
+  ASSERT_EQ(1, spDerivedDerived->b_val);
 }
 
 TEST(SharedPtrTest, SharedPtrInheritence) {
@@ -139,6 +230,36 @@ TEST(SharedPtrTest, SharedFromThisCopyConstructor) {
   ASSERT_TRUE(myTestIntPtr1 == myTestIntPtr2);
   ASSERT_TRUE(5 == myTestIntPtr2->val);
   ASSERT_TRUE(5 == myTestIntPtr3->val);
+}
+
+class Base {
+public:
+  virtual ~Base() {}
+};
+
+class Derived : public Base, public atl::enable_shared_from_this<Base> {
+public:
+  atl::shared_ptr<Derived> getptr() { return shared_from_this(); }
+};
+
+atl::shared_ptr<Derived> getDerivedBaseImpl() {
+  atl::shared_ptr<Derived> output = atl::make_shared<Derived>(Derived());
+  return output;
+}
+atl::shared_ptr<Base> getDerivedBase() {
+  atl::shared_ptr<Derived> temp = getDerivedBaseImpl();
+  atl::shared_ptr<Base> output = getDerivedBaseImpl();
+  return output;
+}
+
+atl::shared_ptr<Base> getBasePoly() {
+  atl::shared_ptr<Base> output;
+  output = getDerivedBase();
+  return output;
+}
+
+TEST(SharedPtrTest, TBDTest) {
+  atl::shared_ptr<Base> derivedPtr = getBasePoly();
 }
 
 TEST(SharedPtrTest, OperatorBool) {

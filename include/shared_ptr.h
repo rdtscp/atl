@@ -70,42 +70,41 @@ public:
   /* Assignment Operator */
   template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
-    *refCount = *refCount + 1;
     return *this;
   }
 
-  /* Move Constructor */
-  shared_ptr<T>(const shared_ptr<T> &&rhs) {
-    if (&rhs == this)
-      return;
+  // /* Move Constructor */
+  // shared_ptr<T>(const shared_ptr<T> &&rhs) {
+  //   if (&rhs == this)
+  //     return;
 
-    if (rhs.ptr == nullptr || rhs.refCount == nullptr)
-      return;
+  //   if (rhs.ptr == nullptr || rhs.refCount == nullptr)
+  //     return;
 
-    ptr = rhs.ptr;
-    refCount = rhs.refCount;
-    // *refCount = *refCount + 1;
-  }
+  //   ptr = rhs.ptr;
+  //   refCount = rhs.refCount;
+  //   // *refCount = *refCount + 1;
+  // }
 
-  /* Move-Assignment Operator */
-  shared_ptr<T> &operator=(const shared_ptr<T> &&rhs) {
-    if (&rhs == this)
-      return *this;
+  // /* Move-Assignment Operator */
+  // shared_ptr<T> &operator=(const shared_ptr<T> &&rhs) {
+  //   if (&rhs == this)
+  //     return *this;
 
-    if (rhs.ptr == nullptr || rhs.refCount == nullptr)
-      return *this;
+  //   if (rhs.ptr == nullptr || rhs.refCount == nullptr)
+  //     return *this;
 
-    ptr = rhs.ptr;
-    refCount = rhs.refCount;
-    // *refCount = *refCount + 1;
-    return *this;
-  }
+  //   ptr = rhs.ptr;
+  //   refCount = rhs.refCount;
+  //   // *refCount = *refCount + 1;
+  //   return *this;
+  // }
 
-  /* Move-Assignment Operator */
-  template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &&rhs) {
-    *this = static_pointer_cast<T>(rhs);
-    return *this;
-  }
+  // /* Move-Assignment Operator */
+  // template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &&rhs) {
+  //   *this = static_pointer_cast<T>(rhs);
+  //   return *this;
+  // }
 
   /* Destructor */
   ~shared_ptr<T>() {
@@ -162,7 +161,8 @@ template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
 
 template <typename TO, typename FROM>
 static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
-  return shared_ptr<TO>(static_cast<TO *>(ptr.get()));
+  TO *outputPtr = static_cast<TO *>(ptr.get());
+  return shared_ptr<TO>(outputPtr);
 }
 
 } // namespace atl
