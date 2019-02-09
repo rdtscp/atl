@@ -127,6 +127,8 @@ public:
 
   bool operator!=(const shared_ptr<T> &rhs) const { return ptr != rhs.ptr; }
 
+  bool operator<(const shared_ptr<T> &rhs) const { return get() < rhs.get(); }
+
   operator bool() const { return ptr; }
 
   T *get() const { return ptr; }
