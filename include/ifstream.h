@@ -44,7 +44,6 @@ public:
         break;
       }
       currChar = (char)nextCharInt;
-      printf("\n%c", currChar);
       output = output + currChar;
     }
     return output;
