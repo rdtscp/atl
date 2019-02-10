@@ -139,7 +139,8 @@ private:
   T *ptr;
 
   void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
-    obj->self_ = *this;
+    if (obj != nullptr)
+      obj->self_ = *this;
   }
 
   void initialiseSharedFromThis(void *obj) {

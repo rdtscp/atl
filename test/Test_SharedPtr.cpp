@@ -11,6 +11,13 @@ TEST(SharedPtrTest, DefaultConstruction) {
   ASSERT_EQ(atlSP.get(), stdSP.get());
 }
 
+TEST(SharedPtrTest, NullPtr) {
+  class Base : public atl::enable_shared_from_this<Base> {};
+  atl::shared_ptr<Base> atlNullSP(nullptr);
+  atl::shared_ptr<Base> atlNullSP2;
+  atlNullSP2 = atlNullSP;
+}
+
 TEST(SharedPtrTest, PtrConstruction) {
   int *myInt = new int(5);
   atl::shared_ptr<int> atlSP(myInt);
@@ -86,8 +93,6 @@ TEST(SharedPtrTest, MakeSharedRVAL) {
   ASSERT_TRUE(atlMSP.get() != nullptr);
   ASSERT_TRUE(*atlMSP == 5);
 }
-
-// TEST(SharedPtrTest, )
 
 /* Pointer Construction Tests */
 
