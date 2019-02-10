@@ -45,10 +45,10 @@ public:
     if (&rhs == this)
       return;
 
-    if (rhs.ptr == nullptr || rhs.refCount == nullptr)
+    ptr = rhs.ptr;
+    if (ptr == nullptr)
       return;
 
-    ptr = rhs.ptr;
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
   }
@@ -58,10 +58,10 @@ public:
     if (&rhs == this)
       return *this;
 
-    if (rhs.ptr == nullptr || rhs.refCount == nullptr)
+    ptr = rhs.ptr;
+    if (ptr == nullptr)
       return *this;
 
-    ptr = rhs.ptr;
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
     return *this;
@@ -125,7 +125,7 @@ public:
 
   bool operator==(const shared_ptr<T> &rhs) const { return ptr == rhs.ptr; }
 
-  bool operator!=(const shared_ptr<T> &rhs) const { return !(*this == rhs);}
+  bool operator!=(const shared_ptr<T> &rhs) const { return !(*this == rhs); }
 
   bool operator<(const shared_ptr<T> &rhs) const { return get() < rhs.get(); }
 
