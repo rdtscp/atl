@@ -19,29 +19,32 @@ class ifstream {
 
 public:
   /* Constructor */
-  ifstream(const atl::string &filename) : filename(filename) {}
+  ifstream(const atl::string &filename) : filename(filename) {
+    filePtr = fopen(filename.c_str(), "r");
+  }
+
+  ~ifstream() { fclose(filePtr); }
 
   bool good() {
-    if (FILE *file = fopen(filename.c_str(), "r")) {
-      fclose(file);
+    if (filePtr)
       return true;
-    } else {
+    else
       return false;
-    }
   }
 
   atl::string readIntoString() {
-    FILE *filePtr = fopen(filename.c_str(), "r");
+    FILE *file_p = filePtr;
     atl::string output;
     char currChar;
     currChar = '0';
     while (true) {
-      int nextCharInt = getc(filePtr);
+      int nextCharInt = getc(file_p);
       if (nextCharInt == -1) {
         output = output + '\0';
         break;
       }
       currChar = (char)nextCharInt;
+      printf("\n%c", currChar);
       output = output + currChar;
     }
     return output;
@@ -49,6 +52,7 @@ public:
 
 private:
   const atl::string &filename;
+  FILE *filePtr;
 };
 
 } // namespace atl
