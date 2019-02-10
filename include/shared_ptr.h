@@ -46,9 +46,6 @@ public:
       return;
 
     ptr = rhs.ptr;
-    if (ptr == nullptr)
-      return;
-
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
   }
@@ -59,9 +56,6 @@ public:
       return *this;
 
     ptr = rhs.ptr;
-    if (ptr == nullptr)
-      return *this;
-
     refCount = rhs.refCount;
     *refCount = *refCount + 1;
     return *this;
