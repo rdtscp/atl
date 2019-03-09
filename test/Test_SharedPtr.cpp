@@ -215,7 +215,7 @@ TEST(SharedPtrTest, SharedPtrInheritence) {
 class TestInt : public atl::enable_shared_from_this<TestInt> {
 public:
   int val;
-  TestInt(const int val) : val(val) {}
+  explicit TestInt(const int val) : val(val) {}
   atl::shared_ptr<TestInt> get_ptr() { return shared_from_this(); }
 };
 
