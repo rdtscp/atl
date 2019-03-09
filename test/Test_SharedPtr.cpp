@@ -180,7 +180,7 @@ TEST(SharedPtrTest, StaticPointerCast) {
   class Derived : public Base {
   public:
     int d_val;
-    Derived(const int val) : Base(val), d_val(val) {}
+    explicit Derived(const int val) : Base(val), d_val(val) {}
   };
 
   atl::shared_ptr<Base> spBaseBase(new Base(0));
