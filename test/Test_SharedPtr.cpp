@@ -59,7 +59,7 @@ TEST(SharedPtrTest, ClassInheritance) {
   class Base {
   public:
     int b_val;
-    Base(const int val) : b_val(val + 1) {}
+    explicit Base(const int val) : b_val(val + 1) {}
     virtual ~Base() {}
   };
   class Derived : public Base {
@@ -100,7 +100,7 @@ TEST(SharedPtrTest, Class) {
   class Base {
   public:
     int b_val;
-    Base(const int val) : b_val(val + 1) {}
+    explicit Base(const int val) : b_val(val + 1) {}
   };
 
   Base *classPtr = new Base(0);
@@ -120,7 +120,7 @@ TEST(SharedPtrTest, MakeSharedClass) {
   class Base {
   public:
     int b_val;
-    Base(const int val) : b_val(val + 1) {}
+    explicit Base(const int val) : b_val(val + 1) {}
   };
 
   atl::shared_ptr<Base> atlSP = atl::make_shared<Base>(Base(0));
@@ -131,13 +131,13 @@ TEST(SharedPtrTest, MakeSharedClassInheritance) {
   class Base {
   public:
     int b_val;
-    Base(const int val) : b_val(val + 1) {}
+    explicit Base(const int val) : b_val(val + 1) {}
     virtual ~Base() {}
   };
   class Derived : public Base {
   public:
     int d_val;
-    Derived(const int val) : Base(val), d_val(val) {}
+    explicit Derived(const int val) : Base(val), d_val(val) {}
   };
 
   atl::shared_ptr<Derived> atlSP = atl::make_shared<Derived>(Derived(0));
@@ -151,7 +151,7 @@ TEST(SharedPtrTest, SharedFromThis) {
   class Base : public atl::enable_shared_from_this<Base> {
   public:
     int b_val;
-    Base(const int val) : b_val(val) {}
+    explicit Base(const int val) : b_val(val) {}
     atl::shared_ptr<Base> get_ptr() { return shared_from_this(); }
   };
 
@@ -174,7 +174,7 @@ TEST(SharedPtrTest, StaticPointerCast) {
   class Base {
   public:
     int b_val;
-    Base(const int val) : b_val(val + 1) {}
+    explicit Base(const int val) : b_val(val + 1) {}
     virtual ~Base() {}
   };
   class Derived : public Base {
