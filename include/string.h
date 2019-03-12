@@ -251,7 +251,8 @@ public:
     if (lhsSize > rhsSize)
       return false;
 
-    char currLhs, currRhs;
+    char currLhs;
+    char currRhs;
     for (int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
@@ -270,7 +271,8 @@ public:
     if (lhsSize > rhsSize)
       return true;
 
-    char currLhs, currRhs;
+    char currLhs;
+    char currRhs;
     for (int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
@@ -289,7 +291,8 @@ public:
     if (lhsSize > rhsSize)
       return false;
 
-    char currLhs, currRhs;
+    char currLhs;
+    char currRhs;
     for (int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
@@ -308,7 +311,8 @@ public:
     if (lhsSize > rhsSize)
       return true;
 
-    char currLhs, currRhs;
+    char currLhs;
+    char currRhs;
     for (int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
