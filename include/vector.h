@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_VECTOR_H
-#define ATL_VECTOR_H
-
 #include <iostream>
 
 namespace atl {
@@ -194,5 +191,3 @@ private:
 };
 
 } // namespace atl
-
-#endif

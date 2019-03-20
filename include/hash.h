@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_HASH_H
-#define ATL_HASH_H
-
 #include "string.h"
 
 namespace atl {
@@ -26,5 +23,3 @@ static int hash(const atl::string &s, const long max, const long prime = 163) {
 }
 
 } // namespace atl
-
-#endif

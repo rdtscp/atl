@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_STRING_H
-#define ATL_STRING_H
-
 namespace atl {
 
 class string {
@@ -327,7 +324,8 @@ public:
     if (length() != rhs.length())
       return false;
     const int str_len = length();
-    char lhsChar, rhsChar;
+    char lhsChar;
+    char rhsChar;
     for (int charIdx = 0; charIdx < str_len; ++charIdx) {
       lhsChar = at(charIdx);
       rhsChar = rhs.at(charIdx);
@@ -341,7 +339,8 @@ public:
     if (length() != charBufferLength(rhs))
       return false;
     const int str_len = length();
-    char lhsChar, rhsChar;
+    char lhsChar;
+    char rhsChar;
     for (int charIdx = 0; charIdx < str_len; ++charIdx) {
       lhsChar = at(charIdx);
       rhsChar = rhs[charIdx];
@@ -474,5 +473,3 @@ static string to_string(int num) {
 }
 
 } // namespace atl
-
-#endif

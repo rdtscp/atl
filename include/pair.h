@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_PAIR_H
-#define ATL_PAIR_H
-
 namespace atl {
 
 template <typename F, typename S> class pair {
@@ -56,5 +53,3 @@ public:
 };
 
 } // namespace atl
-
-#endif

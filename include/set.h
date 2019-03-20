@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_SET_H
-#define ATL_SET_H
-
 namespace atl {
 
 template <typename T> class set {
@@ -127,5 +124,3 @@ private:
 };
 
 } // namespace atl
-
-#endif

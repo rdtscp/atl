@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_SHARED_PTR_H
-#define ATL_SHARED_PTR_H
-
 namespace atl {
 
 template <typename T> class shared_ptr;
@@ -163,5 +160,3 @@ static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
 }
 
 } // namespace atl
-
-#endif

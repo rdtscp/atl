@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef ATL_IFSTREAM_H
-#define ATL_IFSTREAM_H
-
 #include "../include/string.h"
 
 #ifndef ACC_COMPILER
@@ -55,5 +52,3 @@ private:
 };
 
 } // namespace atl
-
-#endif
