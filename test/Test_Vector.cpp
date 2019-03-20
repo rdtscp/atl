@@ -11,8 +11,8 @@ TEST(VectorTest, DefaultConstruction) {
 }
 
 TEST(VectorTest, ListConstruction) {
-  atl::vector<int> atlVect = { 1, 2, 3, 4 };
-  std::vector<int> stdVect = { 1, 2, 3, 4 };
+  atl::vector<int> atlVect = {1, 2, 3, 4};
+  std::vector<int> stdVect = {1, 2, 3, 4};
   ASSERT_EQ(atlVect.size(), stdVect.size());
 }
 
@@ -48,6 +48,17 @@ TEST(VectorTest, PushBack) {
   ASSERT_TRUE(stdVect.capacity() >= 2);
   stdVect.push_back(7);
   atlVect.push_back(7);
+  ASSERT_TRUE(atlVect.capacity() >= 3);
+  ASSERT_TRUE(stdVect.capacity() >= 3);
+  ASSERT_EQ(atlVect.size(), stdVect.size());
+  ASSERT_EQ(atlVect[0], stdVect[0]);
+  ASSERT_EQ(atlVect.at(0), stdVect.at(0));
+  ASSERT_EQ(atlVect[1], stdVect[1]);
+  ASSERT_EQ(atlVect.at(1), stdVect.at(1));
+  ASSERT_TRUE(atlVect.capacity() >= 3);
+  ASSERT_TRUE(stdVect.capacity() >= 3);
+  stdVect[0] = 123;
+  atlVect[0] = 123;
   ASSERT_TRUE(atlVect.capacity() >= 3);
   ASSERT_TRUE(stdVect.capacity() >= 3);
   ASSERT_EQ(atlVect.size(), stdVect.size());
