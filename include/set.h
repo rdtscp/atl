@@ -13,6 +13,7 @@ public:
     if (this == &rhs)
       return;
     allocate(rhs.capacity());
+    elements_used = 0;
     for (int i = 0; i < rhs.elements_used; ++i)
       push_back(rhs[i]);
   }
@@ -22,6 +23,7 @@ public:
     if (this == &rhs)
       return *this;
     allocate(rhs.capacity());
+    elements_used = 0;
     for (int i = 0; i < rhs.size(); ++i)
       push_back(rhs[i]);
     return *this;
@@ -51,6 +53,22 @@ public:
     if (initialised)
       delete[] elements;
   }
+
+  bool operator==(const set<T> &rhs) const {
+    if (this == &rhs)
+      return true;
+
+    if (size() != rhs.size())
+      return false;
+
+    for (int i = 0; i < rhs.size(); ++i)
+      if (at(i) != rhs.at(i))
+        return false;
+
+    return true;
+  }
+
+  bool operator!=(const set<T> &rhs) const { return !(*this == rhs); }
 
   bool find(const T &elem) {
     for (int idx = 0; idx < size(); ++idx)

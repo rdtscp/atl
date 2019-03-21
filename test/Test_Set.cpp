@@ -49,6 +49,17 @@ TEST(SetTest, CopyConstructor) {
   ASSERT_TRUE(atlSet2.find(elem2));
 }
 
+TEST(SetTest, EqualOperator) {
+  atl::set<atl::string> atlSet;
+  atlSet.insert("elem1");
+  atlSet.insert("elem2");
+  atlSet.insert("elem3");
+  atl::set<atl::string> atlSet2 = atlSet;
+  ASSERT_EQ(atlSet, atlSet2);
+  atlSet2.insert("elem4");
+  ASSERT_NE(atlSet, atlSet2);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Set : public ::testing::Test {
 protected:
