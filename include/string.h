@@ -424,6 +424,10 @@ private:
   }
 };
 
+static string operator+(const char *lhs, const atl::string &rhs) {
+  return atl::string(lhs) + rhs;
+}
+
 static bool isspace(const char c) {
   return (c == ' ' || c == '\n' || c == '\r' || c == '\t');
 }

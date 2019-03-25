@@ -220,6 +220,11 @@ TEST(StringTest, IsAlpha) {
   ASSERT_TRUE(atl::isalpha('z'));
 }
 
+TEST(StringTest, CharConcat) {
+  const atl::string expected = "Hello World!";
+  ASSERT_EQ(expected, "Hello " + atl::string("World!"));
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
