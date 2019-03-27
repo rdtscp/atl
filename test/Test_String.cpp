@@ -221,8 +221,9 @@ TEST(StringTest, IsAlpha) {
 }
 
 TEST(StringTest, CharConcat) {
+  const atl::string rhs = "World!";
   const atl::string expected = "Hello World!";
-  ASSERT_EQ(expected, "Hello " + atl::string("World!"));
+  ASSERT_EQ(expected, "Hello " + rhs);
 }
 
 // The fixture for testing class Project1. From google test primer.
