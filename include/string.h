@@ -7,7 +7,6 @@ class string {
 public:
   typedef const char *const_iterator;
   typedef char *iterator;
-  enum { npos = -1 };
 
   /* Constructor */
   string() {
@@ -404,7 +403,7 @@ public:
         return idx;
       }
     }
-    return npos;
+    return -1;
   }
 
   int length() const { return size(); }

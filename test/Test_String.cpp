@@ -112,7 +112,7 @@ TEST(StringTest, Find) {
   ASSERT_EQ(lIndex, 2);
 
   const int xIndex = atlString1.find('x');
-  ASSERT_EQ(xIndex, atl::string::npos);
+  ASSERT_EQ(xIndex, -1);
 }
 
 TEST(StringTest, ToString) {
