@@ -16,7 +16,7 @@ class ifstream {
 
 public:
   /* Constructor */
-  ifstream(const atl::string &filename) : filename(filename) {
+  ifstream(const atl::string &filename) {
     filePtr = fopen(filename.c_str(), "r");
   }
 
@@ -47,7 +47,6 @@ public:
   }
 
 private:
-  const atl::string &filename;
   FILE *filePtr;
 };
 
