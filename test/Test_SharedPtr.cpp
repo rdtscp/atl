@@ -198,6 +198,7 @@ TEST(SharedPtrTest, StaticPointerCast) {
 TEST(SharedPtrTest, SharedPtrInheritence) {
   class Base {
   public:
+    virtual ~Base() {}
     virtual int val() { return 0; }
   };
   class Derived : public Base {

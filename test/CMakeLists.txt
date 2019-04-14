@@ -23,6 +23,10 @@ add_executable(runSharedPtrUnitTests Test_SharedPtr.cpp  main.cpp)
 target_link_libraries(runSharedPtrUnitTests libgtest libgmock)
 add_test(SharedPtrUnitTests runSharedPtrUnitTests)
 
+add_executable(runStackUnitTests Test_Stack.cpp  main.cpp)
+target_link_libraries(runStackUnitTests libgtest libgmock)
+add_test(StackUnitTests runStackUnitTests)
+
 add_executable(runStringUnitTests Test_String.cpp  main.cpp)
 target_link_libraries(runStringUnitTests libgtest libgmock)
 add_test(StringUnitTests runStringUnitTests)
