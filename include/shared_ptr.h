@@ -9,7 +9,10 @@ static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
 template <typename T> class enable_shared_from_this {
 protected:
   enable_shared_from_this() {}
-  enable_shared_from_this(enable_shared_from_this const &ptr) {}
+  enable_shared_from_this(enable_shared_from_this const &ptr) {
+    /* Does nothing, but used for dynamic dispatch. */
+    (void)ptr;
+  }
   enable_shared_from_this &operator=(enable_shared_from_this const &) {
     return *this;
   }
@@ -64,39 +67,6 @@ public:
     return *this;
   }
 
-  // /* Move Constructor */
-  // shared_ptr<T>(const shared_ptr<T> &&rhs) {
-  //   if (&rhs == this)
-  //     return;
-
-  //   if (rhs.ptr == nullptr || rhs.refCount == nullptr)
-  //     return;
-
-  //   ptr = rhs.ptr;
-  //   refCount = rhs.refCount;
-  //   // *refCount = *refCount + 1;
-  // }
-
-  // /* Move-Assignment Operator */
-  // shared_ptr<T> &operator=(const shared_ptr<T> &&rhs) {
-  //   if (&rhs == this)
-  //     return *this;
-
-  //   if (rhs.ptr == nullptr || rhs.refCount == nullptr)
-  //     return *this;
-
-  //   ptr = rhs.ptr;
-  //   refCount = rhs.refCount;
-  //   // *refCount = *refCount + 1;
-  //   return *this;
-  // }
-
-  // /* Move-Assignment Operator */
-  // template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &&rhs) {
-  //   *this = static_pointer_cast<T>(rhs);
-  //   return *this;
-  // }
-
   /* Destructor */
   ~shared_ptr<T>() {
     if (refCount == nullptr)
@@ -142,6 +112,8 @@ private:
 
   void initialiseSharedFromThis(void *obj) {
     /* Not an enable_shared_from_this object, nothing to construct. */
+    /* Does nothing, but used for dynamic dispatch. */
+    (void)obj;
   }
 };
 

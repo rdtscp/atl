@@ -337,10 +337,10 @@ public:
   bool operator==(const char *rhs) const {
     if (length() != charBufferLength(rhs))
       return false;
-    const int str_len = length();
+    const unsigned int str_len = length();
     char lhsChar;
     char rhsChar;
-    for (int charIdx = 0; charIdx < str_len; ++charIdx) {
+    for (unsigned int charIdx = 0; charIdx < str_len; ++charIdx) {
       lhsChar = at(charIdx);
       rhsChar = rhs[charIdx];
       if (lhsChar != rhsChar)
@@ -353,9 +353,9 @@ public:
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
-  char &at(const int index) {
+  char &at(const unsigned int index) {
     if (index < charBufferLength(string_value)) {
-      int currIdx = 0;
+      unsigned int currIdx = 0;
       char *string_value_ptr = string_value;
       while (*string_value_ptr != '\0') {
         if (currIdx == index)
@@ -368,9 +368,9 @@ public:
     throw "atl::string::at Out of Bounds Exception";
   }
 
-  char &at(const int index) const {
+  char &at(const unsigned int index) const {
     if (index < charBufferLength(string_value)) {
-      int currIdx = 0;
+      unsigned int currIdx = 0;
       char *string_value_ptr = string_value;
       while (*string_value_ptr != '\0') {
         if (currIdx == index)
@@ -406,14 +406,14 @@ public:
     return -1;
   }
 
-  int length() const { return size(); }
+  unsigned int length() const { return size(); }
 
-  int size() const { return charBufferLength(string_value); }
+  unsigned int size() const { return charBufferLength(string_value); }
 
 private:
   char *string_value;
 
-  int charBufferLength(const char *buf) const {
+  unsigned int charBufferLength(const char *buf) const {
     int length = 0;
     while (*buf != '\0') {
       ++length;
@@ -439,7 +439,6 @@ static bool isdigit(const char c) { return (c >= (int)'0' && c <= (int)'9'); }
 
 /* https://www.geeksforgeeks.org/implement-itoa/ */
 static string to_string(int num) {
-  int i = 0;
   bool isNegative = false;
 
   /* Handle 0 explicitely, otherwise empty string is printed for 0 */

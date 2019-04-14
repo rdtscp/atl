@@ -20,7 +20,7 @@ public:
   /* Size Constructor */
   vector<T>(const int size) {
     allocate(size);
-    for (int idx = 0; idx < capacity(); ++idx)
+    for (unsigned int idx = 0; idx < capacity(); ++idx)
       push_back(T());
   }
 
@@ -41,7 +41,7 @@ public:
 
     deallocate();
     reserve(rhs.capacity());
-    for (int idx = 0; idx < rhs.size(); ++idx)
+    for (unsigned int idx = 0; idx < rhs.size(); ++idx)
       push_back(rhs.at(idx));
     return *this;
   }
@@ -91,25 +91,25 @@ public:
     throw "atl::vector::at Out of Bounds Exception";
   }
 
-  int capacity() const { return elements_size; }
+  unsigned int capacity() const { return elements_size; }
 
   void clear() { deallocate(); }
 
-  T erase(const int eraseIndex) {
+  T erase(const unsigned int eraseIndex) {
     if (eraseIndex > size())
       throw "atl::vector::erase Out of Bounds Exception";
     const T output = at(eraseIndex);
-    const int vect_size = size();
-    const int vect_capacity = capacity();
+    const unsigned int vect_size = size();
+    const unsigned int vect_capacity = capacity();
 
     /* Backup existing elements. */
     T *tempBuffer = new T[vect_size];
-    for (int idx = 0; idx < vect_size; ++idx)
+    for (unsigned int idx = 0; idx < vect_size; ++idx)
       tempBuffer[idx] = elements[idx];
 
     deallocate();
     allocate(vect_capacity - 1);
-    for (int idx = 0; idx < vect_size; ++idx)
+    for (unsigned int idx = 0; idx < vect_size; ++idx)
       if (idx != eraseIndex)
         push_back(tempBuffer[idx]);
 
@@ -159,7 +159,7 @@ public:
     }
   }
 
-  int size() const { return elements_used; }
+  unsigned int size() const { return elements_used; }
 
 private:
   int elements_size = 0;

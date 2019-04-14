@@ -123,7 +123,7 @@ TEST(VectorTest, Erase) {
   ASSERT_EQ(1, atlVect.erase(1));
   ASSERT_EQ(atlVect.at(0), 0);
   ASSERT_EQ(atlVect.at(1), 2);
-  ASSERT_EQ(atlVect.size(), 2);
+  ASSERT_EQ(atlVect.size(), 2u);
 }
 
 TEST(VectorTest, Clear) {
@@ -131,9 +131,9 @@ TEST(VectorTest, Clear) {
   atlVect.push_back(0);
   atlVect.push_back(1);
   atlVect.push_back(2);
-  ASSERT_EQ(atlVect.size(), 3);
+  ASSERT_EQ(atlVect.size(), 3u);
   atlVect.clear();
-  ASSERT_EQ(atlVect.size(), 0);
+  ASSERT_EQ(atlVect.size(), 0u);
 }
 
 // The fixture for testing class Project1. From google test primer.
