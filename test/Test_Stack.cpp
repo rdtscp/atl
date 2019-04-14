@@ -6,7 +6,7 @@
 
 TEST(StackTest, DefaultConstruction) {
   atl::stack<int> atlStack;
-  ASSERT_EQ(atlStack.size(), 0);
+  ASSERT_EQ(atlStack.size(), 0u);
 }
 
 TEST(StackTest, TopElement) {
@@ -14,7 +14,7 @@ TEST(StackTest, TopElement) {
   atlStack.push_back(1);
   atlStack.push_back(2);
   atlStack.push_back(3);
-  ASSERT_EQ(atlStack.size(), 3);
+  ASSERT_EQ(atlStack.size(), 3u);
   ASSERT_EQ(atlStack.top(), 3);
   ASSERT_NE(atlStack.top(), 2);
 }
