@@ -113,7 +113,6 @@ private:
   void extend(const int num_elems) {
     /* Store the current state of the set. */
     const int temp_elements_size = elements_size;
-    const int temp_elements_used = elements_used;
     T *temp_elements = new T[elements_size];
     for (int i = 0; i < elements_size; ++i)
       temp_elements[i] = elements[i];
