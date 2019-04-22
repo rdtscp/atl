@@ -31,25 +31,6 @@ public:
     second = rhs.second;
     return *this;
   }
-
-  /* Move Constructor */
-  pair<F, S>(const pair<F, S> &&rhs) {
-    if (this == &rhs)
-      return;
-
-    first = rhs.first;
-    second = rhs.second;
-  }
-
-  /* Move-Assignment Operator */
-  pair<F, S> &operator=(const pair<F, S> &&rhs) {
-    if (this == &rhs)
-      return *this;
-
-    first = rhs.first;
-    second = rhs.second;
-    return *this;
-  }
 };
 
 } // namespace atl
