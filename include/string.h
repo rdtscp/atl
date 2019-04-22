@@ -69,11 +69,14 @@ public:
   }
 
   /* Move Constructor */
-  string(const string &&rhs) { *this = rhs; }
+  string(string &&rhs) : string_value(rhs.string_value) {
+    rhs.string_value = nullptr;
+   }
 
   /* Move-Assignment Operator */
-  string &operator=(const string &&rhs) {
-    *this = rhs;
+  string &operator=(string &&rhs) {
+    this->string_value = rhs.string_value;
+    rhs.string_value = nullptr;
     return *this;
   }
 

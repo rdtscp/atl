@@ -47,26 +47,21 @@ public:
   }
 
   /* Move Constructor */
-  vector<T>(const vector<T> &&rhs) {
-    if (this == &rhs)
-      return;
-
-    deallocate();
-    reserve(rhs.capacity());
-    for (int idx = 0; idx < rhs.size(); ++idx)
-      push_back(rhs.at(idx));
+  vector<T>(vector<T> &&rhs) : elements_size(rhs.elements_size), elements_used(rhs.elements_used), elements(rhs.elements) {
+    rhs.elements_size = 0;
+    rhs.elements_used = 0;
+    rhs.elements = nullptr;
   }
 
   /* Move-Assignment Operator */
-  vector<T> &operator=(const vector<T> &&rhs) {
-    if (this == &rhs)
-      return *this;
-
-    deallocate();
-    reserve(rhs.capacity());
-    for (int idx = 0; idx < rhs.size(); ++idx)
-      push_back(rhs.at(idx));
-
+  vector<T> &operator=(vector<T> &&rhs) {
+    elements_size = rhs.elements_size;
+    elements_used = rhs.elements_used;
+    elements = rhs.elements;
+    
+    rhs.elements_size = 0;
+    rhs.elements_used = 0;
+    rhs.elements = nullptr;
     return *this;
   }
 
