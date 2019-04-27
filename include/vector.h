@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 namespace atl {
 
 template <typename T> class vector {
@@ -47,7 +45,9 @@ public:
   }
 
   /* Move Constructor */
-  vector<T>(vector<T> &&rhs) : elements_size(rhs.elements_size), elements_used(rhs.elements_used), elements(rhs.elements) {
+  vector<T>(vector<T> &&rhs)
+      : elements_size(rhs.elements_size), elements_used(rhs.elements_used),
+        elements(rhs.elements) {
     rhs.elements_size = 0;
     rhs.elements_used = 0;
     rhs.elements = nullptr;
@@ -58,7 +58,7 @@ public:
     elements_size = rhs.elements_size;
     elements_used = rhs.elements_used;
     elements = rhs.elements;
-    
+
     rhs.elements_size = 0;
     rhs.elements_used = 0;
     rhs.elements = nullptr;
@@ -177,11 +177,6 @@ private:
   void extend(const int num_elems) {
     const int new_capacity = capacity() + num_elems;
     reserve(new_capacity);
-  }
-
-  void print() const {
-    for (int idx = 0; idx < size(); ++idx)
-      std::cout << at(idx) << std::endl;
   }
 };
 
