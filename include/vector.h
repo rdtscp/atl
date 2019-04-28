@@ -1,5 +1,7 @@
 #pragma once
 
+#include <initializer_list>
+
 namespace atl {
 
 template <typename T> class vector {
