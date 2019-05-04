@@ -5,7 +5,6 @@
 /* This will be hardcoded into the compiler im afraid :S */
 FILE *fopen(const atl::string &, const atl::string &);
 char *fgets(char *buf, int n, FILE *fp);
-int fputs(const char *s, FILE *fp);
 void *memset(void *str, int c, size_t n);
 
 namespace atl {
