@@ -33,9 +33,9 @@ TEST(OfStreamTest, WriteFile) {
 }
 
 // The fixture for testing class Project1. From google test primer.
-class Test_IfStream : public ::testing::Test {
+class Test_OfStream : public ::testing::Test {
 protected:
-  Test_IfStream() {
+  Test_OfStream() {
     // You can do set-up work for each test here.
   }
 
