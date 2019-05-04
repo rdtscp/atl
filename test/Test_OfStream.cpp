@@ -1,28 +1,41 @@
 #include "gtest/gtest.h"
 
 #include "../include/ifstream.h"
+#include "../include/ofstream.h"
 #include "../include/string.h"
 
-atl::string test_prefix =
-    "/Users/alexanderwilson/Documents/GitHub/atl/test/tests/";
-// atl::string test_prefix = "../../test/tests/";
+// atl::string test_prefix =
+// "/Users/alexanderwilson/Documents/GitHub/atl/test/tests/";
+atl::string test_prefix = "../../test/tests/";
 
-TEST(IfStreamTest, NoFileConstruction) {
-  // atl::ifstream fileStream("");
-  // ASSERT_FALSE(fileStream.good());
-}
-
-TEST(IfStreamTest, FileConstruction) {
-  atl::ifstream fileStream(test_prefix + "testfile1.txt");
-  ASSERT_TRUE(fileStream.good());
-  const std::string expectation("this is testfile1.txt\n");
-  ASSERT_EQ(expectation, fileStream.readIntoString().c_str());
+TEST(OfStreamTest, WriteFile) {
+  {
+    // Reset the file.
+    atl::ofstream fileStream(test_prefix + "testfile2.txt");
+    fileStream.write("");
+    // Assert the file is empty.
+    atl::ifstream emptyStream(test_prefix + "testfile2.txt");
+    ASSERT_EQ(emptyStream.readIntoString(), "");
+  }
+  {
+    // Write to the file.
+    atl::ofstream fileStream(test_prefix + "testfile2.txt");
+    fileStream.write("this is testfile2.txt\n");
+  }
+  {
+    // Assert the file is correct.
+    atl::ifstream emptyStream(test_prefix + "testfile2.txt");
+    ASSERT_EQ(emptyStream.readIntoString(), "this is testfile2.txt\n");
+    // Reset the file.
+    atl::ofstream fileStream(test_prefix + "testfile2.txt");
+    fileStream.write("");
+  }
 }
 
 // The fixture for testing class Project1. From google test primer.
-class Test_IfStream : public ::testing::Test {
+class Test_OfStream : public ::testing::Test {
 protected:
-  Test_IfStream() {
+  Test_OfStream() {
     // You can do set-up work for each test here.
   }
 
