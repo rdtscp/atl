@@ -3,9 +3,9 @@
 #include "../include/ifstream.h"
 #include "../include/string.h"
 
-atl::string test_prefix =
-    "/Users/alexanderwilson/Documents/GitHub/atl/test/tests/";
-// atl::string test_prefix = "../../test/tests/";
+// atl::string test_prefix =
+// "/Users/alexanderwilson/Documents/GitHub/atl/test/tests/";
+atl::string test_prefix = "../../test/tests/";
 
 TEST(IfStreamTest, NoFileConstruction) {
   // atl::ifstream fileStream("");
