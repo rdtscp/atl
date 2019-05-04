@@ -8,15 +8,15 @@
 atl::string test_prefix = "../../test/tests/";
 
 TEST(IfStreamTest, NoFileConstruction) {
-  // atl::ifstream fileStream("");
-  // ASSERT_FALSE(fileStream.good());
+  atl::ifstream fileStream("");
+  ASSERT_FALSE(fileStream.good());
 }
 
 TEST(IfStreamTest, FileConstruction) {
   atl::ifstream fileStream(test_prefix + "testfile1.txt");
   ASSERT_TRUE(fileStream.good());
-  const std::string expectation("this is testfile1.txt\n");
-  ASSERT_EQ(expectation, fileStream.readIntoString().c_str());
+  const atl::string expectation("this is testfile1.txt\n");
+  ASSERT_EQ(expectation, fileStream.readIntoString());
 }
 
 // The fixture for testing class Project1. From google test primer.
