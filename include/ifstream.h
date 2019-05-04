@@ -2,13 +2,11 @@
 
 #include "../include/string.h"
 
-#ifndef ACC_COMPILER
-#include <stdio.h>
-#else
 /* This will be hardcoded into the compiler im afraid :S */
 FILE *fopen(const atl::string &, const atl::string &);
-int getc(FILE *);
-#endif
+char *fgets(char *buf, int n, FILE *fp);
+int fputs(const char *s, FILE *fp);
+void *memset(void *str, int c, size_t n);
 
 namespace atl {
 
@@ -30,19 +28,18 @@ public:
   }
 
   atl::string readIntoString() {
-    FILE *file_p = filePtr;
     atl::string output;
-    char currChar;
-    currChar = '0';
-    while (true) {
-      int nextCharInt = getc(file_p);
-      if (nextCharInt == -1) {
-        output = output + '\0';
-        break;
-      }
-      currChar = (char)nextCharInt;
-      output = output + currChar;
-    }
+
+    FILE *file_p = filePtr;
+    const int buffer_size = 2048;
+    char *fgets_res = nullptr;
+    char temp_buffer[buffer_size];
+    do {
+      memset(temp_buffer, 0, buffer_size);
+      fgets_res = fgets(temp_buffer, buffer_size, file_p);
+      output += temp_buffer;
+    } while (fgets_res != nullptr);
+
     return output;
   }
 
