@@ -442,22 +442,22 @@ static bool isdigit(const char c) { return (c >= (int)'0' && c <= (int)'9'); }
 
 /* https://www.geeksforgeeks.org/write-your-own-atoi/ */
 static int stoi(const char *str) {
-  int res = 0;  // Initialize result
-  int sign = 1; // Initialize sign as positive
-  int i = 0;    // Initialize index of first digit
+  int output = 0;    // Initialize result
+  int sign = 1;      // Initialize sign as positive
+  int start_idx = 0; // Initialize index of first digit
 
   // If number is negative, then update sign
   if (str[0] == '-') {
     sign = -1;
-    i++; // Also update index of first digit
+    ++start_idx; // Also update index of first digit
   }
 
   // Iterate through all digits and update the result
-  for (; str[i] != '\0'; ++i)
-    res = res * 10 + str[i] - '0';
+  for (int idx = start_idx; str[idx] != '\0'; ++idx)
+    output = output * 10 + str[idx] - '0';
 
   // Return result with sign
-  return sign * res;
+  return sign * output;
 }
 
 static int stoi(const atl::string &str) { return stoi(str.c_str()); }
