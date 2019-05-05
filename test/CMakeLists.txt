@@ -11,10 +11,6 @@ add_executable(runIfStreamUnitTests Test_IfStream.cpp  main.cpp)
 target_link_libraries(runIfStreamUnitTests libgtest libgmock)
 add_test(IfStreamUnitTests runIfStreamUnitTests)
 
-add_executable(runMapUnitTests Test_Map.cpp  main.cpp)
-target_link_libraries(runMapUnitTests libgtest libgmock)
-add_test(MapUnitTests runMapUnitTests)
-
 add_executable(runOfStreamUnitTests Test_OfStream.cpp  main.cpp)
 target_link_libraries(runOfStreamUnitTests libgtest libgmock)
 add_test(OfStreamUnitTests runOfStreamUnitTests)
@@ -38,6 +34,10 @@ add_test(StackUnitTests runStackUnitTests)
 add_executable(runStringUnitTests Test_String.cpp  main.cpp)
 target_link_libraries(runStringUnitTests libgtest libgmock)
 add_test(StringUnitTests runStringUnitTests)
+
+add_executable(runUnorderedMapUnitTests Test_UnorderedMap.cpp  main.cpp)
+target_link_libraries(runUnorderedMapUnitTests libgtest libgmock)
+add_test(UnorderedMapUnitTests runUnorderedMapUnitTests)
 
 add_executable(runVectorUnitTests Test_Vector.cpp  main.cpp)
 target_link_libraries(runVectorUnitTests libgtest libgmock)
