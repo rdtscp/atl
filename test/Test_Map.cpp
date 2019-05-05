@@ -7,7 +7,28 @@ TEST(MapTest, DefaultConstructor) {
 
   atlMap[5] = true;
 
-  ASSERT_EQ(atlMap.find(5), true);
+  ASSERT_EQ(atlMap.find(5).second, true);
+}
+
+TEST(MapTest, CopyConstructor) {
+  atl::map<int, bool> atlMap;
+
+  atlMap[5] = true;
+
+  atl::map<int, bool> atlMap2(atlMap);
+  ASSERT_EQ(atlMap2.find(5).second, true);
+}
+
+TEST(MapTest, InsertDuplicateElement) {
+  atl::map<int, bool> atlMap;
+
+  atlMap.insert(5, true);
+  atlMap.insert(5, false);
+
+  // atlMap[5] = true;
+  // atlMap[5] = false;
+
+  ASSERT_EQ(atlMap.find(5).second, false);
 }
 
 // The fixture for testing class Project1. From google test primer.
