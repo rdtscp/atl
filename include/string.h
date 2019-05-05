@@ -15,8 +15,8 @@ public:
   }
 
   /* Constructor */
-  string(const int count, const char c) {
-    const int string_length = count;
+  string(const unsigned int count, const char c) {
+    const unsigned int string_length = count;
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
     for (int i = 0; i < string_length; ++i) {
@@ -325,7 +325,7 @@ public:
   bool operator==(const string &rhs) const {
     if (length() != rhs.length())
       return false;
-    const int str_len = length();
+    const unsigned int str_len = length();
     char lhsChar;
     char rhsChar;
     for (unsigned int charIdx = 0; charIdx < str_len; ++charIdx) {
@@ -389,7 +389,7 @@ public:
   const_iterator begin() const { return &string_value[0]; }
 
   const_iterator end() const {
-    const int len = charBufferLength(string_value);
+    const unsigned int len = charBufferLength(string_value);
     return &string_value[len];
   }
 
