@@ -31,6 +31,13 @@ public:
     second = rhs.second;
     return *this;
   }
+
+  bool operator==(const pair<F, S> &rhs) const {
+    if (first != rhs.first)
+      return false;
+
+    return second == rhs.second;
+  }
 };
 
 } // namespace atl
