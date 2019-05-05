@@ -19,7 +19,7 @@ public:
     const int string_length = count;
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (int i = 0; i < string_length; ++i) {
+    for (unsigned int i = 0; i < string_length; ++i) {
       *string_value_ptr = c;
       ++string_value_ptr;
     }
@@ -31,7 +31,7 @@ public:
     const int string_length = charBufferLength(string_literal);
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (int i = 0; i < string_length; ++i) {
+    for (unsigned int i = 0; i < string_length; ++i) {
       *string_value_ptr = *string_literal;
       ++string_value_ptr;
       ++string_literal;
@@ -43,10 +43,10 @@ public:
   string(const string &rhs) {
     if (&rhs == this)
       return;
-    const int string_length = rhs.size();
+    const unsigned int string_length = rhs.size();
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (int i = 0; i < string_length; ++i) {
+    for (unsigned int i = 0; i < string_length; ++i) {
       *string_value_ptr = rhs[i];
       ++string_value_ptr;
     }
@@ -60,7 +60,7 @@ public:
     const int string_length = rhs.size();
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (int i = 0; i < string_length; ++i) {
+    for (unsigned int i = 0; i < string_length; ++i) {
       *string_value_ptr = rhs[i];
       ++string_value_ptr;
     }
@@ -83,9 +83,9 @@ public:
   /* Destructor */
   ~string() { delete[] string_value; }
 
-  char &operator[](const int index) { return at(index); }
+  char &operator[](const unsigned int index) { return at(index); }
 
-  const char &operator[](const int index) const { return at(index); }
+  const char &operator[](const unsigned int index) const { return at(index); }
 
   string operator+(const char rhs) {
     // Calculate the new size.
@@ -99,7 +99,7 @@ public:
 
     // Copy the LHS.
     char *lhs_ptr = string_value;
-    for (int i = 0; i < lhs_len; ++i) {
+    for (unsigned int i = 0; i < lhs_len; ++i) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -129,7 +129,7 @@ public:
 
     // Copy the LHS.
     char *lhs_ptr = string_value;
-    for (int i = 0; i < lhs_len; ++i) {
+    for (unsigned int i = 0; i < lhs_len; ++i) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -137,7 +137,7 @@ public:
 
     // Copy the RHS.
     const char *rhs_ptr = rhs;
-    for (int i = 0; i < rhs_len; ++i) {
+    for (unsigned int i = 0; i < rhs_len; ++i) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -163,7 +163,7 @@ public:
 
     // Copy the LHS.
     char *lhs_ptr = string_value;
-    for (int i = 0; i < lhs_len; ++i) {
+    for (unsigned int i = 0; i < lhs_len; ++i) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -171,7 +171,7 @@ public:
 
     // Copy the RHS.
     char *rhs_ptr = rhs.c_str();
-    for (int i = 0; i < rhs_len; ++i) {
+    for (unsigned int i = 0; i < rhs_len; ++i) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -197,7 +197,7 @@ public:
 
     // Copy the LHS.
     char *lhs_ptr = string_value;
-    for (int i = 0; i < lhs_len; ++i) {
+    for (unsigned int i = 0; i < lhs_len; ++i) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -205,7 +205,7 @@ public:
 
     // Copy the RHS.
     char *rhs_ptr = rhs.c_str();
-    for (int i = 0; i < rhs_len; ++i) {
+    for (unsigned int i = 0; i < rhs_len; ++i) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -252,7 +252,7 @@ public:
 
     char currLhs;
     char currRhs;
-    for (int idx = 0; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs < (int)currRhs) {
@@ -272,7 +272,7 @@ public:
 
     char currLhs;
     char currRhs;
-    for (int idx = 0; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs > (int)currRhs) {
@@ -292,7 +292,7 @@ public:
 
     char currLhs;
     char currRhs;
-    for (int idx = 0; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs > (int)currRhs) {
@@ -312,7 +312,7 @@ public:
 
     char currLhs;
     char currRhs;
-    for (int idx = 0; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0; idx < rhsSize; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs < (int)currRhs) {
@@ -328,7 +328,7 @@ public:
     const int str_len = length();
     char lhsChar;
     char rhsChar;
-    for (int charIdx = 0; charIdx < str_len; ++charIdx) {
+    for (unsigned int charIdx = 0; charIdx < str_len; ++charIdx) {
       lhsChar = at(charIdx);
       rhsChar = rhs.at(charIdx);
       if (lhsChar != rhsChar)
@@ -400,7 +400,7 @@ public:
   int find(const char searchChar) const {
     const int len = length();
     char currChar;
-    for (int idx = 0; idx < len; ++idx) {
+    for (unsigned int idx = 0; idx < len; ++idx) {
       currChar = at(idx);
       if (currChar == searchChar) {
         return idx;
@@ -453,7 +453,7 @@ static int stoi(const char *str) {
   }
 
   // Iterate through all digits and update the result
-  for (int idx = start_idx; str[idx] != '\0'; ++idx)
+  for (unsigned int idx = start_idx; str[idx] != '\0'; ++idx)
     output = output * 10 + str[idx] - '0';
 
   // Return result with sign
