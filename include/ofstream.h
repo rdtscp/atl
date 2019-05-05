@@ -1,13 +1,7 @@
 #pragma once
 
 #include "../include/string.h"
-
-/* This will be hardcoded into the compiler im afraid :S */
-extern "C" {
-FILE *fopen(const char *filename, const char *mode);
-int fputs(const char *s, FILE *fp);
-int fclose(FILE *fp);
-}
+#include <stdio.h>
 
 namespace atl {
 
