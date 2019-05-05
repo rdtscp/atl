@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
-#include <string>
 #include "../include/string.h"
+#include <string>
 
 TEST(StringTest, DefaultConstruction) {
   atl::string atlString;
@@ -222,6 +222,14 @@ TEST(StringTest, CharConcat) {
   const atl::string rhs = "World!";
   const atl::string expected = "Hello World!";
   ASSERT_EQ(expected, "Hello " + rhs);
+}
+
+TEST(StringTest, Stoi) {
+  const atl::string positiveint = "193812394";
+  ASSERT_EQ(atl::stoi(positiveint), 193812394);
+
+  const atl::string negativeint = "-193812394";
+  ASSERT_EQ(atl::stoi(negativeint), -193812394);
 }
 
 // The fixture for testing class Project1. From google test primer.
