@@ -19,7 +19,7 @@ public:
     const int string_length = count;
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (unsigned int i = 0; i < string_length; ++i) {
+    for (int i = 0; i < string_length; ++i) {
       *string_value_ptr = c;
       ++string_value_ptr;
     }
@@ -28,7 +28,7 @@ public:
 
   /* Constructor */
   string(const char *string_literal) {
-    const int string_length = charBufferLength(string_literal);
+    const unsigned int string_length = charBufferLength(string_literal);
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
     for (unsigned int i = 0; i < string_length; ++i) {
@@ -57,7 +57,7 @@ public:
   string &operator=(const string &rhs) {
     if (&rhs == this)
       return *this;
-    const int string_length = rhs.size();
+    const unsigned int string_length = rhs.size();
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
     for (unsigned int i = 0; i < string_length; ++i) {
@@ -89,9 +89,9 @@ public:
 
   string operator+(const char rhs) {
     // Calculate the new size.
-    const int lhs_len = size();
-    const int rhs_len = 1;
-    const int string_length = lhs_len + rhs_len;
+    const unsigned int lhs_len = size();
+    const unsigned int rhs_len = 1;
+    const unsigned int string_length = lhs_len + rhs_len;
 
     // Allocate memory for the new string.
     char *new_string_value = new char[string_length + 1];
@@ -119,9 +119,9 @@ public:
 
   string operator+(const char *rhs) {
     // Calculate the new size.
-    const int lhs_len = size();
-    const int rhs_len = charBufferLength(rhs);
-    const int string_length = lhs_len + rhs_len;
+    const unsigned int lhs_len = size();
+    const unsigned int rhs_len = charBufferLength(rhs);
+    const unsigned int string_length = lhs_len + rhs_len;
 
     // Allocate memory for the new string.
     char *new_string_value = new char[string_length + 1];
@@ -153,9 +153,9 @@ public:
 
   string operator+(const string &rhs) {
     // Calculate the new size.
-    const int lhs_len = size();
-    const int rhs_len = rhs.size();
-    const int string_length = lhs_len + rhs_len;
+    const unsigned int lhs_len = size();
+    const unsigned int rhs_len = rhs.size();
+    const unsigned int string_length = lhs_len + rhs_len;
 
     // Allocate memory for the new string.
     char *new_string_value = new char[string_length + 1];
@@ -187,9 +187,9 @@ public:
 
   string operator+(const string &rhs) const {
     // Calculate the new size.
-    const int lhs_len = size();
-    const int rhs_len = rhs.size();
-    const int string_length = lhs_len + rhs_len;
+    const unsigned int lhs_len = size();
+    const unsigned int rhs_len = rhs.size();
+    const unsigned int string_length = lhs_len + rhs_len;
 
     // Allocate memory for the new string.
     char *new_string_value = new char[string_length + 1];
