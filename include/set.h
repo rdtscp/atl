@@ -100,7 +100,7 @@ private:
     elements_size = num_elems;
   }
 
-  T &at(const int index) const {
+  T &at(const unsigned int index) const {
     if (index < elements_size) {
       return elements[index];
     }
@@ -112,7 +112,7 @@ private:
   /* Extend the size of elements[] by num_elems. */
   void extend(const int num_elems) {
     /* Store the current state of the set. */
-    const int temp_elements_size = elements_size;
+    const unsigned int temp_elements_size = elements_size;
     T *temp_elements = new T[elements_size];
     for (unsigned int i = 0; i < elements_size; ++i)
       temp_elements[i] = elements[i];
