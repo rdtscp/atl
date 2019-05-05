@@ -3,8 +3,9 @@
 #include "../include/string.h"
 
 /* This will be hardcoded into the compiler im afraid :S */
-FILE *fopen(const atl::string &, const atl::string &);
+FILE *fopen(const char *filename, const char *mode);
 int fputs(const char *s, FILE *fp);
+int fclose(FILE *fp);
 
 namespace atl {
 
