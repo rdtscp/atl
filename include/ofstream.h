@@ -13,6 +13,12 @@ public:
     filePtr = fopen(filename.c_str(), "w");
   }
 
+  ofstream(const ofstream &rhs) = delete;
+  ofstream(ofstream &&rhs) {
+    filePtr = rhs.filePtr;
+    rhs.filePtr = nullptr;
+  }
+
   ~ofstream() { fclose(filePtr); }
 
   bool good() {
