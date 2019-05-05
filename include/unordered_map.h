@@ -24,6 +24,15 @@ public:
   /* Destructor */
   ~unordered_map<K, V>() {}
 
+  atl::vector<K> keys() const {
+    atl::vector<K> output;
+    const int num_keys = elements.size();
+    for (int idx = 0; idx < num_keys; ++idx) {
+      output.push_back(elements[idx].first);
+    }
+    return output;
+  }
+
   bool operator==(const unordered_map<K, V> &rhs) const {
     // Check size.
     const int num_elems = elements.size();
