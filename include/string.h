@@ -71,7 +71,7 @@ public:
   /* Move Constructor */
   string(string &&rhs) : string_value(rhs.string_value) {
     rhs.string_value = nullptr;
-   }
+  }
 
   /* Move-Assignment Operator */
   string &operator=(string &&rhs) {
@@ -439,6 +439,28 @@ static bool isalpha(const char c) {
 }
 
 static bool isdigit(const char c) { return (c >= (int)'0' && c <= (int)'9'); }
+
+/* https://www.geeksforgeeks.org/write-your-own-atoi/ */
+static int stoi(const char *str) {
+  int output = 0;    // Initialize result
+  int sign = 1;      // Initialize sign as positive
+  int start_idx = 0; // Initialize index of first digit
+
+  // If number is negative, then update sign
+  if (str[0] == '-') {
+    sign = -1;
+    ++start_idx; // Also update index of first digit
+  }
+
+  // Iterate through all digits and update the result
+  for (int idx = start_idx; str[idx] != '\0'; ++idx)
+    output = output * 10 + str[idx] - '0';
+
+  // Return result with sign
+  return sign * output;
+}
+
+static int stoi(const atl::string &str) { return stoi(str.c_str()); }
 
 /* https://www.geeksforgeeks.org/implement-itoa/ */
 static string to_string(int num) {
