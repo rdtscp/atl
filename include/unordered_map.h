@@ -26,7 +26,7 @@ public:
 
   atl::vector<K> keys() const {
     atl::vector<K> output;
-    const int num_keys = elements.size();
+    const unsigned int num_keys = elements.size();
     for (unsigned int idx = 0; idx < num_keys; ++idx) {
       output.push_back(elements[idx].first);
     }
@@ -35,7 +35,7 @@ public:
 
   bool operator==(const unordered_map<K, V> &rhs) const {
     // Check size.
-    const int num_elems = elements.size();
+    const unsigned int num_elems = elements.size();
     if (num_elems != rhs.elements.size())
       return false;
 
@@ -111,7 +111,7 @@ private:
 
   void insert_unique(const atl::pair<K, V> &new_elem) {
     /* Check if this key exists already */
-    const int num_elems = elements.size();
+    const unsigned int num_elems = elements.size();
     for (unsigned int idx = 0; idx < num_elems; ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == new_elem.first) {
