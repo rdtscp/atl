@@ -398,7 +398,7 @@ public:
   char *c_str() const { return string_value; }
 
   int find(const char searchChar) const {
-    const int len = length();
+    const unsigned int len = length();
     char currChar;
     for (unsigned int idx = 0; idx < len; ++idx) {
       currChar = at(idx);
