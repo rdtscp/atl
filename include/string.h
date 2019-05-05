@@ -19,7 +19,7 @@ public:
     const unsigned int string_length = count;
     string_value = new char[string_length + 1];
     char *string_value_ptr = string_value;
-    for (int i = 0; i < string_length; ++i) {
+    for (unsigned int i = 0; i < string_length; ++i) {
       *string_value_ptr = c;
       ++string_value_ptr;
     }
