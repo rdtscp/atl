@@ -1,8 +1,6 @@
-#include <string.h>
-#include <string>
-
 #include "gtest/gtest.h"
 
+#include <string>
 #include "../include/string.h"
 
 TEST(StringTest, DefaultConstruction) {
