@@ -18,7 +18,7 @@ public:
   }
 
   /* Size Constructor */
-  vector<T>(const int size) {
+  vector<T>(const unsigned int size) {
     allocate(size);
     for (unsigned int idx = 0; idx < capacity(); ++idx)
       push_back(T());
@@ -70,18 +70,18 @@ public:
   /* Destructor */
   ~vector<T>() { deallocate(); }
 
-  T &operator[](const int index) { return at(index); }
+  T &operator[](const unsigned int index) { return at(index); }
 
-  const T &operator[](const int index) const { return at(index); }
+  const T &operator[](const unsigned int index) const { return at(index); }
 
-  T &at(const int index) {
+  T &at(const unsigned int index) {
     if (index < elements_size) {
       return elements[index];
     }
     throw "atl::vector::at Out of Bounds Exception";
   }
 
-  T &at(const int index) const {
+  T &at(const unsigned int index) const {
     if (index < elements_size) {
       return elements[index];
     }
@@ -129,7 +129,7 @@ public:
     return erase(elements_used);
   }
 
-  void reserve(const int reserveSize) {
+  void reserve(const unsigned int reserveSize) {
     /* Already have requested space. */
     if (reserveSize <= elements_size)
       return;
@@ -143,7 +143,7 @@ public:
     /* Buffer already allocated. */
     else if (elements_size > 0) {
       /* Backup existing elements. */
-      const int tempBufferLen = elements_size;
+      const unsigned int tempBufferLen = elements_size;
       T *tempBuffer = new T[tempBufferLen];
       for (unsigned int idx = 0; idx < elements_size; ++idx)
         tempBuffer[idx] = elements[idx];
@@ -159,11 +159,11 @@ public:
   unsigned int size() const { return elements_used; }
 
 private:
-  int elements_size = 0;
-  int elements_used = 0;
+  unsigned int elements_size = 0;
+  unsigned int elements_used = 0;
   T *elements;
 
-  void allocate(const int num_elems) {
+  void allocate(const unsigned int num_elems) {
     elements_size = num_elems;
     elements = new T[elements_size];
   }
@@ -176,8 +176,8 @@ private:
   }
 
   /* Extend the size of elements[] by num_elems. */
-  void extend(const int num_elems) {
-    const int new_capacity = capacity() + num_elems;
+  void extend(const unsigned int num_elems) {
+    const unsigned int new_capacity = capacity() + num_elems;
     reserve(new_capacity);
   }
 };
