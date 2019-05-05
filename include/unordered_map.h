@@ -27,7 +27,7 @@ public:
   atl::vector<K> keys() const {
     atl::vector<K> output;
     const int num_keys = elements.size();
-    for (int idx = 0; idx < num_keys; ++idx) {
+    for (unsigned int idx = 0; idx < num_keys; ++idx) {
       output.push_back(elements[idx].first);
     }
     return output;
@@ -39,13 +39,13 @@ public:
     if (num_elems != rhs.elements.size())
       return false;
 
-    for (int lhs_idx = 0; lhs_idx < num_elems; ++lhs_idx) {
+    for (unsigned int lhs_idx = 0; lhs_idx < num_elems; ++lhs_idx) {
       // Get the current element.
       const atl::pair<K, V> &lhs_curr_elem = elements[lhs_idx];
 
       // Search for it in the RHS.
       bool rhs_contains = false;
-      for (int rhs_idx = 0; rhs_idx < num_elems; ++rhs_idx) {
+      for (unsigned int rhs_idx = 0; rhs_idx < num_elems; ++rhs_idx) {
         const atl::pair<K, V> &rhs_curr_elem = rhs.elements[rhs_idx];
         if (lhs_curr_elem == rhs_curr_elem) {
           rhs_contains = true;
@@ -64,7 +64,7 @@ public:
   }
 
   V &operator[](const K &key) {
-    for (int idx = 0; idx < elements.size(); ++idx) {
+    for (unsigned int idx = 0; idx < elements.size(); ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == key)
         return curr_elem.second;
@@ -74,7 +74,7 @@ public:
   }
 
   V at(const K &key) {
-    for (int idx = 0; idx < elements.size(); ++idx) {
+    for (unsigned int idx = 0; idx < elements.size(); ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == key)
         return curr_elem;
@@ -89,7 +89,7 @@ public:
   void insert(const atl::pair<K, V> &new_elem) { insert_unique(new_elem); }
 
   atl::pair<K, V> &find(const K &key) {
-    for (int idx = 0; idx < elements.size(); ++idx) {
+    for (unsigned int idx = 0; idx < elements.size(); ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == key)
         return curr_elem;
@@ -98,7 +98,7 @@ public:
   }
 
   const atl::pair<K, V> &find(const K &key) const {
-    for (int idx = 0; idx < elements.size(); ++idx) {
+    for (unsigned int idx = 0; idx < elements.size(); ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == key)
         return curr_elem;
@@ -112,7 +112,7 @@ private:
   void insert_unique(const atl::pair<K, V> &new_elem) {
     /* Check if this key exists already */
     const int num_elems = elements.size();
-    for (int idx = 0; idx < num_elems; ++idx) {
+    for (unsigned int idx = 0; idx < num_elems; ++idx) {
       atl::pair<K, V> &curr_elem = elements[idx];
       if (curr_elem.first == new_elem.first) {
         curr_elem.second = new_elem.second;

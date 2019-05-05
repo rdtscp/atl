@@ -14,7 +14,7 @@ public:
       return;
     allocate(rhs.capacity());
     elements_used = 0;
-    for (int i = 0; i < rhs.elements_used; ++i)
+    for (unsigned int i = 0; i < rhs.elements_used; ++i)
       push_back(rhs[i]);
   }
 
@@ -24,7 +24,7 @@ public:
       return *this;
     allocate(rhs.capacity());
     elements_used = 0;
-    for (int i = 0; i < rhs.size(); ++i)
+    for (unsigned int i = 0; i < rhs.size(); ++i)
       push_back(rhs[i]);
     return *this;
   }
@@ -34,7 +34,7 @@ public:
     if (this == &rhs)
       return;
     allocate(rhs.capacity());
-    for (int i = 0; i < rhs.elements_used; ++i)
+    for (unsigned int i = 0; i < rhs.elements_used; ++i)
       push_back(rhs[i]);
   }
 
@@ -43,7 +43,7 @@ public:
     if (this == &rhs)
       return *this;
     allocate(rhs.capacity());
-    for (int i = 0; i < rhs.size(); ++i)
+    for (unsigned int i = 0; i < rhs.size(); ++i)
       push_back(rhs[i]);
     return *this;
   }
@@ -61,7 +61,7 @@ public:
     if (size() != rhs.size())
       return false;
 
-    for (int i = 0; i < rhs.size(); ++i)
+    for (unsigned int i = 0; i < rhs.size(); ++i)
       if (at(i) != rhs.at(i))
         return false;
 
@@ -71,7 +71,7 @@ public:
   bool operator!=(const set<T> &rhs) const { return !(*this == rhs); }
 
   bool find(const T &elem) {
-    for (int idx = 0; idx < size(); ++idx)
+    for (unsigned int idx = 0; idx < size(); ++idx)
       if (elements[idx] == elem)
         return true;
 
@@ -84,11 +84,11 @@ public:
     }
   }
 
-  int size() const { return elements_used; }
+  unsigned int size() const { return elements_used; }
 
 private:
-  int elements_size;
-  int elements_used;
+  unsigned int elements_size;
+  unsigned int elements_used;
   bool initialised;
   T *elements;
 
@@ -114,7 +114,7 @@ private:
     /* Store the current state of the set. */
     const int temp_elements_size = elements_size;
     T *temp_elements = new T[elements_size];
-    for (int i = 0; i < elements_size; ++i)
+    for (unsigned int i = 0; i < elements_size; ++i)
       temp_elements[i] = elements[i];
 
     /* Clear the set state. */

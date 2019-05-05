@@ -30,7 +30,7 @@ public:
       return;
 
     reserve(rhs.capacity());
-    for (int idx = 0; idx < rhs.size(); ++idx)
+    for (unsigned int idx = 0; idx < rhs.size(); ++idx)
       push_back(rhs.at(idx));
   }
 
@@ -145,13 +145,13 @@ public:
       /* Backup existing elements. */
       const int tempBufferLen = elements_size;
       T *tempBuffer = new T[tempBufferLen];
-      for (int idx = 0; idx < elements_size; ++idx)
+      for (unsigned int idx = 0; idx < elements_size; ++idx)
         tempBuffer[idx] = elements[idx];
 
       deallocate();
       elements_size = reserveSize;
       elements = new T[elements_size];
-      for (int idx = 0; idx < tempBufferLen; ++idx)
+      for (unsigned int idx = 0; idx < tempBufferLen; ++idx)
         push_back(tempBuffer[idx]);
     }
   }
