@@ -243,8 +243,8 @@ public:
   bool operator>=(const char *rhs) const { return *this >= string(rhs); }
 
   bool operator<(const string &rhs) const {
-    const int lhsSize = this->size();
-    const int rhsSize = rhs.size();
+    const unsigned int lhsSize = this->size();
+    const unsigned int rhsSize = rhs.size();
     if (lhsSize < rhsSize)
       return true;
     if (lhsSize > rhsSize)
@@ -263,8 +263,8 @@ public:
   }
 
   bool operator>(const string &rhs) const {
-    const int lhsSize = this->size();
-    const int rhsSize = rhs.size();
+    const unsigned int lhsSize = this->size();
+    const unsigned int rhsSize = rhs.size();
     if (lhsSize < rhsSize)
       return false;
     if (lhsSize > rhsSize)
@@ -283,8 +283,8 @@ public:
   }
 
   bool operator<=(const string &rhs) const {
-    const int lhsSize = this->size();
-    const int rhsSize = rhs.size();
+    const unsigned int lhsSize = this->size();
+    const unsigned int rhsSize = rhs.size();
     if (lhsSize < rhsSize)
       return true;
     if (lhsSize > rhsSize)
@@ -303,8 +303,8 @@ public:
   }
 
   bool operator>=(const string &rhs) const {
-    const int lhsSize = this->size();
-    const int rhsSize = rhs.size();
+    const unsigned int lhsSize = this->size();
+    const unsigned int rhsSize = rhs.size();
     if (lhsSize < rhsSize)
       return false;
     if (lhsSize > rhsSize)
