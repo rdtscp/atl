@@ -1,14 +1,9 @@
 #pragma once
 
 #include "../include/string.h"
+#include <stdio.h>
 
-/* This will be hardcoded into the compiler im afraid :S */
-extern "C" {
-FILE *fopen(const char *filename, const char *mode);
-char *fgets(char *buf, int n, FILE *fp);
-void *memset(void *str, int c, size_t n);
-int fclose(FILE *fp);
-}
+extern "C" void *memset(void *__b, int __c, size_t __len);
 
 namespace atl {
 
