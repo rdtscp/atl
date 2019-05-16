@@ -19,7 +19,10 @@ public:
     rhs.filePtr = nullptr;
   }
 
-  ~ofstream() { fclose(filePtr); }
+  ~ofstream() {
+    if (filePtr)
+      fclose(filePtr);
+  }
 
   bool good() {
     if (filePtr)
