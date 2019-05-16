@@ -15,7 +15,10 @@ public:
     filePtr = fopen(filename.c_str(), "r");
   }
 
-  ~ifstream() { fclose(filePtr); }
+  ~ifstream() {
+    if (filePtr)
+      fclose(filePtr);
+  }
 
   bool good() {
     if (filePtr)
