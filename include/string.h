@@ -9,17 +9,16 @@ public:
   typedef char *iterator;
 
   /* Constructor */
-  string() {
+  string() : m_size(0u) {
     string_value = new char[1u];
     *string_value = '\0';
   }
 
   /* Constructor */
-  string(const unsigned int count, const char c) {
-    const unsigned int string_length = count;
-    string_value = new char[string_length + 1u];
+  string(const unsigned int count, const char c) : m_size(count) {
+    string_value = new char[m_size + 1u];
     char *string_value_ptr = string_value;
-    for (unsigned int i = 0u; i < string_length; ++i) {
+    for (unsigned int idx = 0u; idx < m_size; ++idx) {
       *string_value_ptr = c;
       ++string_value_ptr;
     }
@@ -28,10 +27,10 @@ public:
 
   /* Constructor */
   string(const char *string_literal) {
-    const unsigned int string_length = charBufferLength(string_literal);
-    string_value = new char[string_length + 1u];
+    m_size = charBufferLength(string_literal);
+    string_value = new char[m_size + 1u];
     char *string_value_ptr = string_value;
-    for (unsigned int i = 0u; i < string_length; ++i) {
+    for (unsigned int idx = 0u; idx < m_size; ++idx) {
       *string_value_ptr = *string_literal;
       ++string_value_ptr;
       ++string_literal;
@@ -43,11 +42,12 @@ public:
   string(const string &rhs) {
     if (&rhs == this)
       return;
-    const unsigned int string_length = rhs.size();
-    string_value = new char[string_length + 1u];
+
+    m_size = rhs.size();
+    string_value = new char[m_size + 1u];
     char *string_value_ptr = string_value;
-    for (unsigned int i = 0u; i < string_length; ++i) {
-      *string_value_ptr = rhs[i];
+    for (unsigned int idx = 0u; idx < m_size; ++idx) {
+      *string_value_ptr = rhs[idx];
       ++string_value_ptr;
     }
     *string_value_ptr = '\0';
@@ -57,11 +57,12 @@ public:
   string &operator=(const string &rhs) {
     if (&rhs == this)
       return *this;
-    const unsigned int string_length = rhs.size();
-    string_value = new char[string_length + 1u];
+
+    m_size = rhs.size();
+    string_value = new char[m_size + 1u];
     char *string_value_ptr = string_value;
-    for (unsigned int i = 0u; i < string_length; ++i) {
-      *string_value_ptr = rhs[i];
+    for (unsigned int idx = 0u; idx < m_size; ++idx) {
+      *string_value_ptr = rhs[idx];
       ++string_value_ptr;
     }
     *string_value_ptr = '\0';
@@ -69,13 +70,17 @@ public:
   }
 
   /* Move Constructor */
-  string(string &&rhs) : string_value(rhs.string_value) {
+  string(string &&rhs) : m_size(rhs.m_size), string_value(rhs.string_value) {
+    rhs.m_size = 0;
     rhs.string_value = nullptr;
   }
 
   /* Move-Assignment Operator */
   string &operator=(string &&rhs) {
-    this->string_value = rhs.string_value;
+    m_size = rhs.m_size;
+    string_value = rhs.string_value;
+
+    rhs.m_size = 0;
     rhs.string_value = nullptr;
     return *this;
   }
@@ -85,51 +90,66 @@ public:
 
   char &operator[](const unsigned int index) { return at(index); }
 
-  const char &operator[](const unsigned int index) const { return at(index); }
+  const char operator[](const unsigned int index) const { return at(index); }
 
-  string operator+(const char rhs) {
-    // Calculate the new size.
-    const unsigned int lhs_len = size();
-    const unsigned int rhs_len = 1u;
-    const unsigned int string_length = lhs_len + rhs_len;
+  string operator+(const char rhs) const {
+    string output(*this);
+    output += rhs;
+    return output;
+  }
+
+  string operator+(const char *rhs) const {
+    string output(*this);
+    output += rhs;
+    return output;
+  }
+
+  string operator+(const string &rhs) const {
+    string output(*this);
+    output += rhs;
+    return output;
+  }
+
+  string &operator+=(const char rhs) {
+    const unsigned int lhs_size = size();
+    const unsigned int rhs_size = 1u;
+    m_size = lhs_size + rhs_size;
 
     // Allocate memory for the new string.
-    char *new_string_value = new char[string_length + 1u];
+    char *new_string_value = new char[m_size + 1u];
     char *new_string_value_ptr = new_string_value;
 
     // Copy the LHS.
     char *lhs_ptr = string_value;
-    for (unsigned int i = 0u; i < lhs_len; ++i) {
+    for (unsigned int idx = 0u; idx < lhs_size; ++idx) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
     }
 
-    // Copy the RHS.
     *new_string_value_ptr = rhs;
     ++new_string_value_ptr;
 
     // Null terminate.
     *new_string_value_ptr = '\0';
 
-    string output(new_string_value);
-    delete[] new_string_value;
-    return output;
+    delete[] string_value;
+    string_value = new_string_value;
+    return *this;
   }
 
-  string operator+(const char *rhs) {
-    // Calculate the new size.
-    const unsigned int lhs_len = size();
-    const unsigned int rhs_len = charBufferLength(rhs);
-    const unsigned int string_length = lhs_len + rhs_len;
+  string &operator+=(const char *rhs) {
+    const unsigned int lhs_size = size();
+    const unsigned int rhs_size = charBufferLength(rhs);
+    m_size = lhs_size + rhs_size;
 
     // Allocate memory for the new string.
-    char *new_string_value = new char[string_length + 1u];
+    char *new_string_value = new char[m_size + 1u];
     char *new_string_value_ptr = new_string_value;
 
     // Copy the LHS.
-    char *lhs_ptr = string_value;
-    for (unsigned int i = 0u; i < lhs_len; ++i) {
+    const char *lhs_ptr = string_value;
+    for (unsigned int idx = 0u; idx < lhs_size; ++idx) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -137,7 +157,7 @@ public:
 
     // Copy the RHS.
     const char *rhs_ptr = rhs;
-    for (unsigned int i = 0u; i < rhs_len; ++i) {
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -146,91 +166,39 @@ public:
     // Null terminate.
     *new_string_value_ptr = '\0';
 
-    string output(new_string_value);
-    delete[] new_string_value;
-    return output;
-  }
-
-  string operator+(const string &rhs) {
-    // Calculate the new size.
-    const unsigned int lhs_len = size();
-    const unsigned int rhs_len = rhs.size();
-    const unsigned int string_length = lhs_len + rhs_len;
-
-    // Allocate memory for the new string.
-    char *new_string_value = new char[string_length + 1u];
-    char *new_string_value_ptr = new_string_value;
-
-    // Copy the LHS.
-    char *lhs_ptr = string_value;
-    for (unsigned int i = 0u; i < lhs_len; ++i) {
-      *new_string_value_ptr = *lhs_ptr;
-      ++lhs_ptr;
-      ++new_string_value_ptr;
-    }
-
-    // Copy the RHS.
-    char *rhs_ptr = rhs.c_str();
-    for (unsigned int i = 0u; i < rhs_len; ++i) {
-      *new_string_value_ptr = *rhs_ptr;
-      ++rhs_ptr;
-      ++new_string_value_ptr;
-    }
-
-    // Null terminate.
-    *new_string_value_ptr = '\0';
-
-    string output(new_string_value);
-    delete[] new_string_value;
-    return output;
-  }
-
-  string operator+(const string &rhs) const {
-    // Calculate the new size.
-    const unsigned int lhs_len = size();
-    const unsigned int rhs_len = rhs.size();
-    const unsigned int string_length = lhs_len + rhs_len;
-
-    // Allocate memory for the new string.
-    char *new_string_value = new char[string_length + 1u];
-    char *new_string_value_ptr = new_string_value;
-
-    // Copy the LHS.
-    char *lhs_ptr = string_value;
-    for (unsigned int i = 0u; i < lhs_len; ++i) {
-      *new_string_value_ptr = *lhs_ptr;
-      ++lhs_ptr;
-      ++new_string_value_ptr;
-    }
-
-    // Copy the RHS.
-    char *rhs_ptr = rhs.c_str();
-    for (unsigned int i = 0u; i < rhs_len; ++i) {
-      *new_string_value_ptr = *rhs_ptr;
-      ++rhs_ptr;
-      ++new_string_value_ptr;
-    }
-
-    // Null terminate.
-    *new_string_value_ptr = '\0';
-
-    string output(new_string_value);
-    delete[] new_string_value;
-    return output;
-  }
-
-  string &operator+=(const char rhs) {
-    *this = *this + rhs;
-    return *this;
-  }
-
-  string &operator+=(const char *rhs) {
-    *this = *this + atl::string(rhs);
+    delete[] string_value;
+    string_value = new_string_value;
     return *this;
   }
 
   string &operator+=(const string &rhs) {
-    *this = *this + rhs;
+    const unsigned int lhs_size = size();
+    const unsigned int rhs_size = rhs.size();
+    m_size = lhs_size + rhs_size;
+
+    // Allocate memory for the new string.
+    char *new_string_value = new char[m_size + 1u];
+    char *new_string_value_ptr = new_string_value;
+
+    // Copy the LHS.
+    const char *lhs_ptr = string_value;
+    for (unsigned int idx = 0u; idx < lhs_size; ++idx) {
+      *new_string_value_ptr = *lhs_ptr;
+      ++lhs_ptr;
+      ++new_string_value_ptr;
+    }
+
+    // Copy the RHS.
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
+      *new_string_value_ptr = rhs[idx];
+      ++new_string_value_ptr;
+    }
+
+    // Null terminate.
+    *new_string_value_ptr = '\0';
+
+    delete[] string_value;
+    string_value = new_string_value;
     return *this;
   }
 
@@ -243,16 +211,16 @@ public:
   bool operator>=(const char *rhs) const { return *this >= string(rhs); }
 
   bool operator<(const string &rhs) const {
-    const unsigned int lhsSize = this->size();
-    const unsigned int rhsSize = rhs.size();
-    if (lhsSize < rhsSize)
+    const unsigned int lhs_size = size();
+    const unsigned int rhs_size = rhs.size();
+    if (lhs_size < rhs_size)
       return true;
-    if (lhsSize > rhsSize)
+    if (lhs_size > rhs_size)
       return false;
 
     char currLhs;
     char currRhs;
-    for (unsigned int idx = 0u; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs < (int)currRhs) {
@@ -263,16 +231,16 @@ public:
   }
 
   bool operator>(const string &rhs) const {
-    const unsigned int lhsSize = this->size();
-    const unsigned int rhsSize = rhs.size();
-    if (lhsSize < rhsSize)
+    const unsigned int lhs_size = this->size();
+    const unsigned int rhs_size = rhs.size();
+    if (lhs_size < rhs_size)
       return false;
-    if (lhsSize > rhsSize)
+    if (lhs_size > rhs_size)
       return true;
 
     char currLhs;
     char currRhs;
-    for (unsigned int idx = 0u; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs > (int)currRhs) {
@@ -283,16 +251,16 @@ public:
   }
 
   bool operator<=(const string &rhs) const {
-    const unsigned int lhsSize = this->size();
-    const unsigned int rhsSize = rhs.size();
-    if (lhsSize < rhsSize)
+    const unsigned int lhs_size = this->size();
+    const unsigned int rhs_size = rhs.size();
+    if (lhs_size < rhs_size)
       return true;
-    if (lhsSize > rhsSize)
+    if (lhs_size > rhs_size)
       return false;
 
     char currLhs;
     char currRhs;
-    for (unsigned int idx = 0u; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs > (int)currRhs) {
@@ -303,16 +271,16 @@ public:
   }
 
   bool operator>=(const string &rhs) const {
-    const unsigned int lhsSize = this->size();
-    const unsigned int rhsSize = rhs.size();
-    if (lhsSize < rhsSize)
+    const unsigned int lhs_size = this->size();
+    const unsigned int rhs_size = rhs.size();
+    if (lhs_size < rhs_size)
       return false;
-    if (lhsSize > rhsSize)
+    if (lhs_size > rhs_size)
       return true;
 
     char currLhs;
     char currRhs;
-    for (unsigned int idx = 0u; idx < rhsSize; ++idx) {
+    for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
       if ((int)currLhs < (int)currRhs) {
@@ -357,7 +325,7 @@ public:
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
   char &at(const unsigned int index) {
-    if (index < charBufferLength(string_value)) {
+    if (index < size()) {
       unsigned int currIdx = 0u;
       char *string_value_ptr = string_value;
       while (*string_value_ptr != '\0') {
@@ -371,8 +339,8 @@ public:
     throw "atl::string::at Out of Bounds Exception";
   }
 
-  char &at(const unsigned int index) const {
-    if (index < charBufferLength(string_value)) {
+  const char &at(const unsigned int index) const {
+    if (index < size()) {
       unsigned int currIdx = 0u;
       char *string_value_ptr = string_value;
       while (*string_value_ptr != '\0') {
@@ -389,7 +357,7 @@ public:
   const_iterator begin() const { return &string_value[0u]; }
 
   const_iterator end() const {
-    const unsigned int len = charBufferLength(string_value);
+    const unsigned int len = size();
     return &string_value[len];
   }
 
@@ -411,9 +379,14 @@ public:
 
   unsigned int length() const { return size(); }
 
-  unsigned int size() const { return charBufferLength(string_value); }
+  unsigned int size() const {
+    // if (m_size > 0)
+    return m_size;
+    // return charBufferLength(string_value);
+  }
 
 private:
+  unsigned int m_size;
   char *string_value;
 
   unsigned int charBufferLength(const char *buf) const {
@@ -424,7 +397,7 @@ private:
     }
     return length;
   }
-};
+}; // namespace atl
 
 static string operator+(const char *lhs, const atl::string &rhs) {
   return atl::string(lhs) + rhs;
