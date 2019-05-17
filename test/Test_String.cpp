@@ -242,6 +242,8 @@ TEST(StringTest, Size) {
   foo += atl::string("hij");
   ASSERT_EQ(foo.size(), 10);
   ASSERT_EQ((foo + "klm").size(), 13);
+  ASSERT_EQ(foo[0], 'a');
+  ASSERT_EQ(foo[9], 'j');
 }
 
 // The fixture for testing class Project1. From google test primer.

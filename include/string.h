@@ -325,30 +325,14 @@ public:
 
   char &at(const unsigned int index) {
     if (index < size()) {
-      unsigned int currIdx = 0u;
-      char *string_value_ptr = string_value;
-      while (*string_value_ptr != '\0') {
-        if (currIdx == index)
-          return *string_value_ptr;
-        ++currIdx;
-        ++string_value_ptr;
-      }
-      throw "atl::string::at Unexpected NULL Terminator";
+      return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
   }
 
   const char &at(const unsigned int index) const {
     if (index < size()) {
-      unsigned int currIdx = 0u;
-      char *string_value_ptr = string_value;
-      while (*string_value_ptr != '\0') {
-        if (currIdx == index)
-          return *string_value_ptr;
-        ++currIdx;
-        ++string_value_ptr;
-      }
-      throw "atl::string::at Unexpected NULL Terminator";
+      return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
   }
