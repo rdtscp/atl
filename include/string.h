@@ -71,7 +71,6 @@ public:
 
   /* Move Constructor */
   string(string &&rhs) : m_size(rhs.m_size), string_value(rhs.string_value) {
-    rhs.m_size = 0;
     rhs.string_value = nullptr;
   }
 
@@ -326,30 +325,14 @@ public:
 
   char &at(const unsigned int index) {
     if (index < size()) {
-      unsigned int currIdx = 0u;
-      char *string_value_ptr = string_value;
-      while (*string_value_ptr != '\0') {
-        if (currIdx == index)
-          return *string_value_ptr;
-        ++currIdx;
-        ++string_value_ptr;
-      }
-      throw "atl::string::at Unexpected NULL Terminator";
+      return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
   }
 
   const char &at(const unsigned int index) const {
     if (index < size()) {
-      unsigned int currIdx = 0u;
-      char *string_value_ptr = string_value;
-      while (*string_value_ptr != '\0') {
-        if (currIdx == index)
-          return *string_value_ptr;
-        ++currIdx;
-        ++string_value_ptr;
-      }
-      throw "atl::string::at Unexpected NULL Terminator";
+      return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
   }
@@ -379,11 +362,7 @@ public:
 
   unsigned int length() const { return size(); }
 
-  unsigned int size() const {
-    // if (m_size > 0)
-    return m_size;
-    // return charBufferLength(string_value);
-  }
+  unsigned int size() const { return m_size; }
 
 private:
   unsigned int m_size;

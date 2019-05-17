@@ -232,6 +232,20 @@ TEST(StringTest, Stoi) {
   ASSERT_EQ(atl::stoi(negativeint), -193812394);
 }
 
+TEST(StringTest, Size) {
+  atl::string foo(atl::string("abc"));
+  ASSERT_EQ(foo.size(), 3);
+  foo += "def";
+  ASSERT_EQ(foo.size(), 6);
+  foo += 'g';
+  ASSERT_EQ(foo.size(), 7);
+  foo += atl::string("hij");
+  ASSERT_EQ(foo.size(), 10);
+  ASSERT_EQ((foo + "klm").size(), 13);
+  ASSERT_EQ(foo[0], 'a');
+  ASSERT_EQ(foo[9], 'j');
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:
