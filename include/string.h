@@ -71,7 +71,6 @@ public:
 
   /* Move Constructor */
   string(string &&rhs) : m_size(rhs.m_size), string_value(rhs.string_value) {
-    rhs.m_size = 0;
     rhs.string_value = nullptr;
   }
 
@@ -379,11 +378,7 @@ public:
 
   unsigned int length() const { return size(); }
 
-  unsigned int size() const {
-    // if (m_size > 0)
-    return m_size;
-    // return charBufferLength(string_value);
-  }
+  unsigned int size() const { return m_size; }
 
 private:
   unsigned int m_size;
