@@ -74,6 +74,8 @@ TEST(StringTest, EqualsOperator) {
   ASSERT_TRUE(atlString1 == "foo");
   ASSERT_FALSE(atlString1 == "bar");
   ASSERT_FALSE(atlString1 == "foo ");
+  ASSERT_FALSE(atlString1 == "fooo");
+  ASSERT_FALSE(atlString1 == "fooo");
 }
 
 TEST(StringTest, NotEqualsOperator) {
@@ -101,6 +103,11 @@ TEST(StringTest, PlusEqualsOperator) {
 
   atlString2 += '!';
   ASSERT_TRUE(atlString2 == "hello world!");
+
+  atl::string atlString3("my string\n");
+  atlString3 += '\0';
+  atlString3 += "\n";
+  ASSERT_TRUE(atlString3 == "my string\n\n");
 }
 
 TEST(StringTest, Find) {

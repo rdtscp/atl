@@ -110,6 +110,9 @@ public:
   }
 
   string &operator+=(const char rhs) {
+    if (rhs == '\0')
+      return *this;
+
     const unsigned int lhs_size = size();
     const unsigned int rhs_size = 1u;
     m_size = lhs_size + rhs_size;
