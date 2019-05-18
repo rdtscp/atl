@@ -371,7 +371,7 @@ private:
   unsigned int m_size;
   char *string_value;
 
-  unsigned int charBufferLength(const char *buf) const {
+  static unsigned int charBufferLength(const char *buf) {
     unsigned int length = 0u;
     while (*buf != '\0') {
       ++length;
