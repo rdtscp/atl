@@ -79,7 +79,7 @@ public:
     m_size = rhs.m_size;
     string_value = rhs.string_value;
 
-    rhs.m_size = 0;
+    rhs.m_size = 0u;
     rhs.string_value = nullptr;
     return *this;
   }
