@@ -70,9 +70,9 @@ public:
 
   bool operator!=(const set<T> &rhs) const { return !(*this == rhs); }
 
-  bool find(const T &elem) {
+  bool find(const T &elem) const {
     for (unsigned int idx = 0; idx < size(); ++idx)
-      if (elements[idx] == elem)
+      if (at(idx) == elem)
         return true;
 
     return false;
@@ -104,7 +104,7 @@ private:
     if (index < elements_size) {
       return elements[index];
     }
-    throw "atl::vector::at Out of Bounds Exception";
+    throw "atl::set::at Out of Bounds Exception";
   }
 
   int capacity() const { return elements_size; }
