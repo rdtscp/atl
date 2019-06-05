@@ -1,11 +1,12 @@
 
 def atlsharedprtr_SummaryProvider(valobj, dict_env):
     ptr = valobj.GetChildMemberWithName('ptr')
-        
+
     type_name = ptr.GetTypeName()
     if type_name == None:
         return "nullptr"
     return "<{}>".format(type_name).replace(" *", "")
+
 
 class atlshared_ptr_SynthProvider:
 
@@ -15,7 +16,7 @@ class atlshared_ptr_SynthProvider:
 
     def num_children(self):
         return 1
-        
+
     def get_child_index(self, name):
         return 0
 
@@ -46,6 +47,7 @@ def atlstring_SummaryProvider(valobj, dict_env):
         string_value = "\"[...]" + string_value[-25:]
     return string_value
 
+
 class atlvector_SynthProvider:
 
     def __init__(self, valobj, dict_env):
@@ -75,7 +77,8 @@ class atlvector_SynthProvider:
 
     def update(self):
         self.elements = self.valobj.GetChildMemberWithName('elements')
-        self.elements_used = self.valobj.GetChildMemberWithName('elements_used')
+        self.elements_used = self.valobj.GetChildMemberWithName(
+            'elements_used')
         self.data_type = self.elements.GetType().GetPointeeType()
         self.data_size = self.data_type.GetByteSize()
 
@@ -85,6 +88,7 @@ class atlvector_SynthProvider:
 
 def atlvector_SummaryProvider(valobj, dict_env):
     return "size={}".format(valobj.GetNumChildren())
+
 
 def __lldb_init_module(debugger, dict_env):
     debugger.HandleCommand('type summary add -F'
