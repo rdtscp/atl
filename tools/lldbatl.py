@@ -1,11 +1,7 @@
-import lldb
-import lldb.formatters.Logger
 
-
-def atlsharedprtr_SummaryProvider(valobj, dict):
+def atlsharedprtr_SummaryProvider(valobj, dict_env):
     ptr = valobj.GetChildMemberWithName('ptr')
-    refCount = valobj.GetChildMemberWithName('refCount')
-    
+        
     type_name = ptr.GetTypeName()
     if type_name == None:
         return "nullptr"
@@ -13,7 +9,7 @@ def atlsharedprtr_SummaryProvider(valobj, dict):
 
 class atlshared_ptr_SynthProvider:
 
-    def __init__(self, valobj, dict):
+    def __init__(self, valobj, dict_env):
         self.valobj = valobj
         self.update()
 
@@ -44,7 +40,7 @@ class atlshared_ptr_SynthProvider:
         return True
 
 
-def atlstring_SummaryProvider(valobj, dict):
+def atlstring_SummaryProvider(valobj, dict_env):
     string_value = valobj.GetChildMemberWithName('string_value').GetSummary()
     if len(string_value) > 25:
         string_value = "\"[...]" + string_value[-25:]
@@ -52,7 +48,7 @@ def atlstring_SummaryProvider(valobj, dict):
 
 class atlvector_SynthProvider:
 
-    def __init__(self, valobj, dict):
+    def __init__(self, valobj, dict_env):
         self.valobj = valobj
         self.update()
 
@@ -87,10 +83,10 @@ class atlvector_SynthProvider:
         return True
 
 
-def atlvector_SummaryProvider(valobj, dict):
+def atlvector_SummaryProvider(valobj, dict_env):
     return "size={}".format(valobj.GetNumChildren())
 
-def __lldb_init_module(debugger, dict):
+def __lldb_init_module(debugger, dict_env):
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlsharedprtr_SummaryProvider -e -x "^atl::shared_ptr<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
