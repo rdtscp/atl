@@ -87,9 +87,11 @@ public:
   /* Destructor */
   ~string() { delete[] string_value; }
 
-  char &operator[](const unsigned int index) { return at(index); }
+  char &operator[](const unsigned int index) { return this->at(index); }
 
-  const char operator[](const unsigned int index) const { return at(index); }
+  const char operator[](const unsigned int index) const {
+    return this->at(index);
+  }
 
   string operator+(const char rhs) const {
     string output(*this);
@@ -299,7 +301,7 @@ public:
     char lhsChar;
     char rhsChar;
     for (unsigned int charIdx = 0u; charIdx < str_len; ++charIdx) {
-      lhsChar = at(charIdx);
+      lhsChar = this->at(charIdx);
       rhsChar = rhs.at(charIdx);
       if (lhsChar != rhsChar)
         return false;
@@ -314,7 +316,7 @@ public:
     char lhsChar;
     char rhsChar;
     for (unsigned int charIdx = 0u; charIdx < str_len; ++charIdx) {
-      lhsChar = at(charIdx);
+      lhsChar = this->at(charIdx);
       rhsChar = rhs[charIdx];
       if (lhsChar != rhsChar)
         return false;
@@ -355,7 +357,7 @@ public:
     const unsigned int len = length();
     char currChar;
     for (unsigned int idx = 0u; idx < len; ++idx) {
-      currChar = at(idx);
+      currChar = this->at(idx);
       if (currChar == searchChar) {
         return static_cast<int>(idx);
       }
