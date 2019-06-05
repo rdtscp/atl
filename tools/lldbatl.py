@@ -1,3 +1,44 @@
+class atlset_SynthProvider:
+
+    def __init__(self, valobj, dict_env):
+        self.valobj = valobj
+        self.update()
+
+    def num_children(self):
+        num_elems = self.elements_used.GetValueAsUnsigned()
+        return num_elems
+
+    def get_child_index(self, name):
+        return int(name.lstrip('[').rstrip(']'))
+
+    def get_child_at_index(self, index):
+        if index < 0 or index >= self.num_children():
+            return None
+        offset = index * self.data_size
+        return self.elements.CreateChildAtOffset('[' + str(index) + ']', offset, self.data_type)
+
+    def get_type_from_name(self):
+        import re
+        name = self.valobj.GetType().GetName()
+        res = re.match("^(atl::)?set<(.+)>$", name)
+        if res:
+            return res.group(2)
+        return None
+
+    def update(self):
+        self.elements = self.valobj.GetChildMemberWithName('elements')
+        self.elements_used = self.valobj.GetChildMemberWithName(
+            'elements_used')
+        self.data_type = self.elements.GetType().GetPointeeType()
+        self.data_size = self.data_type.GetByteSize()
+
+    def has_children(self):
+        return True
+
+
+def atlset_SummaryProvider(valobj, dict_env):
+    return "size={}".format(valobj.GetNumChildren())
+
 
 def atlsharedprtr_SummaryProvider(valobj, dict_env):
     ptr = valobj.GetChildMemberWithName('ptr')
@@ -91,6 +132,10 @@ def atlvector_SummaryProvider(valobj, dict_env):
 
 
 def __lldb_init_module(debugger, dict_env):
+    debugger.HandleCommand('type summary add -F'
+                           'lldbatl.atlset_SummaryProvider -e -x "^atl::set<.+>$"')
+    debugger.HandleCommand('type synthetic add -l'
+                           'lldbatl.atlset_SynthProvider -x "^atl::set<.+>$"')
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlsharedprtr_SummaryProvider -e -x "^atl::shared_ptr<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
