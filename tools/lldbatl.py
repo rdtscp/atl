@@ -1,6 +1,9 @@
 import lldb
 import lldb.formatters.Logger
 
+def atlstring_SummaryProvider(valobj, dict):
+    return valobj.GetChildMemberWithName('string_value').GetSummary()
+
 class atlvector_SynthProvider:
 
     def __init__(self, valobj, dict):
@@ -45,6 +48,8 @@ def atlvector_SummaryProvider(valobj, dict):
     return "size={}".format(valobj.GetNumChildren())
 
 def __lldb_init_module(debugger, dict):
+    debugger.HandleCommand('type summary add -F'
+                           'lldbatl.atlstring_SummaryProvider atl::string')
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlvector_SummaryProvider -e -x "^atl::vector<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
