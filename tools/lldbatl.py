@@ -3,7 +3,13 @@ import lldb.formatters.Logger
 
 
 def atlsharedprtr_SummaryProvider(valobj, dict):
-    return valobj.GetChildMemberWithName('refCount').Dereference().GetValueAsUnsigned()
+    ptr = valobj.GetChildMemberWithName('ptr')
+    refCount = valobj.GetChildMemberWithName('refCount')
+    
+    type_name = ptr.GetTypeName()
+    if type_name == None:
+        return "nullptr"
+    return "<{}>".format(type_name).replace(" *", "")
 
 class atlshared_ptr_SynthProvider:
 
@@ -18,15 +24,15 @@ class atlshared_ptr_SynthProvider:
         return 0
 
     def get_child_at_index(self, index):
-        return self.ptr.Dereference()
+        if self.ptr.GetValue() != "0x0000000000000000":
+            return self.ptr
+        else:
+            return None
 
     def get_type_from_name(self):
         import re
         name = self.valobj.GetType().GetName()
         res = re.match("^(atl::)?shared_ptr<(.+)>$", name)
-        if res:
-            return res.group(2)
-        res = re.match("^(atl::)?shared_ptr<(.+), \d+>$", name)
         if res:
             return res.group(2)
         return None
@@ -39,7 +45,10 @@ class atlshared_ptr_SynthProvider:
 
 
 def atlstring_SummaryProvider(valobj, dict):
-    return valobj.GetChildMemberWithName('string_value').GetSummary()
+    string_value = valobj.GetChildMemberWithName('string_value').GetSummary()
+    if len(string_value) > 25:
+        string_value = "\"[...]" + string_value[-25:]
+    return string_value
 
 class atlvector_SynthProvider:
 
@@ -64,9 +73,6 @@ class atlvector_SynthProvider:
         import re
         name = self.valobj.GetType().GetName()
         res = re.match("^(atl::)?vector<(.+)>$", name)
-        if res:
-            return res.group(2)
-        res = re.match("^(atl::)?vector<(.+), \d+>$", name)
         if res:
             return res.group(2)
         return None
