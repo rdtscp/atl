@@ -1,4 +1,3 @@
-
 def atlsharedprtr_SummaryProvider(valobj, dict_env):
     ptr = valobj.GetChildMemberWithName('ptr')
 
@@ -91,6 +90,10 @@ def atlvector_SummaryProvider(valobj, dict_env):
 
 
 def __lldb_init_module(debugger, dict_env):
+    debugger.HandleCommand('type summary add -F'
+                           'lldbatl.atlvector_SummaryProvider -e -x "^atl::set<.+>$"')
+    debugger.HandleCommand('type synthetic add -l'
+                           'lldbatl.atlvector_SynthProvider -x "^atl::set<.+>$"')
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlsharedprtr_SummaryProvider -e -x "^atl::shared_ptr<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
