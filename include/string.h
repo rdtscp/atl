@@ -115,7 +115,7 @@ public:
     if (rhs == '\0')
       return *this;
 
-    const unsigned int lhs_size = size();
+    const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = 1u;
     m_size = lhs_size + rhs_size;
 
@@ -143,7 +143,7 @@ public:
   }
 
   string &operator+=(const char *rhs) {
-    const unsigned int lhs_size = size();
+    const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = charBufferLength(rhs);
     m_size = lhs_size + rhs_size;
 
@@ -176,7 +176,7 @@ public:
   }
 
   string &operator+=(const string &rhs) {
-    const unsigned int lhs_size = size();
+    const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     m_size = lhs_size + rhs_size;
 
@@ -215,7 +215,7 @@ public:
   bool operator>=(const char *rhs) const { return *this >= string(rhs); }
 
   bool operator<(const string &rhs) const {
-    const unsigned int lhs_size = size();
+    const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
       return true;
@@ -329,14 +329,14 @@ public:
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
   char &at(const unsigned int index) {
-    if (index < size()) {
+    if (index < this->size()) {
       return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
   }
 
   const char &at(const unsigned int index) const {
-    if (index < size()) {
+    if (index < this->size()) {
       return string_value[index];
     }
     throw "atl::string::at Out of Bounds Exception";
@@ -345,7 +345,7 @@ public:
   const_iterator begin() const { return &string_value[0u]; }
 
   const_iterator end() const {
-    const unsigned int len = size();
+    const unsigned int len = this->size();
     return &string_value[len];
   }
 
@@ -365,7 +365,7 @@ public:
     return -1;
   }
 
-  unsigned int length() const { return size(); }
+  unsigned int length() const { return this->size(); }
 
   unsigned int size() const { return m_size; }
 
