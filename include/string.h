@@ -295,9 +295,9 @@ public:
   }
 
   bool operator==(const string &rhs) const {
-    if (length() != rhs.length())
+    if (this->length() != rhs.length())
       return false;
-    const unsigned int str_len = length();
+    const unsigned int str_len = this->length();
     char lhsChar;
     char rhsChar;
     for (unsigned int charIdx = 0u; charIdx < str_len; ++charIdx) {
@@ -310,9 +310,9 @@ public:
   }
 
   bool operator==(const char *rhs) const {
-    if (length() != charBufferLength(rhs))
+    if (this->length() != charBufferLength(rhs))
       return false;
-    const unsigned int str_len = length();
+    const unsigned int str_len = this->length();
     char lhsChar;
     char rhsChar;
     for (unsigned int charIdx = 0u; charIdx < str_len; ++charIdx) {
@@ -354,7 +354,7 @@ public:
   char *c_str() const { return string_value; }
 
   int find(const char searchChar) const {
-    const unsigned int len = length();
+    const unsigned int len = this->length();
     char currChar;
     for (unsigned int idx = 0u; idx < len; ++idx) {
       currChar = this->at(idx);
