@@ -383,8 +383,8 @@ private:
   }
 }; // namespace atl
 
-static string operator+(const char *lhs, const atl::string &rhs) {
-  return atl::string(lhs) + rhs;
+static string operator+(const char *lhs, const string &rhs) {
+  return string(lhs) + rhs;
 }
 
 static bool isspace(const char c) {
@@ -417,7 +417,7 @@ static int stoi(const char *str) {
   return sign * output;
 }
 
-static int stoi(const atl::string &str) { return stoi(str.c_str()); }
+static int stoi(const string &str) { return stoi(str.c_str()); }
 
 /* https://www.geeksforgeeks.org/implement-itoa/ */
 static string to_string(int num) {
