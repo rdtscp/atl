@@ -227,7 +227,7 @@ public:
     for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
-      if ((int)currLhs < (int)currRhs) {
+      if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
         return true;
       }
     }
@@ -247,7 +247,7 @@ public:
     for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
-      if ((int)currLhs > (int)currRhs) {
+      if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
         return true;
       }
     }
@@ -267,7 +267,7 @@ public:
     for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
-      if ((int)currLhs > (int)currRhs) {
+      if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
         return false;
       }
     }
@@ -287,7 +287,7 @@ public:
     for (unsigned int idx = 0u; idx < rhs_size; ++idx) {
       currLhs = this->at(idx);
       currRhs = rhs[idx];
-      if ((int)currLhs < (int)currRhs) {
+      if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
         return false;
       }
     }
@@ -395,7 +395,9 @@ static bool isalpha(const char c) {
   return ((('a' <= (c)) && ((c) <= 'z')) || (('A' <= (c)) && ((c) <= 'Z')));
 }
 
-static bool isdigit(const char c) { return (c >= (int)'0' && c <= (int)'9'); }
+static bool isdigit(const char c) {
+  return (c >= static_cast<int>('0') && c <= static_cast<int>('9'));
+}
 
 /* https://www.geeksforgeeks.org/write-your-own-atoi/ */
 static int stoi(const char *str) {

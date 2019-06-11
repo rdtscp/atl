@@ -19,7 +19,7 @@ static int hash(const atl::string &s, const long max, const long prime = 163) {
     output += (long)power(prime, len_s - (i + 1)) * s[i];
     output = output % max;
   }
-  return (int)output;
+  return static_cast<int>(output);
 }
 
 } // namespace atl
