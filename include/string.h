@@ -392,12 +392,10 @@ static bool isspace(const char c) {
 }
 
 static bool isalpha(const char c) {
-  return ((('a' <= (c)) && ((c) <= 'z')) || (('A' <= (c)) && ((c) <= 'Z')));
+  return ((('a' <= c) && (c <= 'z')) || (('A' <= c) && (c <= 'Z')));
 }
 
-static bool isdigit(const char c) {
-  return (c >= static_cast<int>('0') && c <= static_cast<int>('9'));
-}
+static bool isdigit(const char c) { return (c >= '0' && c <= '9'); }
 
 /* https://www.geeksforgeeks.org/write-your-own-atoi/ */
 static int stoi(const char *str) {
@@ -413,7 +411,7 @@ static int stoi(const char *str) {
 
   // Iterate through all digits and update the result
   for (unsigned int idx = start_idx; str[idx] != '\0'; ++idx)
-    output = output * 10 + str[idx] - '0';
+    output = output * 10 + str[idx] - static_cast<int>('0');
 
   // Return result with sign
   return sign * output;
