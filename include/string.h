@@ -437,8 +437,11 @@ static string to_string(int num) {
   // Process individual digits
   string reverseDigits;
   while (num != 0) {
-    int rem = num % 10;
-    reverseDigits += (rem > 9) ? (rem - 10) + 'a' : rem + '0';
+    unsigned int rem = num % 10;
+    const char next_char =
+        (rem > 9) ? static_cast<char>((rem - 10) + static_cast<int>('a'))
+                  : static_cast<char>(rem + static_cast<int>('0'));
+    reverseDigits += next_char;
     num = num / 10;
   }
 
