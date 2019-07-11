@@ -411,7 +411,7 @@ static int stoi(const char *str) {
 
   // Iterate through all digits and update the result
   for (unsigned int idx = start_idx; str[idx] != '\0'; ++idx)
-    output = output * 10 + str[idx] - static_cast<int>('0');
+    output = output * 10 + static_cast<int>(str[idx]) - static_cast<int>('0');
 
   // Return result with sign
   return sign * output;
