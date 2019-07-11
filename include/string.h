@@ -439,8 +439,9 @@ static string to_string(int num) {
   while (num != 0) {
     unsigned int rem = num % 10;
     const char next_char =
-        (rem > 9) ? static_cast<char>((rem - 10) + static_cast<int>('a'))
-                  : static_cast<char>(rem + static_cast<int>('0'));
+        (rem > 9u)
+            ? static_cast<char>((rem - 10u) + static_cast<unsigned int>('a'))
+            : static_cast<char>(rem + static_cast<unsigned int>('0'));
     reverseDigits += next_char;
     num = num / 10;
   }
