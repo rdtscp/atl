@@ -452,8 +452,9 @@ static string to_string(int num) {
 
   // Reverse the string
   string output;
-  for (int idx = reverseDigits.size() - 1; idx >= 0; --idx) {
-    char currChar = reverseDigits[idx];
+  for (int idx = static_cast<int>(reverseDigits.size()) - 1; idx >= 0; --idx) {
+    const unsigned int index = static_cast<unsigned int>(idx);
+    char currChar = reverseDigits[index];
     output += currChar;
   }
 
