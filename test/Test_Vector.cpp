@@ -135,6 +135,30 @@ TEST(VectorTest, Clear) {
   ASSERT_EQ(atlVect.size(), 0u);
 }
 
+TEST(VectorTest, PushFront) {
+  atl::vector<int> atlVect;
+  atlVect.push_back(1);
+  atlVect.push_back(2);
+  atlVect.push_back(3);
+  ASSERT_EQ(atlVect.size(), 3u);
+  ASSERT_EQ(atlVect[0], 1);
+  ASSERT_EQ(atlVect[1], 2);
+  ASSERT_EQ(atlVect[2], 3);
+  atlVect.push_front(0);
+  ASSERT_EQ(atlVect.size(), 4u);
+  ASSERT_EQ(atlVect[0], 0);
+  ASSERT_EQ(atlVect[1], 1);
+  ASSERT_EQ(atlVect[2], 2);
+  ASSERT_EQ(atlVect[3], 3);
+  atlVect.push_front(-1);
+  ASSERT_EQ(atlVect.size(), 5u);
+  ASSERT_EQ(atlVect[0], -1);
+  ASSERT_EQ(atlVect[1], 0);
+  ASSERT_EQ(atlVect[2], 1);
+  ASSERT_EQ(atlVect[3], 2);
+  ASSERT_EQ(atlVect[4], 3);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Vector : public ::testing::Test {
 protected:

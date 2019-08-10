@@ -124,6 +124,20 @@ public:
     ++elements_used;
   }
 
+  void push_front(const T &elem) {
+    if (capacity() == 0)
+      reserve(1);
+
+    if (size() >= capacity())
+      reserve(1 + capacity());
+
+    for (unsigned int idx = elements_used; idx > 0; --idx)
+      elements[idx] = elements[idx - 1];
+
+    elements[0] = elem;
+    ++elements_used;
+  }
+
   T pop_back() {
     --elements_used;
     return erase(elements_used);
