@@ -39,7 +39,7 @@ public:
   }
 
   /* Copy Constructor */
-  string(const string &rhs) {
+  string(const atl::string &rhs) {
     if (&rhs == this)
       return;
 
@@ -54,7 +54,7 @@ public:
   }
 
   /* Assignment Operator */
-  string &operator=(const string &rhs) {
+  string &operator=(const atl::string &rhs) {
     if (&rhs == this)
       return *this;
 
@@ -70,12 +70,13 @@ public:
   }
 
   /* Move Constructor */
-  string(string &&rhs) : m_size(rhs.m_size), string_value(rhs.string_value) {
+  string(atl::string &&rhs)
+      : m_size(rhs.m_size), string_value(rhs.string_value) {
     rhs.string_value = nullptr;
   }
 
   /* Move-Assignment Operator */
-  string &operator=(string &&rhs) {
+  string &operator=(atl::string &&rhs) {
     m_size = rhs.m_size;
     string_value = rhs.string_value;
 
@@ -93,25 +94,25 @@ public:
     return this->at(index);
   }
 
-  string operator+(const char rhs) const {
+  atl::string operator+(const char rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  string operator+(const char *rhs) const {
+  atl::string operator+(const char *rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  string operator+(const string &rhs) const {
+  atl::string operator+(const atl::string &rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  string &operator+=(const char rhs) {
+  atl::string &operator+=(const char rhs) {
     if (rhs == '\0')
       return *this;
 
@@ -142,7 +143,7 @@ public:
     return *this;
   }
 
-  string &operator+=(const char *rhs) {
+  atl::string &operator+=(const char *rhs) {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = charBufferLength(rhs);
     m_size = lhs_size + rhs_size;
@@ -175,7 +176,7 @@ public:
     return *this;
   }
 
-  string &operator+=(const string &rhs) {
+  atl::string &operator+=(const atl::string &rhs) {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     m_size = lhs_size + rhs_size;
@@ -206,15 +207,15 @@ public:
     return *this;
   }
 
-  bool operator<(const char *rhs) const { return *this < string(rhs); }
+  bool operator<(const char *rhs) const { return *this < atl::string(rhs); }
 
-  bool operator>(const char *rhs) const { return *this > string(rhs); }
+  bool operator>(const char *rhs) const { return *this > atl::string(rhs); }
 
-  bool operator<=(const char *rhs) const { return *this <= string(rhs); }
+  bool operator<=(const char *rhs) const { return *this <= atl::string(rhs); }
 
-  bool operator>=(const char *rhs) const { return *this >= string(rhs); }
+  bool operator>=(const char *rhs) const { return *this >= atl::string(rhs); }
 
-  bool operator<(const string &rhs) const {
+  bool operator<(const atl::string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -234,7 +235,7 @@ public:
     return false;
   }
 
-  bool operator>(const string &rhs) const {
+  bool operator>(const atl::string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -254,7 +255,7 @@ public:
     return false;
   }
 
-  bool operator<=(const string &rhs) const {
+  bool operator<=(const atl::string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -274,7 +275,7 @@ public:
     return true;
   }
 
-  bool operator>=(const string &rhs) const {
+  bool operator>=(const atl::string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -294,7 +295,7 @@ public:
     return true;
   }
 
-  bool operator==(const string &rhs) const {
+  bool operator==(const atl::string &rhs) const {
     if (this->length() != rhs.length())
       return false;
     const unsigned int str_len = this->length();
@@ -324,7 +325,7 @@ public:
     return true;
   }
 
-  bool operator!=(const string &rhs) const { return !(*this == rhs); }
+  bool operator!=(const atl::string &rhs) const { return !(*this == rhs); }
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
@@ -332,14 +333,16 @@ public:
     if (index < this->size()) {
       return string_value[index];
     }
-    throw "atl::string::at Out of Bounds Exception";
+    printf("%s\n", "atl::string::at Out of Bounds Exception");
+    throw;
   }
 
   const char &at(const unsigned int index) const {
     if (index < this->size()) {
       return string_value[index];
     }
-    throw "atl::string::at Out of Bounds Exception";
+    printf("%s\n", "atl::string::at Out of Bounds Exception");
+    throw;
   }
 
   const_iterator begin() const { return &string_value[0u]; }
@@ -383,8 +386,8 @@ private:
   }
 }; // namespace atl
 
-static string operator+(const char *lhs, const string &rhs) {
-  return string(lhs) + rhs;
+static atl::string operator+(const char *lhs, const atl::string &rhs) {
+  return atl::string(lhs) + rhs;
 }
 
 static bool isspace(const char c) {
@@ -417,10 +420,10 @@ static int stoi(const char *str) {
   return sign * output;
 }
 
-static int stoi(const string &str) { return stoi(str.c_str()); }
+static int stoi(const atl::string &str) { return stoi(str.c_str()); }
 
 /* https://www.geeksforgeeks.org/implement-itoa/ */
-static string to_string(int num) {
+static atl::string to_string(int num) {
   bool isNegative = false;
 
   /* Handle 0 explicitely, otherwise empty string is printed for 0 */
@@ -435,7 +438,7 @@ static string to_string(int num) {
   }
 
   // Process individual digits
-  string reverseDigits;
+  atl::string reverseDigits;
   while (num != 0) {
     unsigned int rem = num % 10;
     const char next_char =
@@ -451,7 +454,7 @@ static string to_string(int num) {
     reverseDigits += '-';
 
   // Reverse the string
-  string output;
+  atl::string output;
   for (int idx = static_cast<int>(reverseDigits.size()) - 1; idx >= 0; --idx) {
     const unsigned int index = static_cast<unsigned int>(idx);
     char currChar = reverseDigits[index];

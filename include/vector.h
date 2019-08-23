@@ -78,14 +78,16 @@ public:
     if (index < elements_size) {
       return elements[index];
     }
-    throw "atl::vector::at Out of Bounds Exception";
+    printf("%s\n", "atl::vector::at Out of Bounds Exception");
+    throw;
   }
 
   T &at(const unsigned int index) const {
     if (index < elements_size) {
       return elements[index];
     }
-    throw "atl::vector::at Out of Bounds Exception";
+    printf("%s\n", "atl::vector::at Out of Bounds Exception");
+    throw;
   }
 
   unsigned int capacity() const { return elements_size; }
@@ -93,8 +95,10 @@ public:
   void clear() { deallocate(); }
 
   T erase(const unsigned int eraseIndex) {
-    if (eraseIndex > size())
-      throw "atl::vector::erase Out of Bounds Exception";
+    if (eraseIndex > size()) {
+      printf("%s\n", "atl::vector::erase Out of Bounds Exception");
+      throw;
+    }
     const T output = at(eraseIndex);
     const unsigned int vect_size = size();
     const unsigned int vect_capacity = capacity();
