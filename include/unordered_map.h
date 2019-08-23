@@ -1,7 +1,7 @@
 #pragma once
-
 #include "pair.h"
 #include "vector.h"
+#include <iostream>
 
 namespace atl {
 
