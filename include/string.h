@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 namespace atl {
 
 class string {
