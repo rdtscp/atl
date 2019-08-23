@@ -104,7 +104,8 @@ private:
     if (index < elements_size) {
       return elements[index];
     }
-    throw "atl::set::at Out of Bounds Exception";
+    printf("%s\n", "atl::set::at Out of Bounds Exception");
+    throw;
   }
 
   int capacity() const { return elements_size; }

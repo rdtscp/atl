@@ -79,7 +79,8 @@ public:
       if (curr_elem.first == key)
         return curr_elem;
     }
-    throw "atl::unordered_map::at Key does not exist.";
+    printf("%s\n", "atl::unordered_map::at Key does not exist.");
+    throw;
   }
 
   void insert(const K &key, const V &value) {
@@ -94,7 +95,8 @@ public:
       if (curr_elem.first == key)
         return curr_elem;
     }
-    throw "atl::unordered_map::at Out of Bounds Exception";
+    printf("%s\n", "atl::unordered_map::at Out of Bounds Exception");
+    throw;
   }
 
   const atl::pair<K, V> &find(const K &key) const {
@@ -103,7 +105,7 @@ public:
       if (curr_elem.first == key)
         return curr_elem;
     }
-    throw "atl::unordered_map::at Out of Bounds Exception";
+    printf("%s\n", "atl::unordered_map::at Out of Bounds Exception");
   }
 
 private:
