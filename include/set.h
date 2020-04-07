@@ -10,7 +10,7 @@ public:
 
   /* Initializer-List Constructor */
   set<T>(std::initializer_list<T> list) {
-    for (const T &item : list)
+    for (const T &item: list)
       insert(item);
   }
 
