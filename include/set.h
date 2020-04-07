@@ -8,6 +8,12 @@ public:
   /* Constructor */
   set<T>() : elements_size(0), elements_used(0), initialised(false) {}
 
+  /* Initializer-List Constructor */
+  set<T>(std::initializer_list<T> list) {
+    for (const T &item : list)
+      insert(item);
+  }
+
   /* Copy Constructor */
   set<T>(const set<T> &rhs) {
     if (this == &rhs)
