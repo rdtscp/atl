@@ -39,7 +39,7 @@ public:
   }
 
   /* Copy Constructor */
-  string(const atl::string &rhs) {
+  string(const string &rhs) {
     if (&rhs == this)
       return;
 
@@ -54,7 +54,7 @@ public:
   }
 
   /* Assignment Operator */
-  string &operator=(const atl::string &rhs) {
+  string &operator=(const string &rhs) {
     if (&rhs == this)
       return *this;
 
@@ -70,13 +70,13 @@ public:
   }
 
   /* Move Constructor */
-  string(atl::string &&rhs)
+  string(string &&rhs)
       : m_size(rhs.m_size), string_value(rhs.string_value) {
     rhs.string_value = nullptr;
   }
 
   /* Move-Assignment Operator */
-  string &operator=(atl::string &&rhs) {
+  string &operator=(string &&rhs) {
     m_size = rhs.m_size;
     string_value = rhs.string_value;
 
@@ -94,25 +94,25 @@ public:
     return this->at(index);
   }
 
-  atl::string operator+(const char rhs) const {
+  string operator+(const char rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  atl::string operator+(const char *rhs) const {
+  string operator+(const char *rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  atl::string operator+(const atl::string &rhs) const {
+  string operator+(const string &rhs) const {
     string output(*this);
     output += rhs;
     return output;
   }
 
-  atl::string &operator+=(const char rhs) {
+  string &operator+=(const char rhs) {
     if (rhs == '\0')
       return *this;
 
@@ -143,7 +143,7 @@ public:
     return *this;
   }
 
-  atl::string &operator+=(const char *rhs) {
+  string &operator+=(const char *rhs) {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = charBufferLength(rhs);
     m_size = lhs_size + rhs_size;
@@ -176,7 +176,7 @@ public:
     return *this;
   }
 
-  atl::string &operator+=(const atl::string &rhs) {
+  string &operator+=(const string &rhs) {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     m_size = lhs_size + rhs_size;
@@ -207,15 +207,15 @@ public:
     return *this;
   }
 
-  bool operator<(const char *rhs) const { return *this < atl::string(rhs); }
+  bool operator<(const char *rhs) const { return *this < string(rhs); }
 
-  bool operator>(const char *rhs) const { return *this > atl::string(rhs); }
+  bool operator>(const char *rhs) const { return *this > string(rhs); }
 
-  bool operator<=(const char *rhs) const { return *this <= atl::string(rhs); }
+  bool operator<=(const char *rhs) const { return *this <= string(rhs); }
 
-  bool operator>=(const char *rhs) const { return *this >= atl::string(rhs); }
+  bool operator>=(const char *rhs) const { return *this >= string(rhs); }
 
-  bool operator<(const atl::string &rhs) const {
+  bool operator<(const string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -235,7 +235,7 @@ public:
     return false;
   }
 
-  bool operator>(const atl::string &rhs) const {
+  bool operator>(const string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -255,7 +255,7 @@ public:
     return false;
   }
 
-  bool operator<=(const atl::string &rhs) const {
+  bool operator<=(const string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -275,7 +275,7 @@ public:
     return true;
   }
 
-  bool operator>=(const atl::string &rhs) const {
+  bool operator>=(const string &rhs) const {
     const unsigned int lhs_size = this->size();
     const unsigned int rhs_size = rhs.size();
     if (lhs_size < rhs_size)
@@ -295,7 +295,7 @@ public:
     return true;
   }
 
-  bool operator==(const atl::string &rhs) const {
+  bool operator==(const string &rhs) const {
     if (this->length() != rhs.length())
       return false;
     const unsigned int str_len = this->length();
@@ -325,7 +325,7 @@ public:
     return true;
   }
 
-  bool operator!=(const atl::string &rhs) const { return !(*this == rhs); }
+  bool operator!=(const string &rhs) const { return !(*this == rhs); }
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
