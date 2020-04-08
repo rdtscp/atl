@@ -11,6 +11,10 @@ add_executable(runIfStreamUnitTests Test_IfStream.cpp  main.cpp)
 target_link_libraries(runIfStreamUnitTests libgtest libgmock)
 add_test(IfStreamUnitTests runIfStreamUnitTests)
 
+add_executable(runListUnitTests Test_List.cpp  main.cpp)
+target_link_libraries(runListUnitTests libgtest libgmock)
+add_test(ListUnitTests runListUnitTests)
+
 add_executable(runOfStreamUnitTests Test_OfStream.cpp  main.cpp)
 target_link_libraries(runOfStreamUnitTests libgtest libgmock)
 add_test(OfStreamUnitTests runOfStreamUnitTests)
