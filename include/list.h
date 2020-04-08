@@ -25,6 +25,28 @@ public:
   list<T>& operator=(const list<T> &rhs) = default;
   list<T>& operator=(list<T> &&rhs) = default;
 
+  const bool operator==(const list<T> &rhs) const {
+    if (size() != rhs.size())
+      return false;
+
+    atl::shared_ptr<list_node> lhs_curr = head_node;
+    atl::shared_ptr<list_node> rhs_curr = rhs.head_node;
+
+    while (lhs_curr != nullptr && rhs_curr != nullptr) {
+      if (lhs_curr->value != rhs_curr->value)
+        return false;
+
+      lhs_curr = lhs_curr->next;
+      rhs_curr = rhs_curr->next;
+    }
+
+    return true;
+  }
+
+  const bool operator!=(const list<T> &rhs) const {
+    return !(*this == rhs);
+  }
+
   void push_back(const T& p_value) {
     const atl::shared_ptr<list_node> new_node(new list_node(p_value));
     if (head_node == nullptr) {
@@ -54,7 +76,7 @@ public:
     return head_node != nullptr;
   }
 
- const bool has_tail() const {
+  const bool has_tail() const {
    if (!has_head())
     return false;
 
