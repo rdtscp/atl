@@ -47,6 +47,30 @@ TEST(VectorTest, PushFront) {
   ASSERT_EQ(atlList.head(), 8);
 }
 
+TEST(VectorTest, Equality) {
+  atl::list<int> atlList1;
+  atl::list<int> atlList2;
+
+  ASSERT_EQ(atlList1, atlList2);
+
+  atlList1.push_back(1);
+
+  ASSERT_NE(atlList1, atlList2);
+
+  atlList2.push_front(1);
+
+  ASSERT_EQ(atlList1, atlList2);
+
+  atlList1.push_back(2);
+
+  ASSERT_NE(atlList1, atlList2);
+
+  atlList2.push_back(2);
+
+  ASSERT_EQ(atlList1, atlList2);
+
+}
+
 
 // The fixture for testing class Project1. From google test primer.
 class Test_List : public ::testing::Test {
