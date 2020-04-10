@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 namespace atl {
 
 template <typename T> class shared_ptr;
