@@ -34,6 +34,12 @@ public:
     initialiseSharedFromThis(ptr);
   }
 
+  /* Constructor - `static_pointer_cast` constructor. */
+  template <typename Base>
+  shared_ptr(T *ptr, shared_ptr<Base> base) : m_ref(base.m_ref), m_ptr(ptr) {
+    ++(*m_ref);
+  }
+
   /* Constructor */
   template <typename B> shared_ptr(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
@@ -104,8 +110,8 @@ public:
       return *m_ref;
   }
 
-private:
   int *m_ref = nullptr;
+private:
   T *m_ptr = nullptr;
 
   void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
@@ -130,8 +136,7 @@ template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
 
 template <typename TO, typename FROM>
 static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
-  TO *outputPtr = static_cast<TO *>(ptr.get());
-  return shared_ptr<TO>(outputPtr);
+  return shared_ptr<TO>(static_cast<TO *>(ptr.get()), ptr);
 }
 
 } // namespace atl
