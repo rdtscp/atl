@@ -58,6 +58,8 @@ public:
     if (&rhs == this)
       return *this;
 
+    delete[] string_value;
+
     m_size = rhs.size();
     string_value = new char[m_size + 1u];
     char *string_value_ptr = string_value;
@@ -77,6 +79,8 @@ public:
 
   /* Move-Assignment Operator */
   string &operator=(string &&rhs) {
+    delete[] string_value;
+
     m_size = rhs.m_size;
     string_value = rhs.string_value;
 
