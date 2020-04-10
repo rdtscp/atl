@@ -25,13 +25,12 @@ public:
 };
 
 template <typename T> class shared_ptr {
-
 public:
   /* Constructor */
-  shared_ptr<T>() : refCount(new int(0)), ptr(nullptr) {}
+  shared_ptr<T>() : m_ref(new int(0)), m_ptr(nullptr) {}
 
   /* Constructor */
-  shared_ptr<T>(T *ptr) : refCount(new int(1)), ptr(ptr) {
+  shared_ptr<T>(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
     initialiseSharedFromThis(ptr);
   }
 
@@ -45,9 +44,9 @@ public:
     if (&rhs == this)
       return;
 
-    ptr = rhs.ptr;
-    refCount = rhs.refCount;
-    *refCount = *refCount + 1;
+    m_ptr = rhs.m_ptr;
+    m_ref = rhs.m_ref;
+    *m_ref = *m_ref + 1;
   }
 
   /* Assignment Operator */
@@ -55,9 +54,9 @@ public:
     if (&rhs == this)
       return *this;
 
-    ptr = rhs.ptr;
-    refCount = rhs.refCount;
-    *refCount = *refCount + 1;
+    m_ptr = rhs.m_ptr;
+    m_ref = rhs.m_ref;
+    *m_ref = *m_ref + 1;
     return *this;
   }
 
@@ -69,41 +68,41 @@ public:
 
   /* Destructor */
   ~shared_ptr<T>() {
-    if (refCount == nullptr)
+    if (m_ref == nullptr)
       return;
-    else if (ptr == nullptr)
+    else if (m_ptr == nullptr)
       return;
-    else if (*refCount == 0) {
-      delete refCount;
-      delete ptr;
+    else if (*m_ref == 0) {
+      delete m_ref;
+      delete m_ptr;
     } else
-      *refCount = *refCount - 1;
+      *m_ref = *m_ref - 1;
   }
 
-  T *operator->() const { return ptr; }
+  T *operator->() const { return m_ptr; }
 
-  T &operator*() const { return *ptr; }
+  T &operator*() const { return *m_ptr; }
 
-  bool operator==(const shared_ptr<T> &rhs) const { return ptr == rhs.ptr; }
+  bool operator==(const shared_ptr<T> &rhs) const { return m_ptr == rhs.m_ptr; }
 
   bool operator!=(const shared_ptr<T> &rhs) const { return !(*this == rhs); }
 
   bool operator<(const shared_ptr<T> &rhs) const { return get() < rhs.get(); }
 
-  operator bool() const { return ptr; }
+  operator bool() const { return m_ptr; }
 
-  T *get() const { return ptr; }
+  T *get() const { return m_ptr; }
 
   int use_count() const {
-    if (refCount == nullptr)
+    if (m_ref == nullptr)
       return 0;
     else
-      return *refCount;
+      return *m_ref;
   }
 
 private:
-  int *refCount;
-  T *ptr;
+  int *m_ref;
+  T *m_ptr;
 
   void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
     if (obj != nullptr)
