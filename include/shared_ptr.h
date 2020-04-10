@@ -54,6 +54,12 @@ public:
     if (&rhs == this)
       return *this;
 
+    if (m_ref) {
+      --(*m_ref);
+      if (*m_ref == 0)
+        delete m_ptr;
+    }
+
     m_ptr = rhs.m_ptr;
     m_ref = rhs.m_ref;
     *m_ref = *m_ref + 1;
