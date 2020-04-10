@@ -5,6 +5,8 @@ set(CMAKE_CXX_FLAGS "-Wall -Wno-unused-function -Werror")
 project(atl)
 
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
+  set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
   # Don't Install Google Test if its already installed.
   IF(NOT GTEST_INSTALLED MATCHES TRUE)
     include(GoogleTest)
