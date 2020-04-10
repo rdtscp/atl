@@ -149,19 +149,14 @@ TEST(SharedPtrTest, SharedFromThis) {
     atl::shared_ptr<Base> get_ptr() { return shared_from_this(); }
   };
 
-  Base testClass(5);
+  atl::shared_ptr<Base> spBase1(new Base(5));
+  atl::shared_ptr<Base> spBase2 = spBase1->get_ptr();
+  ASSERT_TRUE(spBase1 == spBase2);
 
-  atl::shared_ptr<Base> testClassPtr1(&testClass);
-  atl::shared_ptr<Base> testClassPtr2 = testClass.get_ptr();
+  Base &base1 = *spBase1;
 
-  ASSERT_TRUE(testClassPtr1 == testClassPtr2);
-
-  atl::shared_ptr<Base> testClassPtr3(testClassPtr1);
-  atl::shared_ptr<Base> testClassPtr4(testClassPtr2);
-  atl::shared_ptr<Base> testClassPtr5 = testClass.get_ptr();
-
-  ASSERT_TRUE(testClassPtr3 == testClassPtr4);
-  ASSERT_TRUE(testClassPtr4 == testClassPtr5);
+  atl::shared_ptr<Base> spBase3 = base1.get_ptr();
+  ASSERT_TRUE(spBase3 == spBase2);
 }
 
 TEST(SharedPtrTest, StaticPointerCast) {
