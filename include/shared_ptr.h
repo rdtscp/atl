@@ -27,20 +27,20 @@ public:
 template <typename T> class shared_ptr {
 public:
   /* Constructor */
-  shared_ptr<T>() : m_ref(new int(1)), m_ptr(nullptr) {}
+  shared_ptr() : m_ref(new int(1)), m_ptr(nullptr) {}
 
   /* Constructor */
-  shared_ptr<T>(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
+  shared_ptr(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
     initialiseSharedFromThis(ptr);
   }
 
   /* Constructor */
-  template <typename B> shared_ptr<T>(const shared_ptr<B> &rhs) {
+  template <typename B> shared_ptr(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
   }
 
   /* Copy Constructor */
-  shared_ptr<T>(const shared_ptr<T> &rhs) {
+  shared_ptr(const shared_ptr<T> &rhs) {
     if (&rhs == this)
       return;
 
@@ -69,7 +69,7 @@ public:
   }
 
   /* Assignment Operator */
-  template <typename B> shared_ptr<T> &operator=(const shared_ptr<B> &rhs) {
+  template <typename B> shared_ptr &operator=(const shared_ptr<B> &rhs) {
     *this = static_pointer_cast<T>(rhs);
     return *this;
   }
