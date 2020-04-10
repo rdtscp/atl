@@ -21,13 +21,13 @@ public:
   shared_ptr<T> shared_from_this() { return self_; }
   shared_ptr<T const> shared_from_this() const { return self_; }
 
-  shared_ptr<T> self_;
+  shared_ptr<T> self_ = nullptr;
 };
 
 template <typename T> class shared_ptr {
 public:
   /* Constructor */
-  shared_ptr<T>() : m_ref(new int(0)), m_ptr(nullptr) {}
+  shared_ptr<T>() : m_ref(new int(1)), m_ptr(nullptr) {}
 
   /* Constructor */
   shared_ptr<T>(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
@@ -56,8 +56,10 @@ public:
 
     if (m_ref) {
       --(*m_ref);
-      if (*m_ref == 0)
+      if (*m_ref == 0) {
         delete m_ptr;
+        delete m_ref;
+      }
     }
 
     m_ptr = rhs.m_ptr;
@@ -107,8 +109,8 @@ public:
   }
 
 private:
-  int *m_ref;
-  T *m_ptr;
+  int *m_ref = nullptr;
+  T *m_ptr = nullptr;
 
   void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
     if (obj != nullptr)
