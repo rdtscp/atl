@@ -76,15 +76,11 @@ public:
 
   /* Destructor */
   ~shared_ptr<T>() {
-    if (m_ref == nullptr)
-      return;
-    else if (m_ptr == nullptr)
-      return;
-    else if (*m_ref == 0) {
+    --(*m_ref)
+    if (*m_ref == 0) {
       delete m_ref;
       delete m_ptr;
-    } else
-      *m_ref = *m_ref - 1;
+    }
   }
 
   T *operator->() const { return m_ptr; }
