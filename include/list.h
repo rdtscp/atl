@@ -77,10 +77,10 @@ public:
   }
 
   const bool has_tail() const {
-   if (!has_head())
-    return false;
+   if (head_node != nullptr)
+      return head_node->next != nullptr;
 
-    return head_node->next != nullptr;
+    return false;
   }
 
   const T &head() const {

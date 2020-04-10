@@ -19,22 +19,19 @@ TEST(SharedPtrTest, NullPtr) {
 }
 
 TEST(SharedPtrTest, PtrConstruction) {
-  int *myInt = new int(5);
-  atl::shared_ptr<int> atlSP(myInt);
-  std::shared_ptr<int> stdSP(myInt);
-  ASSERT_EQ(atlSP.get(), stdSP.get());
+  atl::shared_ptr<int> atlSP(new int(5));
+  std::shared_ptr<int> stdSP(new int(5));
   ASSERT_EQ(*atlSP, *stdSP);
 }
 
 TEST(SharedPtrTest, RefCount) {
-  int *myInt = new int(5);
-  atl::shared_ptr<int> atlSP(myInt);
+  atl::shared_ptr<int> atlSP(new int(5));
   atl::shared_ptr<int> atlSP2(atlSP);
 
   ASSERT_EQ(atlSP.get(), atlSP2.get());
   ASSERT_EQ(*atlSP, *atlSP2);
 
-  std::shared_ptr<int> stdSP(myInt);
+  std::shared_ptr<int> stdSP(new int(5));
   std::shared_ptr<int> stdSP2(stdSP);
 
   ASSERT_EQ(stdSP.use_count(), atlSP.use_count());
@@ -42,11 +39,10 @@ TEST(SharedPtrTest, RefCount) {
 }
 
 TEST(SharedPtrTest, Equality) {
-  int *myInt = new int(5);
-  atl::shared_ptr<int> atlSP(myInt);
+  atl::shared_ptr<int> atlSP(new int(5));
   atl::shared_ptr<int> atlSP2(atlSP);
 
-  std::shared_ptr<int> stdSP(myInt);
+  std::shared_ptr<int> stdSP(new int(5));
   std::shared_ptr<int> stdSP2(stdSP);
 
   ASSERT_TRUE(atlSP == atlSP2);
@@ -68,12 +64,11 @@ TEST(SharedPtrTest, ClassInheritance) {
     explicit Derived(const int val) : Base(val), d_val(val) {}
   };
 
-  Derived *derivedPtr = new Derived(0);
-  atl::shared_ptr<Derived> atlSP(derivedPtr);
+  atl::shared_ptr<Derived> atlSP(new Derived(0));
   ASSERT_TRUE(atlSP->d_val == 0);
   ASSERT_TRUE(atlSP->b_val == 1);
 
-  atl::shared_ptr<Base> atlSP2(derivedPtr);
+  atl::shared_ptr<Base> atlSP2(new Derived(0));
   ASSERT_TRUE(atlSP2->b_val == 1);
 
   atl::shared_ptr<Base> atlSP3 = atlSP;
@@ -103,11 +98,10 @@ TEST(SharedPtrTest, Class) {
     explicit Base(const int val) : b_val(val + 1) {}
   };
 
-  Base *classPtr = new Base(0);
-  atl::shared_ptr<Base> atlSP(classPtr);
+  atl::shared_ptr<Base> atlSP(new Base(0));
   ASSERT_TRUE(atlSP->b_val == 1);
 
-  atl::shared_ptr<Base> atlSP2(classPtr);
+  atl::shared_ptr<Base> atlSP2(new Base(0));
   ASSERT_TRUE(atlSP2->b_val == 1);
 
   atl::shared_ptr<Base> atlSP3 = atlSP;
@@ -155,19 +149,14 @@ TEST(SharedPtrTest, SharedFromThis) {
     atl::shared_ptr<Base> get_ptr() { return shared_from_this(); }
   };
 
-  Base testClass(5);
+  atl::shared_ptr<Base> spBase1(new Base(5));
+  atl::shared_ptr<Base> spBase2 = spBase1->get_ptr();
+  ASSERT_TRUE(spBase1 == spBase2);
 
-  atl::shared_ptr<Base> testClassPtr1(&testClass);
-  atl::shared_ptr<Base> testClassPtr2 = testClass.get_ptr();
+  Base &base1 = *spBase1;
 
-  ASSERT_TRUE(testClassPtr1 == testClassPtr2);
-
-  atl::shared_ptr<Base> testClassPtr3(testClassPtr1);
-  atl::shared_ptr<Base> testClassPtr4(testClassPtr2);
-  atl::shared_ptr<Base> testClassPtr5 = testClass.get_ptr();
-
-  ASSERT_TRUE(testClassPtr3 == testClassPtr4);
-  ASSERT_TRUE(testClassPtr4 == testClassPtr5);
+  atl::shared_ptr<Base> spBase3 = base1.get_ptr();
+  ASSERT_TRUE(spBase3 == spBase2);
 }
 
 TEST(SharedPtrTest, StaticPointerCast) {
