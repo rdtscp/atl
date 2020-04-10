@@ -30,6 +30,9 @@ public:
   shared_ptr() : m_ref(new int(1)), m_ptr(nullptr) {}
 
   /* Constructor */
+  shared_ptr(std::nullptr_t) : m_ref(new int(1)), m_ptr(nullptr) {}
+
+  /* Constructor */
   explicit shared_ptr(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
     initialiseSharedFromThis(ptr);
   }

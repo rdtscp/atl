@@ -270,6 +270,18 @@ TEST(SharedPtrTest, OperatorBool) {
   }
 }
 
+TEST(SharedPtrTest, NullptrInstantiation) {
+  atl::shared_ptr<int> nullptrCtor1 = nullptr;
+  atl::shared_ptr<int> nullptrCtor2(nullptr);
+  atl::shared_ptr<int> defaultCtor;
+
+  ASSERT_EQ(nullptrCtor1.get(), nullptrCtor2.get());
+  ASSERT_EQ(nullptrCtor2.get(), defaultCtor.get());
+  ASSERT_EQ(nullptrCtor1, nullptr);
+  ASSERT_EQ(nullptrCtor2, nullptr);
+  ASSERT_EQ(defaultCtor, nullptr);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_SharedPtr : public ::testing::Test {
 protected:
