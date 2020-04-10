@@ -93,8 +93,8 @@ public:
 
   T &operator*() const { return *m_ptr; }
 
-  bool operator==(nullptr_t) const { return m_ptr == nullptr; }
-  bool operator!=(nullptr_t) const { return m_ptr != nullptr; }
+  bool operator==(std::nullptr_t) const { return m_ptr == nullptr; }
+  bool operator!=(std::nullptr_t) const { return m_ptr != nullptr; }
 
   bool operator==(const shared_ptr<T> &rhs) const { return m_ptr == rhs.m_ptr; }
 
