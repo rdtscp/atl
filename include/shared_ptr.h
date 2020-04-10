@@ -8,8 +8,8 @@ static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
 
 template <typename T> class enable_shared_from_this {
 protected:
-  enable_shared_from_this() {}
-  enable_shared_from_this(enable_shared_from_this const &ptr) {
+  enable_shared_from_this() : self_() {}
+  enable_shared_from_this(enable_shared_from_this const &ptr) : self_() {
     /* Does nothing, but used for dynamic dispatch. */
     (void)ptr;
   }
@@ -30,7 +30,7 @@ public:
   shared_ptr() : m_ref(new int(1)), m_ptr(nullptr) {}
 
   /* Constructor */
-  shared_ptr(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
+  explicit shared_ptr(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
     initialiseSharedFromThis(ptr);
   }
 
@@ -92,6 +92,9 @@ public:
   T *operator->() const { return m_ptr; }
 
   T &operator*() const { return *m_ptr; }
+
+  bool operator==(nullptr_t) const { return m_ptr == nullptr; }
+  bool operator!=(nullptr_t) const { return m_ptr != nullptr; }
 
   bool operator==(const shared_ptr<T> &rhs) const { return m_ptr == rhs.m_ptr; }
 
