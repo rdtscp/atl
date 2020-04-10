@@ -46,7 +46,7 @@ public:
 
     m_ptr = rhs.m_ptr;
     m_ref = rhs.m_ref;
-    *m_ref = *m_ref + 1;
+     ++(*m_ref); 
   }
 
   /* Assignment Operator */
@@ -64,7 +64,7 @@ public:
 
     m_ptr = rhs.m_ptr;
     m_ref = rhs.m_ref;
-    *m_ref = *m_ref + 1;
+     ++(*m_ref); 
     return *this;
   }
 
@@ -76,7 +76,7 @@ public:
 
   /* Destructor */
   ~shared_ptr<T>() {
-    --(*m_ref)
+    --(*m_ref);
     if (*m_ref == 0) {
       delete m_ref;
       delete m_ptr;
