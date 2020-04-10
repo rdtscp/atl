@@ -48,22 +48,22 @@ public:
 
   /* Move Constructor */
   vector<T>(vector<T> &&rhs)
-      : elements_size(rhs.elements_size), elements_used(rhs.elements_used),
-        elements(rhs.elements) {
-    rhs.elements_size = 0;
-    rhs.elements_used = 0;
-    rhs.elements = nullptr;
+      : m_elements_size(rhs.m_elements_size), m_elements_used(rhs.m_elements_used),
+        m_elements(rhs.m_elements) {
+    rhs.m_elements_size = 0;
+    rhs.m_elements_used = 0;
+    rhs.m_elements = nullptr;
   }
 
   /* Move-Assignment Operator */
   vector<T> &operator=(vector<T> &&rhs) {
-    elements_size = rhs.elements_size;
-    elements_used = rhs.elements_used;
-    elements = rhs.elements;
+    m_elements_size = rhs.m_elements_size;
+    m_elements_used = rhs.m_elements_used;
+    m_elements = rhs.m_elements;
 
-    rhs.elements_size = 0;
-    rhs.elements_used = 0;
-    rhs.elements = nullptr;
+    rhs.m_elements_size = 0;
+    rhs.m_elements_used = 0;
+    rhs.m_elements = nullptr;
     return *this;
   }
 
@@ -75,44 +75,48 @@ public:
   const T &operator[](const unsigned int index) const { return at(index); }
 
   T &at(const unsigned int index) {
-    if (index < elements_size) {
-      return elements[index];
+    if (index < m_elements_size) {
+      return m_elements[index];
     }
     printf("%s\n", "atl::vector::at Out of Bounds Exception");
     throw;
   }
 
   T &at(const unsigned int index) const {
-    if (index < elements_size) {
-      return elements[index];
+    if (index < m_elements_size) {
+      return m_elements[index];
     }
     printf("%s\n", "atl::vector::at Out of Bounds Exception");
     throw;
   }
 
-  unsigned int capacity() const { return elements_size; }
+  unsigned int capacity() const { return m_elements_size; }
 
   void clear() { deallocate(); }
 
   T erase(const unsigned int eraseIndex) {
-    if (eraseIndex > size()) {
+    if (eraseIndex > m_elements_size) {
       printf("%s\n", "atl::vector::erase Out of Bounds Exception");
       throw;
     }
+    /* Store our output value. */
     const T output = at(eraseIndex);
-    const unsigned int vect_size = size();
-    const unsigned int vect_capacity = capacity();
+    
+    /* Copy all but the erased index. */
+    T *new_buffer = new T[m_elements_size  - 1];
+    unsigned int new_buffer_idx = 0;
+    for (unsigned int idx = 0; idx < m_elements_size; ++idx) {
+      if (idx == eraseIndex)
+        continue;
 
-    /* Backup existing elements. */
-    T *tempBuffer = new T[vect_size];
-    for (unsigned int idx = 0; idx < vect_size; ++idx)
-      tempBuffer[idx] = elements[idx];
+      new_buffer[new_buffer_idx] = m_elements[idx];
+      ++new_buffer_idx;
+    }
 
-    deallocate();
-    allocate(vect_capacity - 1);
-    for (unsigned int idx = 0; idx < vect_size; ++idx)
-      if (idx != eraseIndex)
-        push_back(tempBuffer[idx]);
+    delete[] m_elements;
+    m_elements = new_buffer;
+    --m_elements_size;
+    --m_elements_used;
 
     return output;
   }
@@ -124,8 +128,8 @@ public:
     if (size() >= capacity())
       reserve(1 + capacity());
 
-    elements[elements_used] = elem;
-    ++elements_used;
+    m_elements[m_elements_used] = elem;
+    ++m_elements_used;
   }
 
   void push_front(const T &elem) {
@@ -135,65 +139,64 @@ public:
     if (size() >= capacity())
       reserve(1 + capacity());
 
-    for (unsigned int idx = elements_used; idx > 0; --idx)
-      elements[idx] = elements[idx - 1];
+    for (unsigned int idx = m_elements_used; idx > 0; --idx)
+      m_elements[idx] = m_elements[idx - 1];
 
-    elements[0] = elem;
-    ++elements_used;
+    m_elements[0] = elem;
+    ++m_elements_used;
   }
 
   T pop_back() {
-    --elements_used;
-    return erase(elements_used);
+    --m_elements_used;
+    return erase(m_elements_used);
   }
 
   void reserve(const unsigned int reserveSize) {
-    /* Already have requested space. */
-    if (reserveSize <= elements_size)
+    if (reserveSize == 0)
       return;
 
-    /* Buffer not allocated. */
-    else if (elements_size <= 0) {
-      elements_size = reserveSize;
-      elements = new T[elements_size];
+    /* Already have requested space. */
+    if (reserveSize <= m_elements_size)
+      return;
+
+    /* Store the new size of the vector. */
+    m_elements_size = reserveSize;
+
+    /* Allocate for new size */
+    T *new_buffer = new T[m_elements_size];
+
+    /* We have existing elements. */
+    if (m_elements != nullptr) {
+      /* Copy across existing elements. */
+      for (unsigned int idx = 0; idx < m_elements_used; ++idx) {
+        new_buffer[idx] = m_elements[idx];
+      }
     }
 
-    /* Buffer already allocated. */
-    else if (elements_size > 0) {
-      /* Backup existing elements. */
-      const unsigned int tempBufferLen = elements_size;
-      T *tempBuffer = new T[tempBufferLen];
-      for (unsigned int idx = 0; idx < elements_size; ++idx)
-        tempBuffer[idx] = elements[idx];
-
-      deallocate();
-      elements_size = reserveSize;
-      elements = new T[elements_size];
-      for (unsigned int idx = 0; idx < tempBufferLen; ++idx)
-        push_back(tempBuffer[idx]);
-    }
+    delete[] m_elements;
+    m_elements = new_buffer;
   }
 
-  unsigned int size() const { return elements_used; }
+  unsigned int size() const { return m_elements_used; }
 
 private:
-  unsigned int elements_size = 0;
-  unsigned int elements_used = 0;
-  T *elements;
+  unsigned int m_elements_size = 0;
+  unsigned int m_elements_used = 0;
+  T *m_elements = nullptr;
 
   void allocate(const unsigned int num_elems) {
-    elements_size = num_elems;
-    elements = new T[elements_size];
+    m_elements_size = num_elems;
+    m_elements = new T[m_elements_size];
   }
 
   void deallocate() {
-    if (elements_size > 0)
-      delete[] elements;
-    elements_size = 0;
-    elements_used = 0;
+    if (m_elements_size > 0)
+      delete[] m_elements;
+    m_elements_size = 0;
+    m_elements_used = 0;
   }
 
-  /* Extend the size of elements[] by num_elems. */
+  /* Extend the size of m_elements[] by num_elems. */
   void extend(const unsigned int num_elems) {
     const unsigned int new_capacity = capacity() + num_elems;
     reserve(new_capacity);
