@@ -9,7 +9,7 @@ static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
 template <typename T> class enable_shared_from_this {
 protected:
   enable_shared_from_this() : self_() {}
-  enable_shared_from_this(enable_shared_from_this const &ptr) : self_() {
+  enable_shared_from_this(enable_shared_from_this const &ptr) : self_(ptr.self_) {
     /* Does nothing, but used for dynamic dispatch. */
     (void)ptr;
   }
@@ -82,11 +82,11 @@ public:
 
   /* Destructor */
   ~shared_ptr<T>() {
-    --(*m_ref);
-    if (*m_ref == 0) {
-      delete m_ref;
-      delete m_ptr;
-    }
+      --(*m_ref);
+      if (*m_ref == 0) {
+        delete m_ptr;
+        delete m_ref;
+      }
   }
 
   T *operator->() const { return m_ptr; }
@@ -118,8 +118,13 @@ private:
   T *m_ptr = nullptr;
 
   void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
-    if (obj != nullptr)
-      obj->self_ = *this;
+    if (obj != nullptr) {
+      /* Explicitly copy the members rather than the object as we don't want to increase the ref-count here
+       * otherwise we will never destruct an object deriving from `enable_shared_from_this` */
+      delete obj->self_.m_ref;
+      obj->self_.m_ptr = m_ptr;
+      obj->self_.m_ref = m_ref;
+    }
   }
 
   void initialiseSharedFromThis(void *obj) {
