@@ -230,6 +230,23 @@ TEST(SharedPtrTest, SharedFromThisInheritance) {
   ASSERT_EQ(std_sp2->t_val, 11);
 }
 
+TEST(SharedPtrTest, SelfAssign) {
+  class Base : public atl::enable_shared_from_this<Base> {
+  public:
+    virtual ~Base() {}
+  };
+
+  class Test : public Base {
+  public:
+    ~Test() {}
+  };
+
+  atl::shared_ptr<Test> atl_sp(new Test());
+  atl_sp = atl_sp->shared_from_this();
+
+  atl::shared_ptr<Base> atl_sp2 = atl_sp->shared_from_this();
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_SharedPtr : public ::testing::Test {
 protected:
