@@ -42,11 +42,9 @@ public:
 
   /* Assignemnt Operator */
   template <typename Derived>
-  shared_ptr &operator=(shared_ptr<Derived> rhs) {
-    if (this == &rhs)
-      return *this;
-
-    atl::swap(*this, rhs);
+  shared_ptr &operator=(const shared_ptr<Derived> &rhs) {
+    shared_ptr<T> rhs_upcast = static_pointer_cast<T>(rhs);
+    atl::swap(*this, rhs_upcast);
     return *this;
   }
 
@@ -110,13 +108,13 @@ private:
 
 };
 
-template <typename T>
-bool operator==(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+template <typename T, typename U>
+bool operator==(const shared_ptr<T> &lhs, const shared_ptr<U> &rhs) {
   return lhs.get() == rhs.get();
 }
 
-template <typename T>
-bool operator!=(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+template <typename T, typename U>
+bool operator!=(const shared_ptr<T> &lhs, const shared_ptr<U> &rhs) {
   return !(lhs == rhs);
 }
 
