@@ -110,13 +110,13 @@ private:
 
 };
 
-template <typename T>
-bool operator==(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+template <typename T, typename U>
+bool operator==(const shared_ptr<T> &lhs, const shared_ptr<U> &rhs) {
   return lhs.get() == rhs.get();
 }
 
-template <typename T>
-bool operator!=(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+template <typename T, typename U>
+bool operator!=(const shared_ptr<T> &lhs, const shared_ptr<U> &rhs) {
   return !(lhs == rhs);
 }
 

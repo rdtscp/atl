@@ -138,6 +138,10 @@ TEST(SharedPtrTest, ClassInheritance2) {
   atl::shared_ptr<Base> atl_sp3 = atl_sp2;
   ASSERT_EQ(atl_sp1.get(), atl_sp3.get());
 
+  ASSERT_EQ(atl_sp1, atl_sp3);
+
+  atl::shared_ptr<Test> atl_sp4(new Test(5));
+  ASSERT_NE(atl_sp1, atl_sp4);
 }
 
 TEST(SharedPtrTest, SharedFromThis) {
