@@ -190,8 +190,10 @@ private:
   }
 
   void deallocate() {
-    if (m_elements_size > 0)
+    if (m_elements_size > 0) {
       delete[] m_elements;
+      m_elements = nullptr;
+    }
     m_elements_size = 0;
     m_elements_used = 0;
   }
