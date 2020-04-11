@@ -122,6 +122,24 @@ TEST(SharedPtrTest, ClassInheritance) {
   ASSERT_EQ(std_sp3->b_val, std_sp1->b_val);
 }
 
+TEST(SharedPtrTest, ClassInheritance2) {
+  struct Base {
+    int b_val;
+    Base(int val) : b_val(val + 1) {}
+  };
+  struct Test : public Base {
+    int t_val;
+    Test(int val) : Base(val), t_val(val + 2) {}
+  };
+
+  atl::shared_ptr<Test> atl_sp1(new Test(5));
+  atl::shared_ptr<Base> atl_sp2(atl_sp1);
+  ASSERT_EQ(atl_sp1.get(), atl_sp2.get());
+  atl::shared_ptr<Base> atl_sp3 = atl_sp2;
+  ASSERT_EQ(atl_sp1.get(), atl_sp3.get());
+
+}
+
 TEST(SharedPtrTest, SharedFromThis) {
   class Test1 : public atl::enable_shared_from_this<Test1> {
   public:
