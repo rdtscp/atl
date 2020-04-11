@@ -77,17 +77,6 @@ TEST(SharedPtrTest, ClassInheritance) {
 
 /* Static Function Tests */
 
-TEST(SharedPtrTest, MakeSharedDefault) {
-  atl::shared_ptr<int> atlMSP = atl::make_shared<int>();
-  ASSERT_TRUE(atlMSP.get() != nullptr);
-  ASSERT_TRUE(*atlMSP == 0);
-}
-
-TEST(SharedPtrTest, MakeSharedRVAL) {
-  atl::shared_ptr<int> atlMSP = atl::make_shared<int>(5);
-  ASSERT_TRUE(atlMSP.get() != nullptr);
-  ASSERT_TRUE(*atlMSP == 5);
-}
 
 /* Pointer Construction Tests */
 
@@ -110,34 +99,6 @@ TEST(SharedPtrTest, Class) {
 
 /* MakeShared Construction Tests */
 
-TEST(SharedPtrTest, MakeSharedClass) {
-  class Base {
-  public:
-    int b_val;
-    explicit Base(const int val) : b_val(val + 1) {}
-  };
-
-  atl::shared_ptr<Base> atlSP = atl::make_shared<Base>(Base(0));
-  ASSERT_TRUE(atlSP->b_val == 1);
-}
-
-TEST(SharedPtrTest, MakeSharedClassInheritance) {
-  class Base {
-  public:
-    int b_val;
-    explicit Base(const int val) : b_val(val + 1) {}
-    virtual ~Base() {}
-  };
-  class Derived : public Base {
-  public:
-    int d_val;
-    explicit Derived(const int val) : Base(val), d_val(val) {}
-  };
-
-  atl::shared_ptr<Derived> atlSP = atl::make_shared<Derived>(Derived(0));
-  ASSERT_TRUE(atlSP->d_val == 0);
-  ASSERT_TRUE(atlSP->b_val == 1);
-}
 
 /* SharedFromThis Tests */
 
@@ -210,17 +171,15 @@ public:
 };
 
 atl::shared_ptr<TestInt> getTestIntSP2() {
-  return atl::make_shared<TestInt>(TestInt(5));
+  return atl::shared_ptr<TestInt>(new TestInt(5));
 }
 
 atl::shared_ptr<TestInt> getTestIntSP() { return getTestIntSP2(); }
-TestInt getTestInt() { return TestInt(5); }
 
 TEST(SharedPtrTest, SharedFromThisCopyConstructor) {
   atl::shared_ptr<TestInt> myTestIntPtr1 = getTestIntSP();
   atl::shared_ptr<TestInt> myTestIntPtr2 = myTestIntPtr1;
-  atl::shared_ptr<TestInt> myTestIntPtr3 =
-      atl::make_shared<TestInt>(getTestInt());
+  atl::shared_ptr<TestInt> myTestIntPtr3 = atl::shared_ptr<TestInt>(new TestInt(5));
 
   ASSERT_TRUE(myTestIntPtr1 == myTestIntPtr2);
   ASSERT_TRUE(5 == myTestIntPtr2->val);
@@ -238,7 +197,7 @@ public:
 };
 
 atl::shared_ptr<Derived> getDerivedBaseImpl() {
-  atl::shared_ptr<Derived> output = atl::make_shared<Derived>(Derived());
+  atl::shared_ptr<Derived> output = atl::shared_ptr<Derived>(new Derived());
   return output;
 }
 atl::shared_ptr<Base> getDerivedBase() {
