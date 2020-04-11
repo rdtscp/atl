@@ -1,151 +1,123 @@
 #pragma once
 
-#include <cstddef>
+#include "detail/shared_count.h"
+#include "enable_shared_from_this.h"
+#include "swap.h"
 
 namespace atl {
 
-template <typename T> class shared_ptr;
-template <typename TO, typename FROM>
-static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr);
-
-template <typename T> class enable_shared_from_this {
-protected:
-  enable_shared_from_this() : self_() {}
-  enable_shared_from_this(enable_shared_from_this const &ptr) : self_(ptr.self_) {
-    /* Does nothing, but used for dynamic dispatch. */
-    (void)ptr;
-  }
-  enable_shared_from_this &operator=(enable_shared_from_this const &) {
-    return *this;
-  }
-
+template <typename T>
+class shared_ptr {
 public:
-  shared_ptr<T> shared_from_this() { return self_; }
-  shared_ptr<T const> shared_from_this() const { return self_; }
+  /* Constructors */
+  shared_ptr() : m_ptr(nullptr), m_ref(new shared_count(1)) {}
 
-  shared_ptr<T> self_ = nullptr;
-};
+  shared_ptr(std::nullptr_t) : shared_ptr() {}
 
-template <typename T> class shared_ptr {
-public:
-  /* Constructor */
-  shared_ptr() : m_ref(new int(1)), m_ptr(nullptr) {}
-
-  /* Constructor */
-  shared_ptr(std::nullptr_t) : m_ref(new int(1)), m_ptr(nullptr) {}
-
-  /* Constructor */
-  explicit shared_ptr(T *ptr) : m_ref(new int(1)), m_ptr(ptr) {
-    initialiseSharedFromThis(ptr);
-  }
-
-  /* Constructor - `static_pointer_cast` constructor. */
-  template <typename Base>
-  shared_ptr(T *ptr, shared_ptr<Base> base) : m_ref(base.m_ref), m_ptr(ptr) {
-    ++(*m_ref);
-  }
-
-  /* Constructor */
-  template <typename B> shared_ptr(const shared_ptr<B> &rhs) {
-    *this = static_pointer_cast<T>(rhs);
+  explicit shared_ptr(T *ptr) : m_ptr(ptr), m_ref(new shared_count(1)) {
+    intialise_shared_from_this(m_ptr, m_ref);
   }
 
   /* Copy Constructor */
-  shared_ptr(const shared_ptr<T> &rhs) {
-    if (&rhs == this)
-      return;
-
-    m_ptr = rhs.m_ptr;
-    m_ref = rhs.m_ref;
-     ++(*m_ref); 
+  shared_ptr(const shared_ptr &rhs) : m_ptr(rhs.m_ptr), m_ref(rhs.m_ref) {
+    m_ref->increment_shared();
   }
 
-  /* Assignment Operator */
-  shared_ptr<T> &operator=(const shared_ptr<T> &rhs) {
-    if (&rhs == this)
-      return *this;
+  /* Assignemnt Operator */
+  shared_ptr &operator=(shared_ptr rhs) {
+    if (this == &rhs)
+      return *this;    
 
-    if (m_ref) {
-      --(*m_ref);
-      if (*m_ref == 0) {
-        delete m_ptr;
-        delete m_ref;
-        m_ptr = nullptr;
-        m_ref = nullptr;
-      }
-    }
-
-    m_ptr = rhs.m_ptr;
-    m_ref = rhs.m_ref;
-     ++(*m_ref); 
-    return *this;
-  }
-
-  /* Assignment Operator */
-  template <typename B> shared_ptr &operator=(const shared_ptr<B> &rhs) {
-    *this = static_pointer_cast<T>(rhs);
+    atl::swap(m_ptr, rhs.m_ptr);
+    atl::swap(m_ref, rhs.m_ref);
     return *this;
   }
 
   /* Destructor */
-  ~shared_ptr<T>() {
-      --(*m_ref);
-      if (*m_ref == 0) {
-        delete m_ptr;
-        delete m_ref;
-        m_ptr = nullptr;
-        m_ref = nullptr;
-      }
-  }
-
-  T *operator->() const { return m_ptr; }
-
-  T &operator*() const { return *m_ptr; }
-
-  bool operator==(std::nullptr_t) const { return m_ptr == nullptr; }
-  bool operator!=(std::nullptr_t) const { return m_ptr != nullptr; }
-
-  bool operator==(const shared_ptr<T> &rhs) const { return m_ptr == rhs.m_ptr; }
-
-  bool operator!=(const shared_ptr<T> &rhs) const { return !(*this == rhs); }
-
-  bool operator<(const shared_ptr<T> &rhs) const { return get() < rhs.get(); }
-
-  operator bool() const { return m_ptr; }
-
-  T *get() const { return m_ptr; }
-
-  int use_count() const {
-    if (m_ref == nullptr)
-      return 0;
-    else
-      return *m_ref;
-  }
-
-  int *m_ref = nullptr;
-private:
-  T *m_ptr = nullptr;
-
-  void initialiseSharedFromThis(enable_shared_from_this<T> *obj) {
-    if (obj != nullptr) {
-      /* Explicitly copy the members rather than the object as we don't want to increase the ref-count here
-       * otherwise we will never destruct an object deriving from `enable_shared_from_this` */
-      delete obj->self_.m_ref;
-      obj->self_.m_ptr = m_ptr;
-      obj->self_.m_ref = m_ref;
+  ~shared_ptr() {
+    m_ref->decrement_shared();
+    if (m_ref->use_count() == 0) {
+      delete m_ptr;
+      delete m_ref;
     }
   }
 
-  void initialiseSharedFromThis(void *obj) {
-    /* Not an enable_shared_from_this object, nothing to construct. */
-    /* Does nothing, but used for dynamic dispatch. */
-    (void)obj;
+  /* Accessors */
+  T &operator*() const {
+    return *m_ptr;
   }
+
+  T *operator->() const {
+    return m_ptr;
+  }
+
+  T *get() const {
+    return m_ptr;
+  }
+
+  operator bool() const {
+    return m_ptr != nullptr;
+  }
+
+  /* Only for use in `static_pointer_cast`. */
+  atl::shared_count *get_ref_counter() const {
+    return m_ref;
+  }
+
+  /* Only for use by `weak_ptr`. */
+  void __set(T *ptr, atl::shared_count *ref) {
+    delete m_ref;
+
+    atl::swap(m_ptr, ptr);
+    atl::swap(m_ref, ref);
+
+    m_ref->increment_shared();
+  }
+
+private:
+  T *m_ptr;
+  atl::shared_count *m_ref;
+
+  template <typename Derived>
+  void intialise_shared_from_this(atl::enable_shared_from_this<Derived> *ptr, atl::shared_count *ref) {
+    ptr->__set_weak_ptr(ref);
+  }
+
+  void intialise_shared_from_this(atl::enable_shared_from_this<T> *ptr, atl::shared_count *ref) {
+    ptr->__set_weak_ptr(ref);
+  }
+
+  void intialise_shared_from_this(void *, atl::shared_count *) {
+    // Do nothing. Dynamic Dispatch.
+  }
+
 };
 
-template <typename TO, typename FROM>
-static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
-  return shared_ptr<TO>(static_cast<TO *>(ptr.get()), ptr);
+template <typename T>
+bool operator==(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+  return lhs.get() == rhs.get();
+}
+
+template <typename T>
+bool operator!=(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) {
+  return !(lhs == rhs);
+}
+
+template <typename T>
+bool operator==(const shared_ptr<T> &lhs, const std::nullptr_t) {
+  return lhs.get() == nullptr;
+}
+
+template <typename T>
+bool operator!=(const shared_ptr<T> &lhs, const std::nullptr_t) {
+  return !(lhs == nullptr);
+}
+
+template<typename TO, class FROM>
+atl::shared_ptr<TO> static_pointer_cast(const atl::shared_ptr<FROM> &rhs) {
+  atl::shared_ptr<TO> output;
+  output.__set(static_cast<TO*>(rhs.get()), rhs.get_ref_counter());
+  return output;
 }
 
 } // namespace atl
