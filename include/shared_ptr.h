@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 #include "detail/shared_count.h"
 #include "enable_shared_from_this.h"
 #include "swap.h"
@@ -18,6 +20,11 @@ public:
     intialise_shared_from_this(m_ptr, m_ref);
   }
 
+  template <typename Derived>
+  shared_ptr(const shared_ptr<Derived> &rhs) : shared_ptr() {
+    *this = static_pointer_cast<T>(rhs);
+  }
+
   /* Copy Constructor */
   shared_ptr(const shared_ptr &rhs) : m_ptr(rhs.m_ptr), m_ref(rhs.m_ref) {
     m_ref->increment_shared();
@@ -26,10 +33,20 @@ public:
   /* Assignemnt Operator */
   shared_ptr &operator=(shared_ptr rhs) {
     if (this == &rhs)
-      return *this;    
+      return *this;
 
     atl::swap(m_ptr, rhs.m_ptr);
     atl::swap(m_ref, rhs.m_ref);
+    return *this;
+  }
+
+  /* Assignemnt Operator */
+  template <typename Derived>
+  shared_ptr &operator=(shared_ptr<Derived> rhs) {
+    if (this == &rhs)
+      return *this;
+
+    atl::swap(*this, rhs);
     return *this;
   }
 
