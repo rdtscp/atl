@@ -20,10 +20,7 @@ public:
     if (this == &rhs)
       return;
 
-    m_elements.clear();
-    m_elements.reserve(rhs.size());
-    for (unsigned int i = 0; i < rhs.size(); ++i)
-      insert(rhs.m_elements[i]);
+    m_elements = rhs.m_elements;
   }
 
   /* Assignment Operator */
@@ -31,10 +28,7 @@ public:
     if (this == &rhs)
       return *this;
 
-    m_elements.clear();
-    m_elements.reserve(rhs.size());
-    for (unsigned int i = 0; i < rhs.size(); ++i)
-      insert(rhs[i]);
+    m_elements = rhs.m_elements;
     return *this;
   }
 
