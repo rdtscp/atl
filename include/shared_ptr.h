@@ -70,6 +70,8 @@ public:
       if (*m_ref == 0) {
         delete m_ptr;
         delete m_ref;
+        m_ptr = nullptr;
+        m_ref = nullptr;
       }
     }
 
@@ -91,6 +93,8 @@ public:
       if (*m_ref == 0) {
         delete m_ptr;
         delete m_ref;
+        m_ptr = nullptr;
+        m_ref = nullptr;
       }
   }
 
@@ -138,14 +142,6 @@ private:
     (void)obj;
   }
 };
-
-template <typename T> static shared_ptr<T> make_shared() {
-  return shared_ptr<T>(new T());
-}
-
-template <typename T> static shared_ptr<T> make_shared(const T &&obj) {
-  return shared_ptr<T>(new T(obj));
-}
 
 template <typename TO, typename FROM>
 static shared_ptr<TO> static_pointer_cast(const shared_ptr<FROM> &ptr) {
