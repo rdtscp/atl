@@ -12,7 +12,14 @@ class weak_ptr {
 public:
   weak_ptr() : m_ptr(nullptr), m_ref(nullptr) {}
 
+  weak_ptr(std::nullptr_t) : weak_ptr() {}
+
   weak_ptr(T *ptr, atl::shared_count *ref) : m_ptr(ptr), m_ref(ref) {}
+
+  weak_ptr(const atl::shared_ptr<T> &rhs) {
+    m_ptr = rhs.get();
+    m_ref = rhs.get_ref_counter();
+  }
 
   shared_ptr<T> lock() const {
     shared_ptr<T> output;
