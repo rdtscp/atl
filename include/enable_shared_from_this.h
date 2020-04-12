@@ -31,10 +31,8 @@ public:
       // return shared_ptr<T const>(m_weak_this);
     }
 
-    void __set_weak_ptr(atl::shared_count *ref) {
-      if (m_weak_this.expired()) {
-        m_weak_this.__set(static_cast<T*>(this), ref);
-      }
+    void __create_weak_ptr(T *ptr, atl::shared_count *ref) {
+      m_weak_this = weak_ptr<T>(ptr, ref);
     }
 
 private:
