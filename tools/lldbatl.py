@@ -75,10 +75,9 @@ class atlvector_SynthProvider:
         return None
 
     def update(self):
-        self.elements = self.valobj.GetChildMemberWithName('m_elements')
-        self.elements_used = self.valobj.GetChildMemberWithName(
-            'm_elements_used')
-        self.data_type = self.elements.GetType().GetPointeeType()
+        self.m_elements = self.valobj.GetChildMemberWithName('m_elements')
+        self.m_elements_used = self.valobj.GetChildMemberWithName('m_elements_used')
+        self.data_type = self.m_elements.GetType().GetPointeeType()
         self.data_size = self.data_type.GetByteSize()
 
     def has_children(self):
