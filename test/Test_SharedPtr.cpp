@@ -262,6 +262,25 @@ TEST(SharedPtrTest, WeakPtr) {
   ASSERT_EQ(*atl_sp, 5);
 }
 
+TEST(SharedPtrTest, WeakPtrDtor) {
+  atl::weak_ptr<int> outer_wp;
+  {
+    atl::shared_ptr<int> atl_sp(new int(5));
+    outer_wp = atl_sp;
+    {
+      atl::shared_ptr<int> atl_sp2 = outer_wp.lock();
+      ASSERT_EQ(*atl_sp2, 5);
+    }
+    {
+      atl::shared_ptr<int> atl_sp2(outer_wp.lock());
+      ASSERT_EQ(*atl_sp2, 5);
+    }
+    ASSERT_EQ(*atl_sp, 5);
+  }
+  ASSERT_EQ(outer_wp.expired(), true);
+  ASSERT_EQ(outer_wp.lock(), nullptr);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_SharedPtr : public ::testing::Test {
 protected:
