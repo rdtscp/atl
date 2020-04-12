@@ -12,11 +12,11 @@ template <typename T>
 class shared_ptr {
 public:
   /* Constructors */
-  shared_ptr() : m_ptr(nullptr), m_ref(new shared_count(1)) {}
+  shared_ptr() : m_ptr(nullptr), m_ref(new shared_count(1, 0)) {}
 
   shared_ptr(std::nullptr_t) : shared_ptr() {}
 
-  explicit shared_ptr(T *ptr) : m_ptr(ptr), m_ref(new shared_count(1)) {
+  explicit shared_ptr(T *ptr) : m_ptr(ptr), m_ref(new shared_count(1, 0)) {
     intialise_shared_from_this(m_ptr, m_ref);
   }
 
@@ -51,9 +51,18 @@ public:
   /* Destructor */
   ~shared_ptr() {
     m_ref->decrement_shared();
-    if (m_ref->use_count() == 0) {
+    if (m_ref->user_count() == 0) {
+      /* We must store the weak count here before deleting `m_ptr` because `m_ptr` may be of
+       * type `enable_shared_from_this` which upon destruction will clean up its own weak_ptr.
+       * If there is another weak_ptr elsewhere, it'll clean up the `m_ref` when it destructs.
+       */
+      const int weak_count = m_ref->weak_count();
       delete m_ptr;
-      delete m_ref;
+      m_ptr = nullptr;
+      if (weak_count == 0) {
+        delete m_ref;
+      }
+      m_ref = nullptr;
     }
   }
 
@@ -80,12 +89,7 @@ public:
   }
 
   /* Only for use by `weak_ptr`. */
-  void __set(T *ptr, atl::shared_count *ref) {
-    delete m_ref;
-
-    atl::swap(m_ptr, ptr);
-    atl::swap(m_ref, ref);
-
+  shared_ptr(T *ptr, atl::shared_count *ref) : m_ptr(ptr), m_ref(ref) {
     m_ref->increment_shared();
   }
 
@@ -95,11 +99,11 @@ private:
 
   template <typename Derived>
   void intialise_shared_from_this(atl::enable_shared_from_this<Derived> *ptr, atl::shared_count *ref) {
-    ptr->__set_weak_ptr(ref);
+    ptr->__create_weak_ptr(static_cast<Derived*>(ptr), ref);
   }
 
   void intialise_shared_from_this(atl::enable_shared_from_this<T> *ptr, atl::shared_count *ref) {
-    ptr->__set_weak_ptr(ref);
+    ptr->__create_weak_ptr(static_cast<T*>(ptr), ref);
   }
 
   void intialise_shared_from_this(void *, atl::shared_count *) {
@@ -130,9 +134,7 @@ bool operator!=(const shared_ptr<T> &lhs, const std::nullptr_t) {
 
 template<typename TO, class FROM>
 atl::shared_ptr<TO> static_pointer_cast(const atl::shared_ptr<FROM> &rhs) {
-  atl::shared_ptr<TO> output;
-  output.__set(static_cast<TO*>(rhs.get()), rhs.get_ref_counter());
-  return output;
+  return atl::shared_ptr<TO>(static_cast<TO*>(rhs.get()), rhs.get_ref_counter());
 }
 
 } // namespace atl
