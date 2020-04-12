@@ -15,6 +15,8 @@ public:
     filePtr = fopen(filename.c_str(), "r");
   }
 
+  ifstream &operator=(const ifstream &rhs) = delete;
+
   ~ifstream() {
     if (filePtr)
       fclose(filePtr);
