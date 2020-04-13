@@ -16,19 +16,14 @@ public:
   }
 
   /* Copy Constructor */
-  set<T>(const set<T> &rhs) {
-    if (this == &rhs)
-      return;
-
-    m_elements = rhs.m_elements;
-  }
+  set<T>(const set<T> &rhs) m_elements(rhs.m_elements) {}
 
   /* Assignment Operator */
-  set<T> &operator=(const set<T> &rhs) {
+  set<T> &operator=(set<T> rhs) {
     if (this == &rhs)
       return *this;
 
-    m_elements = rhs.m_elements;
+    atl::swap(m_elements, rhs.m_elements);
     return *this;
   }
 
