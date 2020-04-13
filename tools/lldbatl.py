@@ -20,8 +20,8 @@ class atlshared_ptr_SynthProvider:
         return 0
 
     def get_child_at_index(self, index):
-        if self.ptr.GetValue() != "0x0000000000000000":
-            return self.ptr
+        if self.m_ptr.GetValue() != "0x0000000000000000":
+            return self.m_ptr
         else:
             return None
 
@@ -34,7 +34,7 @@ class atlshared_ptr_SynthProvider:
         return None
 
     def update(self):
-        self.ptr = self.valobj.GetChildMemberWithName('ptr')
+        self.m_ptr = self.valobj.GetChildMemberWithName('m_ptr')
 
     def has_children(self):
         return True
@@ -54,7 +54,7 @@ class atlvector_SynthProvider:
         self.update()
 
     def num_children(self):
-        num_elems = self.elements_used.GetValueAsUnsigned()
+        num_elems = self.m_elements_used.GetValueAsUnsigned()
         return num_elems
 
     def get_child_index(self, name):
@@ -64,7 +64,7 @@ class atlvector_SynthProvider:
         if index < 0 or index >= self.num_children():
             return None
         offset = index * self.data_size
-        return self.elements.CreateChildAtOffset('[' + str(index) + ']', offset, self.data_type)
+        return self.m_elements.CreateChildAtOffset('[' + str(index) + ']', offset, self.data_type)
 
     def get_type_from_name(self):
         import re
@@ -75,10 +75,9 @@ class atlvector_SynthProvider:
         return None
 
     def update(self):
-        self.elements = self.valobj.GetChildMemberWithName('elements')
-        self.elements_used = self.valobj.GetChildMemberWithName(
-            'elements_used')
-        self.data_type = self.elements.GetType().GetPointeeType()
+        self.m_elements = self.valobj.GetChildMemberWithName('m_elements')
+        self.m_elements_used = self.valobj.GetChildMemberWithName('m_elements_used')
+        self.data_type = self.m_elements.GetType().GetPointeeType()
         self.data_size = self.data_type.GetByteSize()
 
     def has_children(self):
