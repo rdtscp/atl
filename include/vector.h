@@ -151,8 +151,10 @@ public:
   }
 
   T pop_back() {
-    --m_elements_used;
-    return erase(m_elements_used);
+    if (size() == 0) {
+      throw "atl::vector::pop_back empty exception";
+    }
+    return erase(m_elements_used - 1);
   }
 
   void reserve(const unsigned int reserveSize) {

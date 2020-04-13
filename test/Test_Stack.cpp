@@ -17,6 +17,27 @@ TEST(StackTest, TopElement) {
   ASSERT_NE(atlStack.top(), 2);
 }
 
+TEST(StackTest, PopBack) {
+  atl::stack<int> atlStack;
+  atlStack.push_back(1);
+  atlStack.push_back(2);
+  atlStack.push_back(3);
+  ASSERT_EQ(atlStack.size(), 3u);
+  ASSERT_EQ(atlStack.top(), 3);
+  ASSERT_NE(atlStack.top(), 2);
+  ASSERT_EQ(atlStack.pop_back(), 3);
+  ASSERT_EQ(atlStack.pop_back(), 2);
+  ASSERT_EQ(atlStack.pop_back(), 1);
+  ASSERT_EQ(atlStack.size(), 0);
+  try {
+    atlStack.pop_back();
+  }
+  catch (...) {
+    return;
+  }
+  ASSERT_EQ(1,2);
+}
+
 // The fixture for testing class Project1. From google test primer.
 class Test_Stack : public ::testing::Test {
 protected:
