@@ -59,6 +59,8 @@ public:
 
   /* Move-Assignment Operator */
   vector<T> &operator=(vector<T> &&rhs) {
+    deallocate();
+
     m_elements = rhs.m_elements;
     m_elements_size = rhs.m_elements_size;
     m_elements_used = rhs.m_elements_used;
