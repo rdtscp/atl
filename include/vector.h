@@ -6,8 +6,8 @@
 
 namespace atl {
 
-template <typename T> class vector {
-
+template <typename T>
+class vector {
 public:
   /* Default Constructor */
   vector<T>() {}
@@ -49,26 +49,10 @@ public:
   }
 
   /* Move Constructor */
-  vector<T>(vector<T> &&rhs)
-      : m_elements_size(rhs.m_elements_size), m_elements_used(rhs.m_elements_used),
-        m_elements(rhs.m_elements) {
-    rhs.m_elements = nullptr;
-    rhs.m_elements_size = 0;
-    rhs.m_elements_used = 0;
-  }
-
-  /* Move-Assignment Operator */
-  vector<T> &operator=(vector<T> &&rhs) {
-    deallocate();
-
-    m_elements = rhs.m_elements;
-    m_elements_size = rhs.m_elements_size;
-    m_elements_used = rhs.m_elements_used;
-
-    rhs.m_elements = nullptr;
-    rhs.m_elements_size = 0;
-    rhs.m_elements_used = 0;
-    return *this;
+  vector<T>(vector<T> &&rhs) : vector() {
+    atl::swap(m_elements, rhs.m_elements);
+    atl::swap(m_elements_size, rhs.m_elements_size);
+    atl::swap(m_elements_used, rhs.m_elements_used);
   }
 
   /* Destructor */
@@ -126,22 +110,14 @@ public:
   }
 
   void push_back(const T &elem) {
-    if (capacity() == 0)
-      reserve(1);
-
-    if (size() >= capacity())
-      reserve(1 + capacity());
+    reserve(size() + 1);
 
     m_elements[m_elements_used] = elem;
     ++m_elements_used;
   }
 
   void push_front(const T &elem) {
-    if (capacity() == 0)
-      reserve(1);
-
-    if (size() >= capacity())
-      reserve(1 + capacity());
+    reserve(size() + 1);
 
     for (unsigned int idx = m_elements_used; idx > 0; --idx)
       m_elements[idx] = m_elements[idx - 1];
@@ -189,12 +165,6 @@ private:
   unsigned int m_elements_size = 0;
   unsigned int m_elements_used = 0;
   T *m_elements = nullptr;
-
-  void allocate(const unsigned int num_elems) {
-    m_elements_size = num_elems;
-    m_elements = new T[m_elements_size];
-    m_elements_used = 0;
-  }
 
   void deallocate() {
     delete[] m_elements;
