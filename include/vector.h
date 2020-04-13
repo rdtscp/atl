@@ -2,6 +2,8 @@
 #include <initializer_list>
 #include <iostream>
 
+#include "swap.h"
+
 namespace atl {
 
 template <typename T> class vector {
@@ -19,7 +21,7 @@ public:
 
   /* Size Constructor */
   vector<T>(const unsigned int size) {
-    allocate(size);
+    reserve(size);
     for (unsigned int idx = 0; idx < capacity(); ++idx)
       push_back(T());
   }
@@ -30,19 +32,19 @@ public:
       return;
 
     reserve(rhs.capacity());
-    for (unsigned int idx = 0; idx < rhs.size(); ++idx)
-      push_back(rhs.at(idx));
+    for (m_elements_used = 0; m_elements_used < rhs.size(); ++m_elements_used) {
+      m_elements[m_elements_used] = rhs.at(m_elements_used);
+    }
   }
 
   /* Assignment Operator */
-  vector<T> &operator=(const vector<T> &rhs) {
+  vector<T> &operator=(vector<T> rhs) {
     if (this == &rhs)
       return *this;
 
-    deallocate();
-    reserve(rhs.capacity());
-    for (unsigned int idx = 0; idx < rhs.size(); ++idx)
-      push_back(rhs.at(idx));
+    atl::swap(m_elements, rhs.m_elements);
+    atl::swap(m_elements_size, rhs.m_elements_size);
+    atl::swap(m_elements_used, rhs.m_elements_used);
     return *this;
   }
 
@@ -50,20 +52,22 @@ public:
   vector<T>(vector<T> &&rhs)
       : m_elements_size(rhs.m_elements_size), m_elements_used(rhs.m_elements_used),
         m_elements(rhs.m_elements) {
+    rhs.m_elements = nullptr;
     rhs.m_elements_size = 0;
     rhs.m_elements_used = 0;
-    rhs.m_elements = nullptr;
   }
 
   /* Move-Assignment Operator */
   vector<T> &operator=(vector<T> &&rhs) {
+    deallocate();
+
+    m_elements = rhs.m_elements;
     m_elements_size = rhs.m_elements_size;
     m_elements_used = rhs.m_elements_used;
-    m_elements = rhs.m_elements;
 
+    rhs.m_elements = nullptr;
     rhs.m_elements_size = 0;
     rhs.m_elements_used = 0;
-    rhs.m_elements = nullptr;
     return *this;
   }
 
@@ -147,8 +151,10 @@ public:
   }
 
   T pop_back() {
-    --m_elements_used;
-    return erase(m_elements_used);
+    if (size() == 0) {
+      throw "atl::vector::pop_back empty exception";
+    }
+    return erase(m_elements_used - 1);
   }
 
   void reserve(const unsigned int reserveSize) {
@@ -187,21 +193,14 @@ private:
   void allocate(const unsigned int num_elems) {
     m_elements_size = num_elems;
     m_elements = new T[m_elements_size];
-  }
-
-  void deallocate() {
-    if (m_elements_size > 0) {
-      delete[] m_elements;
-      m_elements = nullptr;
-    }
-    m_elements_size = 0;
     m_elements_used = 0;
   }
 
-  /* Extend the size of m_elements[] by num_elems. */
-  void extend(const unsigned int num_elems) {
-    const unsigned int new_capacity = capacity() + num_elems;
-    reserve(new_capacity);
+  void deallocate() {
+    delete[] m_elements;
+    m_elements = nullptr;
+    m_elements_size = 0;
+    m_elements_used = 0;
   }
 };
 
