@@ -16,7 +16,7 @@ public:
   }
 
   /* Copy Constructor */
-  set<T>(const set<T> &rhs) m_elements(rhs.m_elements) {}
+  set<T>(const set<T> &rhs) : m_elements(rhs.m_elements) {}
 
   /* Assignment Operator */
   set<T> &operator=(set<T> rhs) {

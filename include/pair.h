@@ -17,7 +17,7 @@ public:
   pair(const F &first, const S &second) : first(first), second(second) {}
 
   /* Copy Constructor */
-  pair(const pair<F, S> &rhs) first(rhs.first), second(rhs.second) {}
+  pair(const pair<F, S> &rhs) : first(rhs.first), second(rhs.second) {}
 
   /* Assignment Operator */
   pair &operator=(pair rhs) {
