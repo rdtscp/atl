@@ -1,34 +1,31 @@
 #pragma once
 
+#include "swap.h"
+
 namespace atl {
 
-template <typename F, typename S> class pair {
-
+template <typename F, typename S>
+class pair {
 public:
   F first;
   S second;
 
   /* Constructor */
-  pair<F, S>() : first(), second() {}
+  pair() : first(), second() {}
 
   /* Constructor */
-  pair<F, S>(const F &first, const S &second) : first(first), second(second) {}
+  pair(const F &first, const S &second) : first(first), second(second) {}
 
   /* Copy Constructor */
-  pair<F, S>(const pair<F, S> &rhs) {
-    if (this == &rhs)
-      return;
-    first = rhs.first;
-    second = rhs.second;
-  }
+  pair(const pair<F, S> &rhs) : first(rhs.first), second(rhs.second) {}
 
   /* Assignment Operator */
-  pair<F, S> &operator=(const pair<F, S> &rhs) {
+  pair &operator=(pair rhs) {
     if (this == &rhs)
       return *this;
 
-    first = rhs.first;
-    second = rhs.second;
+    atl::swap(first, rhs.first);
+    atl::swap(second, rhs.second);
     return *this;
   }
 
