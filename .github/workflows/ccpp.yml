@@ -27,6 +27,7 @@ jobs:
     runs-on: macOS-latest
     
     steps:
+      - run: brew install lcov
       - uses: actions/checkout@v1
       - run: mkdir build
       - run: cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCODE_COVERAGE=1 -S . -B ./build
