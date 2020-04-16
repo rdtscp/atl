@@ -72,7 +72,7 @@ TEST(UnorderedMapTest, Iteration) {
   const atl::vector<int> expected_keys = {0, 3, 5, 7, 13};
   const atl::vector<int> actual_keys = atlMap.keys();
   ASSERT_EQ(expected_keys.size(), actual_keys.size());
-  for (int idx = 0; idx < actual_keys.size(); ++idx)
+  for (unsigned int idx = 0; idx < actual_keys.size(); ++idx)
     ASSERT_EQ(expected_keys[idx], actual_keys[idx]);
 }
 

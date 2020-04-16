@@ -28,7 +28,7 @@ TEST(StackTest, PopBack) {
   ASSERT_EQ(atlStack.pop_back(), 3);
   ASSERT_EQ(atlStack.pop_back(), 2);
   ASSERT_EQ(atlStack.pop_back(), 1);
-  ASSERT_EQ(atlStack.size(), 0);
+  ASSERT_EQ(atlStack.size(), 0u);
   try {
     atlStack.pop_back();
   }

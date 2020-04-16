@@ -158,9 +158,7 @@ TEST(SharedPtrTest, SharedFromThis) {
 
   atl::shared_ptr<Test1> atl_sp3 = atl_sp2->shared_from_this();
   Test1 &test = *atl_sp3;
-  (void)test;
   atl::shared_ptr<Test1> atl_sp4 = test.shared_from_this();
-  // atl::shared_ptr<Test const> atl_sp4 = atl_sp2->shared_from_this();
 
   ASSERT_EQ(atl_sp2->t_val, 6);
 

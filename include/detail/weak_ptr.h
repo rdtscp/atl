@@ -18,6 +18,10 @@ public:
     m_ref->increment_weak();
   }
 
+  weak_ptr(const weak_ptr &rhs) : m_ptr(rhs.m_ptr), m_ref(rhs.m_ref) {
+    m_ref->increment_weak();
+  }
+
   weak_ptr &operator=(weak_ptr rhs) {
     if (this == &rhs)
       return *this;
