@@ -23,6 +23,18 @@ jobs:
     - run: make --directory ./build -j
     - run: make test -C ./build ARGS='--output-on-failure'
 
+  test-coverage:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: mkdir build
+      - run: cmake -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=1 -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
+      - run: make --directory ./build -j
+      - run: make test -C ./build ARGS='--output-on-failure'
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
+
   release-build:
 
     runs-on: macOS-latest
