@@ -45,7 +45,7 @@ jobs:
       run: make test -C ./build ARGS='--output-on-failure'
     
     - name: Clean Build
-      run: ¬
+      run: |
        rm -rf ./build/
        mkdir build
 
