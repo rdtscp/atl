@@ -4,7 +4,7 @@
 
 TEST(VectorTest, DefaultConstruction) {
   atl::list<int> atlList;
-  ASSERT_EQ(atlList.size(), 0);
+  ASSERT_EQ(atlList.size(), 0u);
 }
 
 TEST(VectorTest, PushBack) {
@@ -14,7 +14,7 @@ TEST(VectorTest, PushBack) {
   atlList.push_back(5);
   ASSERT_EQ(atlList.has_head(), true);
   ASSERT_EQ(atlList.has_tail(), false);
-  ASSERT_EQ(atlList.size(), 1);
+  ASSERT_EQ(atlList.size(), 1u);
   ASSERT_EQ(atlList.head(), 5);
   atlList.push_back(6);
   ASSERT_EQ(atlList.has_head(), true);
@@ -22,28 +22,28 @@ TEST(VectorTest, PushBack) {
   atlList.push_back(7);
   atlList.push_back(8);
   atlList.push_back(9);
-  ASSERT_EQ(atlList.size(), 5);
+  ASSERT_EQ(atlList.size(), 5u);
   ASSERT_EQ(atlList.head(), 5);
   atlList = atlList.tail();
   ASSERT_EQ(atlList.has_head(), true);
   ASSERT_EQ(atlList.has_tail(), true);
-  ASSERT_EQ(atlList.size(), 4);
+  ASSERT_EQ(atlList.size(), 4u);
   ASSERT_EQ(atlList.head(), 6);
 }
 
 TEST(VectorTest, PushFront) {
   atl::list<int> atlList;
   atlList.push_front(5);
-  ASSERT_EQ(atlList.size(), 1);
+  ASSERT_EQ(atlList.size(), 1u);
   ASSERT_EQ(atlList.head(), 5);
   atlList.push_front(6);
   atlList.push_front(7);
   atlList.push_front(8);
   atlList.push_front(9);
-  ASSERT_EQ(atlList.size(), 5);
+  ASSERT_EQ(atlList.size(), 5u);
   ASSERT_EQ(atlList.head(), 9);
   atlList = atlList.tail();
-  ASSERT_EQ(atlList.size(), 4);
+  ASSERT_EQ(atlList.size(), 4u);
   ASSERT_EQ(atlList.head(), 8);
 }
 

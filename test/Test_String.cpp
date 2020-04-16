@@ -241,14 +241,14 @@ TEST(StringTest, Stoi) {
 
 TEST(StringTest, Size) {
   atl::string foo(atl::string("abc"));
-  ASSERT_EQ(foo.size(), 3);
+  ASSERT_EQ(foo.size(), 3u);
   foo += "def";
-  ASSERT_EQ(foo.size(), 6);
+  ASSERT_EQ(foo.size(), 6u);
   foo += 'g';
-  ASSERT_EQ(foo.size(), 7);
+  ASSERT_EQ(foo.size(), 7u);
   foo += atl::string("hij");
-  ASSERT_EQ(foo.size(), 10);
-  ASSERT_EQ((foo + "klm").size(), 13);
+  ASSERT_EQ(foo.size(), 10u);
+  ASSERT_EQ((foo + "klm").size(), 13u);
   ASSERT_EQ(foo[0], 'a');
   ASSERT_EQ(foo[9], 'j');
 }
