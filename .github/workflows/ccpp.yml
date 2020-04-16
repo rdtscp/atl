@@ -14,7 +14,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
         make --directory ./build -j
 
-    - name: Run Tests
+    - name: Debug Tests
       run: make test -C ./build ARGS='--output-on-failure'
     
     - name: Clean Build
@@ -27,7 +27,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
         make --directory ./build -j
 
-    - name: Run Tests
+    - name: Release Tests
       run: make test -C ./build ARGS='--output-on-failure'
 
   gcc-build:
@@ -40,7 +40,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
         make --directory ./build -j
 
-    - name: Run Tests
+    - name: Debug Tests
       run: make test -C ./build ARGS='--output-on-failure'
     
     - name: Clean Build
@@ -53,7 +53,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
         make --directory ./build -j
 
-    - name: Run Tests
+    - name: Release Tests
       run: make test -C ./build ARGS='--output-on-failure'
 
   test-coverage:
@@ -66,7 +66,7 @@ jobs:
         cmake -DCMAKE_BUILD_TYPE=Debug -S . -B ./build
         make --directory ./build -j
 
-    - name: Run Tests
+    - name: Debug Tests
       run: make test -C ./build ARGS='--output-on-failure'
 
     - name: Get Coverage
