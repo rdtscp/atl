@@ -7,19 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Release Build
-      run: |
-        mkdir build
-        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
-        make --directory ./build -j
-
-    - name: Run Tests
-      run: make test -C ./build ARGS='--output-on-failure'
-    
-    - name: Clean Build
-      run: |
-       rm -rf ./build/
-       mkdir build
 
     - name: Debug Build
       run: |
@@ -29,15 +16,29 @@ jobs:
 
     - name: Run Tests
       run: make test -C ./build ARGS='--output-on-failure'
+    
+    - name: Clean Build
+      run: |
+       rm -rf ./build/
+       mkdir build
+    
+    - name: Release Build
+      run: |
+        mkdir build
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
+        make --directory ./build -j
+
+    - name: Run Tests
+      run: make test -C ./build ARGS='--output-on-failure'
 
   gcc-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Release Build
+    - name: Debug Build
       run: |
         mkdir build
-        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
+        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
         make --directory ./build -j
 
     - name: Run Tests
@@ -48,10 +49,10 @@ jobs:
        rm -rf ./build/
        mkdir build
 
-    - name: Debug Build
+    - name: Release Build
       run: |
         mkdir build
-        cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -S . -B ./build
         make --directory ./build -j
 
     - name: Run Tests
