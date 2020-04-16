@@ -5,8 +5,10 @@ set(CMAKE_CXX_FLAGS "-Wall -Wno-unused-function -Werror")
 project(atl)
 
 IF (CMAKE_BUILD_TYPE MATCHES Debug)
-  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
-  set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
+  IF (NOT CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
+    set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=leak")
+  ENDIF (NOT CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
 ENDIF (CMAKE_BUILD_TYPE MATCHES Debug)
 
   # Don't Install Google Test if its already installed.
