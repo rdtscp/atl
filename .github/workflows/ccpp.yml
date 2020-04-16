@@ -59,6 +59,7 @@ jobs:
   test-coverage:
     runs-on: ubuntu-latest
     steps:
+    - run: sudo apt install lcov
     - uses: actions/checkout@v1
     - name: Debug Build
       run: |
