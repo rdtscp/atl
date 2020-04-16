@@ -32,10 +32,9 @@ jobs:
       - run: cmake -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=1 -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S . -B ./build
       - run: make --directory ./build -j
       - run: make test -C ./build ARGS='--output-on-failure'
-      - run: lcov --capture --directory . --output-file coverage.info
-      - run: lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
-      - run: lcov --remove coverage.info '*/gtest/*' --output-file coverage.info # filter gtest files
-      - run: bash <(curl -s https://codecov.io/bash)
+      - uses: codecov/codecov-action@v1.0.6
+        with:
+          fail_ci_if_error: true
 
   release-build:
 
