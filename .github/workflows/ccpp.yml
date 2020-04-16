@@ -24,13 +24,12 @@ jobs:
     - run: make test -C ./build ARGS='--output-on-failure'
 
   test-coverage:
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     
     steps:
-      - run: sudo apt install lcov
       - uses: actions/checkout@v1
       - run: mkdir build
-      - run: cmake -DCMAKE_BUILD_TYPE=Debug -DCODE_COVERAGE=1 -S . -B ./build
+      - run: cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCODE_COVERAGE=1 -S . -B ./build
       - run: make --directory ./build -j
       - run: make test -C ./build ARGS='--output-on-failure'
       - run: lcov --directory ./build/ --capture --output-file coverage.info
