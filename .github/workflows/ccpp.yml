@@ -20,7 +20,6 @@ jobs:
     - name: Clean Build
       run: |
        rm -rf ./build/
-       mkdir build
     
     - name: Release Build
       run: |
@@ -47,7 +46,6 @@ jobs:
     - name: Clean Build
       run: |
        rm -rf ./build/
-       mkdir build
 
     - name: Release Build
       run: |
