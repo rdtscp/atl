@@ -27,7 +27,7 @@ jobs:
     runs-on: macOS-latest
     
     steps:
-      - run: brew install lcov llvm@10
+      - run: brew install lcov llvm
       - uses: actions/checkout@v1
       - run: mkdir build
       - run: export CC=/usr/local/opt/llvm/bin/clang
