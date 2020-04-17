@@ -38,6 +38,7 @@ public:
     for (uint idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = rhs[idx];
     }
+    m_value[m_size] = '\0';
   }
 
   /* Assignment Operator */
