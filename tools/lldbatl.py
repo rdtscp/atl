@@ -41,7 +41,7 @@ class atlshared_ptr_SynthProvider:
 
 
 def atlstring_SummaryProvider(valobj, dict_env):
-    string_value = valobj.GetChildMemberWithName('string_value').GetSummary()
+    string_value = valobj.GetChildMemberWithName('m_value').GetSummary()
     if len(string_value) > 25:
         string_value = "\"[...]" + string_value[-25:]
     return string_value
@@ -98,7 +98,7 @@ def __lldb_init_module(debugger, dict_env):
     debugger.HandleCommand('type synthetic add -l'
                            'lldbatl.atlshared_ptr_SynthProvider -x "^atl::shared_ptr<.+>$"')
     debugger.HandleCommand('type summary add -F'
-                           'lldbatl.atlstring_SummaryProvider atl::string')
+                           'lldbatl.atlstring_SummaryProvider "^atl::string$"')
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlvector_SummaryProvider -e -x "^atl::vector<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
