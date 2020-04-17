@@ -5,108 +5,68 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(lldb) Hash Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) Hash Unit Tests",
       "program": "${workspaceFolder}/build/test/runHashUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) IfStream Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) IfStream Unit Tests",
       "program": "${workspaceFolder}/build/test/runIfStreamUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) Map Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) Map Unit Tests",
       "program": "${workspaceFolder}/build/test/runMapUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) OfStream Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) OfStream Unit Tests",
       "program": "${workspaceFolder}/build/test/runOfStreamUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) Set Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) Set Unit Tests",
       "program": "${workspaceFolder}/build/test/runSetUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) SharedPtr Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) SharedPtr Unit Tests",
       "program": "${workspaceFolder}/build/test/runSharedPtrUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) String Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) String Unit Tests",
       "program": "${workspaceFolder}/build/test/runStringUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     },
     {
-      "name": "(lldb) Vector Unit Tests",
-      "type": "cppdbg",
+      "type": "lldb",
       "request": "launch",
+      "name": "(lldb) Vector Unit Tests",
       "program": "${workspaceFolder}/build/test/runVectorUnitTests",
       "args": [],
-      "stopAtEntry": false,
-      "cwd": "${workspaceFolder}",
-      "environment": [],
-      "externalConsole": true,
-      "MIMode": "lldb",
-      "miDebuggerPath": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-mi"
+      "cwd": "${workspaceFolder}"
     }
   ]
 }
