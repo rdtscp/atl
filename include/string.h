@@ -12,7 +12,7 @@ public:
   typedef char *iterator;
 
   /* Constructor */
-  string() : m_size(0u), m_value(new char[1]){
+  string() : m_size(0u), m_value(new char[1]) {
     *m_value = '\0';
   }
 
@@ -49,7 +49,7 @@ public:
   }
 
   /* Move Constructor */
-  string(string &&rhs) : string() {
+  string(string &&rhs) : m_size(0u), m_value(nullptr) {
     atl::swap(m_size, rhs.m_size);
     atl::swap(m_value, rhs.m_value);
   }
