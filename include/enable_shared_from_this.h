@@ -9,6 +9,9 @@ atl::shared_ptr<TO> static_pointer_cast(const atl::shared_ptr<FROM> &rhs);
 
 template<class T>
 class enable_shared_from_this {
+private:
+    mutable weak_ptr<T> m_weak_this;
+
 protected:
     enable_shared_from_this() {}
 
@@ -35,8 +38,6 @@ public:
       m_weak_this = weak_ptr<T>(ptr, ref);
     }
 
-private:
-    mutable weak_ptr<T> m_weak_this;
 };
 
 } // namespace atl

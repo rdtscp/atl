@@ -3,6 +3,10 @@
 namespace atl {
 
 class shared_count {
+private:
+  int m_user_count;
+  int m_weak_count;
+
 public:
   shared_count(const int user_count, const int weak_count) : m_user_count(user_count), m_weak_count(weak_count) {}
 
@@ -29,10 +33,6 @@ public:
   int weak_count() const {
     return m_weak_count;
   }
-
-private:
-  int m_user_count;
-  int m_weak_count;
 
 };
 

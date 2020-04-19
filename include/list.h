@@ -4,7 +4,8 @@
 
 namespace atl {
 
-template <typename T> class list {
+template <typename T>
+class list {
 private:
   struct list_node {
     list_node(const T &p_value) : value(p_value) {}

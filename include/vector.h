@@ -8,6 +8,11 @@ namespace atl {
 
 template <typename T>
 class vector {
+private:
+  unsigned int m_elements_size = 0;
+  unsigned int m_elements_used = 0;
+  T *m_elements = nullptr;
+
 public:
   /* Default Constructor */
   vector<T>() {}
@@ -162,9 +167,6 @@ public:
   unsigned int size() const { return m_elements_used; }
 
 private:
-  unsigned int m_elements_size = 0;
-  unsigned int m_elements_used = 0;
-  T *m_elements = nullptr;
 
   void deallocate() {
     delete[] m_elements;

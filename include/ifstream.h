@@ -8,6 +8,8 @@ extern "C" void *memset(void *__b, int __c, size_t __len);
 namespace atl {
 
 class ifstream {
+private:
+  FILE *filePtr;
 
 public:
   /* Constructor */
@@ -45,8 +47,6 @@ public:
     return output;
   }
 
-private:
-  FILE *filePtr;
 };
 
 } // namespace atl

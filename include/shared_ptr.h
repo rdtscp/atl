@@ -10,6 +10,10 @@ namespace atl {
 
 template <typename T>
 class shared_ptr {
+private:
+  T *m_ptr;
+  atl::shared_count *m_ref;
+
 public:
   /* Constructors */
   shared_ptr() : m_ptr(nullptr), m_ref(new shared_count(1, 0)) {}
@@ -94,9 +98,6 @@ public:
   }
 
 private:
-  T *m_ptr;
-  atl::shared_count *m_ref;
-
   template <typename Derived>
   void intialise_shared_from_this(atl::enable_shared_from_this<Derived> *ptr, atl::shared_count *ref) {
     ptr->__create_weak_ptr(static_cast<Derived*>(ptr), ref);

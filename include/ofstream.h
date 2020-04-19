@@ -6,6 +6,8 @@
 namespace atl {
 
 class ofstream {
+private:
+  FILE *filePtr;
 
 public:
   /* Constructor */
@@ -33,8 +35,6 @@ public:
 
   void write(const atl::string &contents) { fputs(contents.c_str(), filePtr); }
 
-private:
-  FILE *filePtr;
 };
 
 } // namespace atl
