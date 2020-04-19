@@ -3,7 +3,10 @@
 #include <iostream>
 namespace atl {
 
-template <typename T> class set {
+template <typename T>
+class set {
+private:
+  atl::vector<T> m_elements;
 
 public:
   /* Constructor */
@@ -61,9 +64,6 @@ public:
   }
 
   unsigned int size() const { return m_elements.size(); }
-
-private:
-  atl::vector<T> m_elements;
 
 };
 

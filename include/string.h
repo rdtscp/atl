@@ -6,8 +6,12 @@
 namespace atl {
 
 class string {
-public:
+private:
   typedef unsigned int uint;
+  uint m_size;
+  char *m_value;
+
+public:
   typedef const char *const_iterator;
   typedef char *iterator;
 
@@ -270,9 +274,6 @@ public:
   uint size() const { return m_size; }
 
 private:
-  uint m_size;
-  char *m_value;
-
   static uint char_buf_len(const char *buf) {
     uint length = 0u;
     while (*buf != '\0') {

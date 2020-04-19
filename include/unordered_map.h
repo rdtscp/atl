@@ -5,7 +5,10 @@
 
 namespace atl {
 
-template <typename K, typename V> class unordered_map {
+template <typename K, typename V>
+class unordered_map {
+private:
+  atl::vector<atl::pair<K, V>> elements;
 
 public:
   /* Constructor */
@@ -109,8 +112,6 @@ public:
   }
 
 private:
-  atl::vector<atl::pair<K, V>> elements;
-
   void insert_unique(const atl::pair<K, V> &new_elem) {
     /* Check if this key exists already */
     const unsigned int num_elems = elements.size();

@@ -9,6 +9,10 @@ template <typename T> class shared_ptr;
 
 template <typename T>
 class weak_ptr {
+private:
+  T *m_ptr;
+  atl::shared_count *m_ref;
+
 public:
   weak_ptr() : m_ptr(nullptr), m_ref(new shared_count(0, 1)) {}
 
@@ -68,10 +72,6 @@ public:
   weak_ptr(T *ptr, atl::shared_count *ref) : m_ptr(ptr), m_ref(ref) {
     m_ref->increment_weak();
   }
-
-private:
-  T *m_ptr;
-  atl::shared_count *m_ref;
 
 };
 
