@@ -60,7 +60,7 @@ public:
 
   /* Destructor */
   ~string() {
-    m_size = 0;
+    m_size = 0u;
     delete[] m_value;
     m_value = nullptr;
   }
@@ -74,17 +74,17 @@ public:
   }
 
   string &operator+=(const char rhs) {
-    append(string(1, rhs));
+    this->append(string(1u, rhs));
     return *this;
   }
 
   string &operator+=(const char *rhs) {
-    append(rhs);
+    this->append(string(rhs));
     return *this;
   }
 
   string &operator+=(const string &rhs) {
-    append(rhs);
+    this->append(rhs);
     return *this;
   }
 
@@ -98,7 +98,7 @@ public:
     }
 
     for (uint idx = 0u; idx < m_size; ++idx) {
-      const char currLhs = at(idx);
+      const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
         return true;
@@ -116,7 +116,7 @@ public:
     }
 
     for (uint idx = 0u; idx < m_size; ++idx) {
-      const char currLhs = at(idx);
+      const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
         return true;
@@ -135,7 +135,7 @@ public:
     }
 
     for (uint idx = 0u; idx < m_size; ++idx) {
-      const char currLhs = at(idx);
+      const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
         return false;
@@ -153,7 +153,7 @@ public:
     }
 
     for (uint idx = 0u; idx < m_size; ++idx) {
-      const char currLhs = at(idx);
+      const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
         return false;
@@ -168,8 +168,8 @@ public:
       return false;
     }
 
-    for (uint idx = 0; idx < m_size; ++idx) {
-      if (at(idx) != rhs.at(idx)) {
+    for (uint idx = 0u; idx < m_size; ++idx) {
+      if (this->at(idx) != rhs.at(idx)) {
         return false;
       }
     }
