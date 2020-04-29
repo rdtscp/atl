@@ -216,10 +216,10 @@ public:
       return;
     }
 
-    const int new_size = m_size + rhs.m_size;
+    const uint new_size = m_size + rhs.m_size;
 
     // Allocate memory for the new string.
-    char *new_string_value = new char[new_size + 1];
+    char *new_string_value = new char[new_size + 1u];
     char *new_string_value_ptr = new_string_value;
 
     // Copy the LHS.
@@ -301,7 +301,7 @@ static string operator+(string lhs, const string &rhs) {
   return lhs;
 }
 
-static string operator+(const char *lhs, const atl::string &rhs) {
+static string operator+(const char *lhs, const string &rhs) {
   return string(lhs) + rhs;
 }
 
