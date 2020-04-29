@@ -41,10 +41,10 @@ class atlshared_ptr_SynthProvider:
 
 
 def atlstring_SummaryProvider(valobj, dict_env):
-    string_value = valobj.GetChildMemberWithName('m_value').GetSummary()
-    if len(string_value) > 25:
-        string_value = "\"[...]" + string_value[-25:]
-    return string_value
+    m_value = valobj.GetChildMemberWithName('m_value').GetSummary()
+    if len(m_value) > 25:
+        m_value = "\"[...]" + m_value[-25:]
+    return m_value
 
 
 class atlvector_SynthProvider:
@@ -98,8 +98,10 @@ def __lldb_init_module(debugger, dict_env):
     debugger.HandleCommand('type synthetic add -l'
                            'lldbatl.atlshared_ptr_SynthProvider -x "^atl::shared_ptr<.+>$"')
     debugger.HandleCommand('type summary add -F'
-                           'lldbatl.atlstring_SummaryProvider "^atl::string$"')
+                           'lldbatl.atlstring_SummaryProvider -x "^atl::string$"')
     debugger.HandleCommand('type summary add -F'
                            'lldbatl.atlvector_SummaryProvider -e -x "^atl::vector<.+>$"')
     debugger.HandleCommand('type synthetic add -l'
                            'lldbatl.atlvector_SynthProvider -x "^atl::vector<.+>$"')
+    # Prevent Debugger from Stepping into atl.
+    debugger.HandleCommand('settings set target.process.thread.step-avoid-regexp ^(atl::)')
