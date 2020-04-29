@@ -208,11 +208,11 @@ public:
   }
 
   void append(const string &rhs) {
-    if (rhs.size() == 0) {
+    if (rhs.size() == 0u) {
       return;
     }
 
-    if (rhs.size() == 1 && rhs[0] == '\0') {
+    if (rhs.size() == 1u && rhs[0u] == '\0') {
       return;
     }
 
