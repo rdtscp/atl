@@ -8,7 +8,7 @@ namespace atl {
 
 class string {
 private:
-  uint m_size;
+  uint32_t m_size;
   char *m_value;
 
 public:
@@ -21,8 +21,8 @@ public:
   }
 
   /* Constructor */
-  string(const uint count, const char c) : m_size(count), m_value(new char[m_size + 1]) {
-    for (uint idx = 0u; idx < m_size; ++idx) {
+  string(const uint32_t count, const char c) : m_size(count), m_value(new char[m_size + 1]) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = c;
     }
     m_value[m_size] = '\0';
@@ -30,7 +30,7 @@ public:
 
   /* Constructor */
   string(const char *string_literal) : m_size(char_buf_len(string_literal)), m_value(new char[m_size + 1]) {
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = *string_literal;
       ++string_literal;
     }
@@ -39,7 +39,7 @@ public:
 
   /* Copy Constructor */
   string(const string &rhs) : m_size(rhs.m_size), m_value(new char[m_size + 1]) {
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = rhs[idx];
     }
     m_value[m_size] = '\0';
@@ -65,11 +65,11 @@ public:
     m_value = nullptr;
   }
 
-  char &operator[](const uint index) {
+  char &operator[](const uint32_t index) {
     return this->at(index);
   }
 
-  const char operator[](const uint index) const {
+  const char operator[](const uint32_t index) const {
     return this->at(index);
   }
 
@@ -97,7 +97,7 @@ public:
       return false;
     }
 
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
@@ -115,7 +115,7 @@ public:
       return true;
     }
 
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
@@ -134,7 +134,7 @@ public:
       return false;
     }
 
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
@@ -152,7 +152,7 @@ public:
       return true;
     }
 
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
@@ -168,7 +168,7 @@ public:
       return false;
     }
 
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       if (this->at(idx) != rhs.at(idx)) {
         return false;
       }
@@ -191,7 +191,7 @@ public:
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
-  char &at(const uint index) {
+  char &at(const uint32_t index) {
     if (index < this->size()) {
       return m_value[index];
     }
@@ -199,7 +199,7 @@ public:
     throw;
   }
 
-  const char &at(const uint index) const {
+  const char &at(const uint32_t index) const {
     if (index < this->size()) {
       return m_value[index];
     }
@@ -224,7 +224,7 @@ public:
 
     // Copy the LHS.
     const char *lhs_ptr = m_value;
-    for (uint idx = 0u; idx < m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < m_size; ++idx) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -232,7 +232,7 @@ public:
 
     // Copy the RHS.
     const char *rhs_ptr = rhs.m_value;
-    for (uint idx = 0u; idx < rhs.m_size; ++idx) {
+    for (uint32_t idx = 0u; idx < rhs.m_size; ++idx) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -249,7 +249,7 @@ public:
   const_iterator begin() const { return &m_value[0u]; }
 
   const_iterator end() const {
-    const uint len = this->size();
+    const uint32_t len = this->size();
     return &m_value[len];
   }
 
@@ -258,9 +258,9 @@ public:
   char *c_str() const { return m_value; }
 
   int find(const char searchChar) const {
-    const uint len = this->length();
+    const uint32_t len = this->length();
     char currChar;
-    for (uint idx = 0u; idx < len; ++idx) {
+    for (uint32_t idx = 0u; idx < len; ++idx) {
       currChar = this->at(idx);
       if (currChar == searchChar) {
         return static_cast<int>(idx);
@@ -269,13 +269,13 @@ public:
     return -1;
   }
 
-  uint length() const { return this->size(); }
+  uint32_t length() const { return this->size(); }
 
-  uint size() const { return m_size; }
+  uint32_t size() const { return m_size; }
 
 private:
-  static uint char_buf_len(const char *buf) {
-    uint length = 0u;
+  static uint32_t char_buf_len(const char *buf) {
+    uint32_t length = 0u;
     while (*buf != '\0') {
       ++length;
       ++buf;
