@@ -1,4 +1,5 @@
 #pragma once
+#include "types.h"
 #include "vector.h"
 #include <iostream>
 namespace atl {
@@ -40,7 +41,7 @@ public:
     if (size() != rhs.size())
       return false;
 
-    for (unsigned int i = 0; i < rhs.size(); ++i)
+    for (uint32_t i = 0; i < rhs.size(); ++i)
       if (m_elements[i] != rhs.m_elements[i])
         return false;
 
@@ -50,7 +51,7 @@ public:
   bool operator!=(const set<T> &rhs) const { return !(*this == rhs); }
 
   bool find(const T &elem) const {
-    for (unsigned int idx = 0; idx < size(); ++idx)
+    for (uint32_t idx = 0; idx < size(); ++idx)
       if (m_elements[idx] == elem)
         return true;
 
@@ -63,7 +64,7 @@ public:
     }
   }
 
-  unsigned int size() const { return m_elements.size(); }
+  uint32_t size() const { return m_elements.size(); }
 
 };
 

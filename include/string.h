@@ -2,12 +2,12 @@
 #include <iostream>
 
 #include "swap.h"
+#include "types.h"
 
 namespace atl {
 
 class string {
 private:
-  typedef unsigned int uint;
   uint m_size;
   char *m_value;
 
@@ -321,7 +321,7 @@ static bool isdigit(const char c) { return (c >= '0' && c <= '9'); }
 static int stoi(const char *str) {
   int output = 0;              // Initialize result
   int sign = 1;                // Initialize sign as positive
-  unsigned int start_idx = 0u; // Initialize index of first digit
+  uint32_t start_idx = 0u; // Initialize index of first digit
 
   // If number is negative, then update sign
   if (str[0] == '-') {
@@ -330,7 +330,7 @@ static int stoi(const char *str) {
   }
 
   // Iterate through all digits and update the result
-  for (unsigned int idx = start_idx; str[idx] != '\0'; ++idx)
+  for (uint32_t idx = start_idx; str[idx] != '\0'; ++idx)
     output = output * 10 + static_cast<int>(str[idx]) - static_cast<int>('0');
 
   // Return result with sign
@@ -357,11 +357,11 @@ static string to_string(int num) {
   // Process individual digits
   string reverseDigits;
   while (num != 0) {
-    unsigned int rem = num % 10;
+    uint32_t rem = num % 10;
     const char next_char =
         (rem > 9u)
-            ? static_cast<char>((rem - 10u) + static_cast<unsigned int>('a'))
-            : static_cast<char>(rem + static_cast<unsigned int>('0'));
+            ? static_cast<char>((rem - 10u) + static_cast<uint32_t>('a'))
+            : static_cast<char>(rem + static_cast<uint32_t>('0'));
     reverseDigits += next_char;
     num = num / 10;
   }
@@ -373,7 +373,7 @@ static string to_string(int num) {
   // Reverse the string
   string output;
   for (int idx = static_cast<int>(reverseDigits.size()) - 1; idx >= 0; --idx) {
-    const unsigned int index = static_cast<unsigned int>(idx);
+    const uint32_t index = static_cast<uint32_t>(idx);
     char currChar = reverseDigits[index];
     output += currChar;
   }
