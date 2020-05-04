@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shared_ptr.h"
+#include "types.h"
 
 namespace atl {
 
@@ -98,8 +99,8 @@ public:
     throw "atl::list::tail No tail exception."; 
   }
 
-  const unsigned int size() const {
-    unsigned int output = 0;
+  const uint32_t size() const {
+    uint32_t output = 0;
     atl::shared_ptr<list_node> curr = head_node;
     while (curr) {
       ++output;
