@@ -23,8 +23,10 @@ public:
     switch (m_mode) {
       case open_mode::read:
         filePtr = fopen(filename.c_str(), "r");
+        break;
       case open_mode::write:
         filePtr = fopen(filename.c_str(), "w");
+        break;
     }
   }
 
