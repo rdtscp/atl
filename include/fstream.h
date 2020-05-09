@@ -3,6 +3,8 @@
 #include "../include/string.h"
 #include <stdio.h>
 
+extern "C" void *memset(void *__b, int __c, size_t __len);
+
 namespace atl {
 
 class fstream {
