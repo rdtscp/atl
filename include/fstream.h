@@ -46,7 +46,7 @@ public:
       return false;
   }
 
-  atl::string read() {
+  atl::string read() const {
     atl::string output;
 
     FILE *file_p = filePtr;
