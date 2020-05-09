@@ -11,17 +11,17 @@ private:
 
 public:
 
-  enum class OpenMode {
-    READ,
-    WRITE
+  enum class open_mode {
+    read,
+    write
   };
 
   /* Constructor */
-  fstream(const atl::string &filename, const OpenMode mode) {
+  fstream(const atl::string &filename, const open_mode mode) {
     switch (mode) {
-      case OpenMode::READ:
+      case open_mode::read:
         filePtr = fopen(filename.c_str(), "r");
-      case OpenMode::WRITE:
+      case open_mode::write:
         filePtr = fopen(filename.c_str(), "w");
     }
   }
