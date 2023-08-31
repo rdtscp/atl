@@ -16,12 +16,11 @@ public:
   typedef char *iterator;
 
   /* Constructor */
-  string() : m_size(0u), m_value(new char[1]) {
-    *m_value = '\0';
-  }
+  string() : m_size(0u), m_value(new char[1]) { *m_value = '\0'; }
 
   /* Constructor */
-  string(const uint32_t count, const char c) : m_size(count), m_value(new char[m_size + 1]) {
+  string(const uint32_t count, const char c)
+      : m_size(count), m_value(new char[m_size + 1]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = c;
     }
@@ -29,7 +28,9 @@ public:
   }
 
   /* Constructor */
-  string(const char *string_literal) : m_size(char_buf_len(string_literal)), m_value(new char[m_size + 1]) {
+  // "0"
+  string(const char *string_literal)
+      : m_size(char_buf_len(string_literal)), m_value(new char[(m_size + 1)]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = *string_literal;
       ++string_literal;
@@ -38,7 +39,8 @@ public:
   }
 
   /* Copy Constructor */
-  string(const string &rhs) : m_size(rhs.m_size), m_value(new char[m_size + 1]) {
+  string(const string &rhs)
+      : m_size(rhs.m_size), m_value(new char[m_size + 1]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = rhs[idx];
     }
@@ -65,13 +67,9 @@ public:
     m_value = nullptr;
   }
 
-  char &operator[](const uint32_t index) {
-    return this->at(index);
-  }
+  char &operator[](const uint32_t index) { return this->at(index); }
 
-  const char operator[](const uint32_t index) const {
-    return this->at(index);
-  }
+  const char operator[](const uint32_t index) const { return this->at(index); }
 
   string &operator+=(const char rhs) {
     this->append(string(1u, rhs));
@@ -319,8 +317,8 @@ static bool isdigit(const char c) { return (c >= '0' && c <= '9'); }
 
 /* https://www.geeksforgeeks.org/write-your-own-atoi/ */
 static int stoi(const char *str) {
-  int output = 0;              // Initialize result
-  int sign = 1;                // Initialize sign as positive
+  int output = 0;          // Initialize result
+  int sign = 1;            // Initialize sign as positive
   uint32_t start_idx = 0u; // Initialize index of first digit
 
   // If number is negative, then update sign
@@ -359,9 +357,8 @@ static string to_string(int num) {
   while (num != 0) {
     uint32_t rem = num % 10;
     const char next_char =
-        (rem > 9u)
-            ? static_cast<char>((rem - 10u) + static_cast<uint32_t>('a'))
-            : static_cast<char>(rem + static_cast<uint32_t>('0'));
+        (rem > 9u) ? static_cast<char>((rem - 10u) + static_cast<uint32_t>('a'))
+                   : static_cast<char>(rem + static_cast<uint32_t>('0'));
     reverseDigits += next_char;
     num = num / 10;
   }
