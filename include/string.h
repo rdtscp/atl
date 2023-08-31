@@ -20,7 +20,7 @@ public:
 
   /* Constructor */
   string(const uint32_t count, const char c)
-      : m_size(count), m_value(new char[m_size + 1]) {
+      : m_size(count), m_value(new char[m_size + 1u]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = c;
     }
@@ -30,7 +30,7 @@ public:
   /* Constructor */
   // "0"
   string(const char *string_literal)
-      : m_size(char_buf_len(string_literal)), m_value(new char[(m_size + 1)]) {
+      : m_size(char_buf_len(string_literal)), m_value(new char[m_size + 1u]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = *string_literal;
       ++string_literal;
@@ -40,7 +40,7 @@ public:
 
   /* Copy Constructor */
   string(const string &rhs)
-      : m_size(rhs.m_size), m_value(new char[m_size + 1]) {
+      : m_size(rhs.m_size), m_value(new char[m_size + 1u]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = rhs[idx];
     }
@@ -217,7 +217,7 @@ public:
     const int new_size = m_size + rhs.m_size;
 
     // Allocate memory for the new string.
-    char *new_string_value = new char[new_size + 1];
+    char *new_string_value = new char[new_size + 1u];
     char *new_string_value_ptr = new_string_value;
 
     // Copy the LHS.
