@@ -8,7 +8,7 @@ namespace atl {
 
 class string {
 private:
-  uint32_t m_size;
+  uint64_t m_size;
   char *m_value;
 
 public:
@@ -28,7 +28,6 @@ public:
   }
 
   /* Constructor */
-  // "0"
   string(const char *string_literal)
       : m_size(char_buf_len(string_literal)), m_value(new char[m_size + 1u]) {
     for (uint32_t idx = 0u; idx < m_size; ++idx) {
