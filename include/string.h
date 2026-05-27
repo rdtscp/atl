@@ -19,9 +19,9 @@ public:
   string() : m_size(0u), m_value(new char[1]) { *m_value = '\0'; }
 
   /* Constructor */
-  string(const uint32_t count, const char c)
+  string(const uint_32t count, const char c)
       : m_size(count), m_value(new char[m_size + 1u]) {
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = c;
     }
     m_value[m_size] = '\0';
@@ -30,7 +30,7 @@ public:
   /* Constructor */
   string(const char *string_literal)
       : m_size(char_buf_len(string_literal)), m_value(new char[m_size + 1u]) {
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = *string_literal;
       ++string_literal;
     }
@@ -40,7 +40,7 @@ public:
   /* Copy Constructor */
   string(const string &rhs)
       : m_size(rhs.m_size), m_value(new char[m_size + 1u]) {
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       m_value[idx] = rhs[idx];
     }
     m_value[m_size] = '\0';
@@ -66,9 +66,9 @@ public:
     m_value = nullptr;
   }
 
-  char &operator[](const uint32_t index) { return this->at(index); }
+  char &operator[](const uint_32t index) { return this->at(index); }
 
-  const char operator[](const uint32_t index) const { return this->at(index); }
+  const char operator[](const uint_32t index) const { return this->at(index); }
 
   string &operator+=(const char rhs) {
     this->append(string(1u, rhs));
@@ -94,7 +94,7 @@ public:
       return false;
     }
 
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
@@ -112,7 +112,7 @@ public:
       return true;
     }
 
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
@@ -131,7 +131,7 @@ public:
       return false;
     }
 
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) > static_cast<int>(currRhs)) {
@@ -149,7 +149,7 @@ public:
       return true;
     }
 
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       const char currLhs = this->at(idx);
       const char currRhs = rhs.at(idx);
       if (static_cast<int>(currLhs) < static_cast<int>(currRhs)) {
@@ -165,7 +165,7 @@ public:
       return false;
     }
 
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       if (this->at(idx) != rhs.at(idx)) {
         return false;
       }
@@ -188,7 +188,7 @@ public:
 
   bool operator!=(const char *rhs) const { return !(*this == rhs); }
 
-  char &at(const uint32_t index) {
+  char &at(const uint_32t index) {
     if (index < this->size()) {
       return m_value[index];
     }
@@ -196,7 +196,7 @@ public:
     throw;
   }
 
-  const char &at(const uint32_t index) const {
+  const char &at(const uint_32t index) const {
     if (index < this->size()) {
       return m_value[index];
     }
@@ -221,7 +221,7 @@ public:
 
     // Copy the LHS.
     const char *lhs_ptr = m_value;
-    for (uint32_t idx = 0u; idx < m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < m_size; ++idx) {
       *new_string_value_ptr = *lhs_ptr;
       ++lhs_ptr;
       ++new_string_value_ptr;
@@ -229,7 +229,7 @@ public:
 
     // Copy the RHS.
     const char *rhs_ptr = rhs.m_value;
-    for (uint32_t idx = 0u; idx < rhs.m_size; ++idx) {
+    for (uint_32t idx = 0u; idx < rhs.m_size; ++idx) {
       *new_string_value_ptr = *rhs_ptr;
       ++rhs_ptr;
       ++new_string_value_ptr;
@@ -246,7 +246,7 @@ public:
   const_iterator begin() const { return &m_value[0u]; }
 
   const_iterator end() const {
-    const uint32_t len = this->size();
+    const uint_32t len = this->size();
     return &m_value[len];
   }
 
@@ -255,9 +255,9 @@ public:
   char *c_str() const { return m_value; }
 
   int find(const char searchChar) const {
-    const uint32_t len = this->length();
+    const uint_32t len = this->length();
     char currChar;
-    for (uint32_t idx = 0u; idx < len; ++idx) {
+    for (uint_32t idx = 0u; idx < len; ++idx) {
       currChar = this->at(idx);
       if (currChar == searchChar) {
         return static_cast<int>(idx);
@@ -266,13 +266,13 @@ public:
     return -1;
   }
 
-  uint32_t length() const { return this->size(); }
+  uint_32t length() const { return this->size(); }
 
-  uint32_t size() const { return m_size; }
+  uint_32t size() const { return m_size; }
 
 private:
-  static uint32_t char_buf_len(const char *buf) {
-    uint32_t length = 0u;
+  static uint_32t char_buf_len(const char *buf) {
+    uint_32t length = 0u;
     while (*buf != '\0') {
       ++length;
       ++buf;
@@ -318,7 +318,7 @@ static bool isdigit(const char c) { return (c >= '0' && c <= '9'); }
 static int stoi(const char *str) {
   int output = 0;          // Initialize result
   int sign = 1;            // Initialize sign as positive
-  uint32_t start_idx = 0u; // Initialize index of first digit
+  uint_32t start_idx = 0u; // Initialize index of first digit
 
   // If number is negative, then update sign
   if (str[0] == '-') {
@@ -327,7 +327,7 @@ static int stoi(const char *str) {
   }
 
   // Iterate through all digits and update the result
-  for (uint32_t idx = start_idx; str[idx] != '\0'; ++idx)
+  for (uint_32t idx = start_idx; str[idx] != '\0'; ++idx)
     output = output * 10 + static_cast<int>(str[idx]) - static_cast<int>('0');
 
   // Return result with sign
@@ -354,10 +354,10 @@ static string to_string(int num) {
   // Process individual digits
   string reverseDigits;
   while (num != 0) {
-    uint32_t rem = num % 10;
+    uint_32t rem = num % 10;
     const char next_char =
-        (rem > 9u) ? static_cast<char>((rem - 10u) + static_cast<uint32_t>('a'))
-                   : static_cast<char>(rem + static_cast<uint32_t>('0'));
+        (rem > 9u) ? static_cast<char>((rem - 10u) + static_cast<uint_32t>('a'))
+                   : static_cast<char>(rem + static_cast<uint_32t>('0'));
     reverseDigits += next_char;
     num = num / 10;
   }
@@ -369,7 +369,7 @@ static string to_string(int num) {
   // Reverse the string
   string output;
   for (int idx = static_cast<int>(reverseDigits.size()) - 1; idx >= 0; --idx) {
-    const uint32_t index = static_cast<uint32_t>(idx);
+    const uint_32t index = static_cast<uint_32t>(idx);
     char currChar = reverseDigits[index];
     output += currChar;
   }

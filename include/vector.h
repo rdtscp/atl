@@ -10,8 +10,8 @@ namespace atl {
 template <typename T>
 class vector {
 private:
-  uint32_t m_elements_size = 0;
-  uint32_t m_elements_used = 0;
+  uint_32t m_elements_size = 0;
+  uint_32t m_elements_used = 0;
   T *m_elements = nullptr;
 
 public:
@@ -26,9 +26,9 @@ public:
   }
 
   /* Size Constructor */
-  vector<T>(const uint32_t size) {
+  vector<T>(const uint_32t size) {
     reserve(size);
-    for (uint32_t idx = 0; idx < capacity(); ++idx)
+    for (uint_32t idx = 0; idx < capacity(); ++idx)
       push_back(T());
   }
 
@@ -64,11 +64,11 @@ public:
   /* Destructor */
   ~vector<T>() { deallocate(); }
 
-  T &operator[](const uint32_t index) { return at(index); }
+  T &operator[](const uint_32t index) { return at(index); }
 
-  const T &operator[](const uint32_t index) const { return at(index); }
+  const T &operator[](const uint_32t index) const { return at(index); }
 
-  T &at(const uint32_t index) {
+  T &at(const uint_32t index) {
     if (index < m_elements_size) {
       return m_elements[index];
     }
@@ -76,7 +76,7 @@ public:
     throw;
   }
 
-  T &at(const uint32_t index) const {
+  T &at(const uint_32t index) const {
     if (index < m_elements_size) {
       return m_elements[index];
     }
@@ -84,22 +84,22 @@ public:
     throw;
   }
 
-  uint32_t capacity() const { return m_elements_size; }
+  uint_32t capacity() const { return m_elements_size; }
 
   void clear() { deallocate(); }
 
-  T erase(const uint32_t eraseIndex) {
+  T erase(const uint_32t eraseIndex) {
     if (eraseIndex > m_elements_size) {
       printf("%s\n", "atl::vector::erase Out of Bounds Exception");
       throw;
     }
     /* Store our output value. */
     const T output = at(eraseIndex);
-    
+
     /* Copy all but the erased index. */
     T *new_buffer = new T[m_elements_size  - 1];
-    uint32_t new_buffer_idx = 0;
-    for (uint32_t idx = 0; idx < m_elements_size; ++idx) {
+    uint_32t new_buffer_idx = 0;
+    for (uint_32t idx = 0; idx < m_elements_size; ++idx) {
       if (idx == eraseIndex)
         continue;
 
@@ -125,7 +125,7 @@ public:
   void push_front(const T &elem) {
     reserve(size() + 1);
 
-    for (uint32_t idx = m_elements_used; idx > 0; --idx)
+    for (uint_32t idx = m_elements_used; idx > 0; --idx)
       m_elements[idx] = m_elements[idx - 1];
 
     m_elements[0] = elem;
@@ -139,7 +139,7 @@ public:
     return erase(m_elements_used - 1);
   }
 
-  void reserve(const uint32_t reserveSize) {
+  void reserve(const uint_32t reserveSize) {
     if (reserveSize == 0)
       return;
 
@@ -156,7 +156,7 @@ public:
     /* We have existing elements. */
     if (m_elements != nullptr) {
       /* Copy across existing elements. */
-      for (uint32_t idx = 0; idx < m_elements_used; ++idx) {
+      for (uint_32t idx = 0; idx < m_elements_used; ++idx) {
         new_buffer[idx] = m_elements[idx];
       }
     }
@@ -165,7 +165,7 @@ public:
     m_elements = new_buffer;
   }
 
-  uint32_t size() const { return m_elements_used; }
+  uint_32t size() const { return m_elements_used; }
 
 private:
 

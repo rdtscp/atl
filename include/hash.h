@@ -15,8 +15,8 @@ static long power(int value, int exponent) {
 /* https://github.com/jamesroutley/write-a-hash-table */
 static int hash(const atl::string &s, const long max, const long prime = 163) {
   long output = 0;
-  const uint32_t len_s = s.size();
-  for (uint32_t i = 0; i < len_s; ++i) {
+  const uint_32t len_s = s.size();
+  for (uint_32t i = 0; i < len_s; ++i) {
     output += (long)power(prime, len_s - (i + 1)) * s[i];
     output = output % max;
   }
