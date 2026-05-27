@@ -8,7 +8,7 @@ namespace atl {
 
 class string {
 private:
-  uint64_t m_size;
+  uint_64t m_size;
   char *m_value;
 
 public:
