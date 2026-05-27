@@ -89,18 +89,18 @@ public:
     if (head_node) {
       return head_node->value;
     }
-    throw "atl::list::head No head exception."; 
+    throw "atl::list::head No head exception.";
   }
 
   const list<T> tail() const {
     if (head_node->next) {
       return list<T>(head_node->next);
     }
-    throw "atl::list::tail No tail exception."; 
+    throw "atl::list::tail No tail exception.";
   }
 
-  const uint32_t size() const {
-    uint32_t output = 0;
+  const uint_32t size() const {
+    uint_32t output = 0;
     atl::shared_ptr<list_node> curr = head_node;
     while (curr) {
       ++output;
