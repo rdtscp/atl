@@ -59,8 +59,13 @@ jobs:
   test-coverage:
     runs-on: ubuntu-latest
     steps:
-    - run: sudo apt install lcov
     - uses: actions/checkout@v1
+
+    - name: Install lcov 2.x
+      run: |
+        sudo apt-get install -y libcapture-tiny-perl libdatetime-perl
+        git clone --branch v2.3 --depth 1 https://github.com/linux-test-project/lcov.git /tmp/lcov
+        sudo make -C /tmp/lcov install
 
     - name: Debug Compile
       run: |
@@ -73,10 +78,10 @@ jobs:
 
     - name: Get Coverage
       run: |
-        lcov --directory ./build/ --capture --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
-        lcov --remove coverage.info '*/gtest/*' "${HOME}"'/.cache/*' --output-file coverage.info
-        lcov --list coverage.info
+        lcov --ignore-errors inconsistent,unused --directory ./build/ --capture --output-file coverage.info
+        lcov --ignore-errors inconsistent,unused --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' --output-file coverage.info
+        lcov --ignore-errors inconsistent,unused --remove coverage.info '*/gtest/*' "${HOME}"'/.cache/*' --output-file coverage.info
+        lcov --ignore-errors inconsistent,unused --list coverage.info
 
     - name: Upload Coverage
       run: bash <(curl -s https://codecov.io/bash) -f coverage.info
